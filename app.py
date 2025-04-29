@@ -4,7 +4,9 @@ import pandas as pd
 import spacy
 
 # Загрузка модели spaCy
-nlp = spacy.load('en_core_web_sm')
+import en_core_web_sm
+nlp = en_core_web_sm.load()
+
 
 # Навыки на основе требований Goldman Sachs Australia
 mandatory_skills = [
