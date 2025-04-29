@@ -28,7 +28,7 @@ st.markdown(
 col1, col2 = st.columns([1, 4])
 
 with col1:
-    st.image("https://raw.githubusercontent.com/kseniia-nikolaeva/fintelligen-mvp/main/images/goldman_sachs_logo.png", width=80)
+    st.image("https://github.com/Kseniia-nik/fintelligen-mvp/blob/ae0c29bd97dbd913dc256c557e24cc1d53e0e3a8/Goldman-Sachs.png", width=80)
 
 with col2:
     st.markdown(
