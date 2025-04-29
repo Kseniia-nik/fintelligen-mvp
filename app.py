@@ -3,32 +3,29 @@ import fitz  # PyMuPDF
 import pandas as pd
 import spacy
 import docx
-import uuid  # для генерации уникальных ID
+import uuid
+import matplotlib.pyplot as plt
 
 # Загрузка модели spaCy
 import en_core_web_sm
 nlp = en_core_web_sm.load()
 
-# 💻 Стиль: серый фон
+# ----------------------- СТИЛЬ: ЛЁГКИЙ ФОН -----------------------
 st.markdown(
     """
     <style>
-        body {
-            background-color: #f5f5f5;
-        }
-        .css-18e3th9 {
-            background-color: #f5f5f5;
-        }
+        body { background-color: #f5f5f5; }
+        .css-18e3th9 { background-color: #f5f5f5; }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# 🔷 Верхняя панель: логотип + заголовок
+# ----------------------- ШАПКА: ЛОГО + БРЕНД -----------------------
 col1, col2 = st.columns([1, 4])
 
 with col1:
-    st.image("https://github.com/Kseniia-nik/fintelligen-mvp/blob/ae0c29bd97dbd913dc256c557e24cc1d53e0e3a8/Goldman-Sachs.png", width=80)
+    st.image("https://raw.githubusercontent.com/kseniia-nikolaeva/fintelligen-mvp/main/images/Goldman-Sachs.png", width=80)
 
 with col2:
     st.markdown(
@@ -40,8 +37,16 @@ with col2:
         unsafe_allow_html=True
     )
 
+# ----------------------- INFO БЛОК -----------------------
+st.info(
+    "Upload one or more resumes (PDF or DOCX).\n\n"
+    "This tool anonymizes personal information and evaluates key competencies aligned with Goldman Sachs Australia's graduate hiring criteria.\n\n"
+    "**Scoring Methodology:**\n"
+    "- Each mandatory skill match = 2 points\n"
+    "- Each optional skill match = 1 point"
+)
 
-# Навыки для оценки
+# ----------------------- СКИЛЛЫ -----------------------
 mandatory_skills = [
     "financial analysis", "excel", "data analysis", "problem solving",
     "communication", "teamwork", "attention to detail",
@@ -54,7 +59,7 @@ optional_skills = [
     "risk management", "corporate finance", "investment banking knowledge"
 ]
 
-# Функция извлечения текста из PDF
+# ----------------------- ФУНКЦИИ -----------------------
 def extract_text_from_pdf(file):
     text = ""
     pdf = fitz.open(stream=file.read(), filetype="pdf")
@@ -62,7 +67,6 @@ def extract_text_from_pdf(file):
         text += page.get_text()
     return text
 
-# Функция извлечения текста из DOCX
 def extract_text_from_docx(file):
     doc = docx.Document(file)
     text = ""
@@ -70,7 +74,6 @@ def extract_text_from_docx(file):
         text += paragraph.text + "\n"
     return text
 
-# Анонимизация текста
 def anonymize_text(text):
     doc = nlp(text)
     anonymized_text = text
@@ -79,7 +82,6 @@ def anonymize_text(text):
             anonymized_text = anonymized_text.replace(ent.text, f'[{ent.label_}]')
     return anonymized_text
 
-# Поиск навыков
 def find_skills(text, mandatory_skills, optional_skills):
     found_mandatory = []
     found_optional = []
@@ -92,25 +94,7 @@ def find_skills(text, mandatory_skills, optional_skills):
             found_optional.append(skill)
     return found_mandatory, found_optional
 
-# Интерфейс Streamlit
-st.markdown(
-    """
-    <h1 style='text-align: center; color: #004080;'>🧠 Fintelligen – Resume Anonymizer & Skill Evaluator</h1>
-    <p style='text-align: center; color: darkred; font-weight: bold;'>
-    Powered by Goldman Sachs Australia Graduate Hiring Criteria
-    </p>
-    """,
-    unsafe_allow_html=True
-)
-
-st.info(
-    "Upload one or more resumes (PDF or DOCX).\n\n"
-    "This tool anonymizes personal information and evaluates key competencies aligned with Goldman Sachs Australia's graduate hiring criteria.\n\n"
-    "**Scoring Methodology:**\n"
-    "- Each mandatory skill match = 2 points\n"
-    "- Each optional skill match = 1 point"
-)
-
+# ----------------------- ФАЙЛЫ -----------------------
 uploaded_files = st.file_uploader("Upload resumes", type=["pdf", "docx"], accept_multiple_files=True)
 
 if uploaded_files:
@@ -127,8 +111,6 @@ if uploaded_files:
             continue
 
         anonymized_text = anonymize_text(text)
-
-        # Генерация уникального анонимизированного имени
         unique_id = str(uuid.uuid4())[:8]
         anonymized_filename = f"Candidate_{unique_id}.pdf"
 
@@ -149,9 +131,22 @@ if uploaded_files:
 
     if results:
         df = pd.DataFrame(results)
-        st.subheader("Summary Table:")
+        st.subheader("📊 Summary Table:")
         st.dataframe(df)
 
+        # BAR CHART
+        st.subheader("📈 Top Candidates by Total Score")
+        df_sorted = df.sort_values(by="Total Score", ascending=False)
+
+        plt.figure(figsize=(10, 5))
+        plt.barh(df_sorted["Anonymized Resume Name"], df_sorted["Total Score"], color='#0e6ba8')
+        plt.xlabel("Total Score")
+        plt.ylabel("Candidate")
+        plt.title("Skill Match Comparison")
+        plt.gca().invert_yaxis()
+        st.pyplot(plt)
+
+        # DOWNLOAD CSV
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="📥 Download Summary CSV",
@@ -160,19 +155,7 @@ if uploaded_files:
             mime='text/csv',
         )
 
-import matplotlib.pyplot as plt
-
-if results:
-    st.subheader("Top Candidates by Total Score")
-    df_sorted = df.sort_values(by="Total Score", ascending=False)
-
-    plt.figure(figsize=(10, 5))
-    plt.barh(df_sorted["Anonymized Resume Name"], df_sorted["Total Score"], color='#0e6ba8')
-    plt.xlabel("Total Score")
-    plt.ylabel("Candidate")
-    plt.title("Skill Match Comparison")
-    plt.gca().invert_yaxis()
-    st.pyplot(plt)
+# ----------------------- FAQ -----------------------
 st.markdown("---")
 st.subheader("📘 FAQ: Frequently Asked Questions")
 
@@ -184,4 +167,3 @@ with st.expander("🔹 How is the score calculated?"):
 
 with st.expander("🔹 What types of personal data are anonymized?"):
     st.write("Names, locations, organizations, email addresses, phone numbers, dates, and nationalities are anonymized to ensure unbiased evaluation.")
-
