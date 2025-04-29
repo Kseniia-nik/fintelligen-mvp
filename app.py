@@ -1,12 +1,26 @@
 import streamlit as st
-import fitz  # PyMuPDF
+import fitz  # PyMuPDF для PDF
 import pandas as pd
 import spacy
-import docx  # для .docx файлов
+import docx  # для DOCX файлов
 
 # Загрузка модели spaCy
 import en_core_web_sm
 nlp = en_core_web_sm.load()
+
+# Навыки на основе требований Goldman Sachs Australia
+mandatory_skills = [
+    "financial analysis", "excel", "data analysis", "problem solving", 
+    "communication", "teamwork", "attention to detail", 
+    "critical thinking", "python", "valuation"
+]
+
+optional_skills = [
+    "SQL", "powerpoint", "financial modeling", "presentation skills",
+    "project management", "statistics", "machine learning",
+    "risk management", "corporate finance",
+    "investment banking knowledge"
+]
 
 # Функция извлечения текста из PDF
 def extract_text_from_pdf(file):
@@ -24,7 +38,7 @@ def extract_text_from_docx(file):
         text += paragraph.text + "\n"
     return text
 
-# Анонимизация
+# Анонимизация текста
 def anonymize_text(text):
     doc = nlp(text)
     anonymized_text = text
@@ -46,10 +60,22 @@ def find_skills(text, mandatory_skills, optional_skills):
             found_optional.append(skill)
     return found_mandatory, found_optional
 
-# Основной интерфейс
-st.title("Resume Anonymizer & Skill Evaluator - Fintelligen MVP")
+# Интерфейс Streamlit
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #004080;'>🧠 Fintelligen – Resume Anonymizer & Skill Evaluator</h1>
+    <h4 style='text-align: center; color: gray;'>AI-powered evaluation for top graduate programs</h4>
+    """,
+    unsafe_allow_html=True
+)
 
-uploaded_files = st.file_uploader("Choose resume files (PDF or DOCX)", type=["pdf", "docx"], accept_multiple_files=True)
+st.info(
+    "Upload one or more resumes (PDF or DOCX).\n\n"
+    "The system will anonymize personal information and evaluate key skills based on Goldman Sachs Australia criteria.\n\n"
+    "**Scoring:** Each mandatory skill = 2 points, each optional skill = 1 point."
+)
+
+uploaded_files = st.file_uploader("Upload resumes", type=["pdf", "docx"], accept_multiple_files=True)
 
 if uploaded_files:
     results = []
@@ -65,41 +91,30 @@ if uploaded_files:
 
         anonymized_text = anonymize_text(text)
 
-        st.subheader(f"Anonymized Text Preview: {uploaded_file.name}")
-        st.text_area("Anonymized Text", anonymized_text, height=300, key=uploaded_file.name)
-
-        # Оценка навыков
-        mandatory_skills = [
-            "financial analysis", "excel", "data analysis", "problem solving", 
-            "communication", "teamwork", "attention to detail", 
-            "critical thinking", "python", "valuation"
-        ]
-
-        optional_skills = [
-            "SQL", "powerpoint", "financial modeling", "presentation skills",
-            "project management", "statistics", "machine learning",
-            "risk management", "corporate finance", "investment banking knowledge"
-        ]
+        st.subheader(f"Anonymized Preview: {uploaded_file.name}")
+        st.code(anonymized_text, language='markdown')
 
         mandatory, optional = find_skills(anonymized_text, mandatory_skills, optional_skills)
         score = len(mandatory) * 2 + len(optional)
 
+        st.success(f"✅ Total Skill Score for {uploaded_file.name}: {score}")
+
         results.append({
             "Resume": uploaded_file.name,
-            "Mandatory Skills Found": mandatory,
-            "Optional Skills Found": optional,
-            "Score": score
+            "Mandatory Skills Found": len(mandatory),
+            "Optional Skills Found": len(optional),
+            "Total Score": score
         })
 
-    df = pd.DataFrame(results)
-    st.subheader("Summary Table:")
-    st.dataframe(df)
+    if results:
+        df = pd.DataFrame(results)
+        st.subheader("Summary Table:")
+        st.dataframe(df)
 
-    # Кнопка скачать CSV
-    csv = df.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="Download Summary CSV",
-        data=csv,
-        file_name='resume_skill_evaluation_summary.csv',
-        mime='text/csv',
-    )
+        csv = df.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Download Summary CSV",
+            data=csv,
+            file_name='resume_skill_evaluation_summary.csv',
+            mime='text/csv',
+        )
