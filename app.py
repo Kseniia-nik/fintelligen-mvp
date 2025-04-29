@@ -9,6 +9,38 @@ import uuid  # для генерации уникальных ID
 import en_core_web_sm
 nlp = en_core_web_sm.load()
 
+# 💻 Стиль: серый фон
+st.markdown(
+    """
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .css-18e3th9 {
+            background-color: #f5f5f5;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# 🔷 Верхняя панель: логотип + заголовок
+col1, col2 = st.columns([1, 4])
+
+with col1:
+    st.image("https://raw.githubusercontent.com/kseniia-nikolaeva/fintelligen-mvp/main/images/goldman_sachs_logo.png", width=80)
+
+with col2:
+    st.markdown(
+        """
+        <h1 style='text-align: center; color: #004080;'>🧠 Fintelligen</h1>
+        <h4 style='text-align: center; color: gray;'>AI Resume Evaluator</h4>
+        <p style='text-align: center; color: darkred;'>Powered by Goldman Sachs Australia Graduate Criteria</p>
+        """,
+        unsafe_allow_html=True
+    )
+
+
 # Навыки для оценки
 mandatory_skills = [
     "financial analysis", "excel", "data analysis", "problem solving",
@@ -127,3 +159,29 @@ if uploaded_files:
             file_name='resume_skill_evaluation_summary.csv',
             mime='text/csv',
         )
+
+import matplotlib.pyplot as plt
+
+if results:
+    st.subheader("Top Candidates by Total Score")
+    df_sorted = df.sort_values(by="Total Score", ascending=False)
+
+    plt.figure(figsize=(10, 5))
+    plt.barh(df_sorted["Anonymized Resume Name"], df_sorted["Total Score"], color='#0e6ba8')
+    plt.xlabel("Total Score")
+    plt.ylabel("Candidate")
+    plt.title("Skill Match Comparison")
+    plt.gca().invert_yaxis()
+    st.pyplot(plt)
+st.markdown("---")
+st.subheader("📘 FAQ: Frequently Asked Questions")
+
+with st.expander("🔹 What is considered a mandatory skill?"):
+    st.write("Mandatory skills are core competencies such as financial analysis, data analysis, teamwork, communication, etc., required for success in Goldman Sachs Australia's graduate programs.")
+
+with st.expander("🔹 How is the score calculated?"):
+    st.write("Each mandatory skill match earns 2 points. Each optional skill match earns 1 point.")
+
+with st.expander("🔹 What types of personal data are anonymized?"):
+    st.write("Names, locations, organizations, email addresses, phone numbers, dates, and nationalities are anonymized to ensure unbiased evaluation.")
+
