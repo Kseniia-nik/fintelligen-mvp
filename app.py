@@ -1,3 +1,5 @@
+# app.py — финальная улучшенная версия с современным графиком
+
 import streamlit as st
 import fitz  # PyMuPDF
 import pandas as pd
@@ -25,7 +27,7 @@ st.markdown(
 col1, col2 = st.columns([1, 4])
 
 with col1:
-    st.image("https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/images/Goldman-Sachs.png", width=200)
+    st.image("https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/images/Goldman-Sachs.png", width=140)
 
 with col2:
     st.markdown(
@@ -69,61 +71,45 @@ def extract_text_from_pdf(file):
 
 def extract_text_from_docx(file):
     doc = docx.Document(file)
-    text = ""
-    for paragraph in doc.paragraphs:
-        text += paragraph.text + "\n"
-    return text
+    return "\n".join(p.text for p in doc.paragraphs)
 
 def anonymize_text(text):
     doc = nlp(text)
-    anonymized_text = text
     for ent in doc.ents:
         if ent.label_ in ['PERSON', 'GPE', 'ORG', 'DATE', 'LOC', 'EMAIL', 'PHONE', 'NORP']:
-            anonymized_text = anonymized_text.replace(ent.text, f'[{ent.label_}]')
-    return anonymized_text
+            text = text.replace(ent.text, f'[{ent.label_}]')
+    return text
 
 def find_skills(text, mandatory_skills, optional_skills):
-    found_mandatory = []
-    found_optional = []
-    text_lower = text.lower()
-    for skill in mandatory_skills:
-        if skill.lower() in text_lower:
-            found_mandatory.append(skill)
-    for skill in optional_skills:
-        if skill.lower() in text_lower:
-            found_optional.append(skill)
+    found_mandatory = [s for s in mandatory_skills if s.lower() in text.lower()]
+    found_optional = [s for s in optional_skills if s.lower() in text.lower()]
     return found_mandatory, found_optional
 
-# ----------------------- ФАЙЛЫ -----------------------
+# ----------------------- ЗАГРУЗКА РЕЗЮМЕ -----------------------
 uploaded_files = st.file_uploader("Upload resumes", type=["pdf", "docx"], accept_multiple_files=True)
 
 if uploaded_files:
     results = []
-
     for uploaded_file in uploaded_files:
-        # Извлечение текста
         if uploaded_file.name.endswith(".pdf"):
             text = extract_text_from_pdf(uploaded_file)
-        elif uploaded_file.name.endswith(".docx"):
-            text = extract_text_from_docx(uploaded_file)
         else:
-            st.warning(f"Unsupported file type: {uploaded_file.name}")
-            continue
+            text = extract_text_from_docx(uploaded_file)
 
         anonymized_text = anonymize_text(text)
         unique_id = str(uuid.uuid4())[:8]
-        anonymized_filename = f"Candidate_{unique_id}.pdf"
+        filename = f"Candidate_{unique_id}.pdf"
 
-        with st.expander(f"🔍 View Anonymized Resume: {anonymized_filename}"):
+        with st.expander(f"🔍 View Anonymized Resume: {filename}"):
             st.code(anonymized_text, language='markdown')
 
         mandatory, optional = find_skills(anonymized_text, mandatory_skills, optional_skills)
         score = len(mandatory) * 2 + len(optional)
 
-        st.success(f"✅ Total Skill Score for {anonymized_filename}: {score}")
+        st.success(f"✅ Total Skill Score for {filename}: {score}")
 
         results.append({
-            "Anonymized Resume Name": anonymized_filename,
+            "Anonymized Resume Name": filename,
             "Mandatory Skills Found": len(mandatory),
             "Optional Skills Found": len(optional),
             "Total Score": score
@@ -134,36 +120,32 @@ if uploaded_files:
         st.subheader("📊 Summary Table:")
         st.dataframe(df)
 
-        # BAR CHART
-        st.subheader("📈 Top Candidates by Total Score")
-        df_sorted = df.sort_values(by="Total Score", ascending=False)
+        # ----------------------- СОВРЕМЕННЫЙ ГРАФИК -----------------------
+        df_sorted = df.sort_values(by="Total Score", ascending=True)
+        fig, ax = plt.subplots(figsize=(10, 6))
+        bars = ax.barh(df_sorted["Anonymized Resume Name"], df_sorted["Total Score"], color="#1f77b4")
+        ax.set_title("📈 Top Candidates by Total Score", fontsize=18, fontweight="bold", loc="left", pad=15)
+        ax.set_xlabel("Total Score", fontsize=12)
+        ax.set_ylabel("Candidate", fontsize=12)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.grid(axis='x', linestyle='--', alpha=0.4)
+        for bar in bars:
+            ax.text(bar.get_width() + 0.2, bar.get_y() + bar.get_height()/2, f"{int(bar.get_width())}", va='center', fontsize=11)
+        plt.xticks(fontsize=10)
+        plt.yticks(fontsize=10)
+        st.pyplot(fig)
 
-        plt.figure(figsize=(10, 5))
-        plt.barh(df_sorted["Anonymized Resume Name"], df_sorted["Total Score"], color='#0e6ba8')
-        plt.xlabel("Total Score")
-        plt.ylabel("Candidate")
-        plt.title("Skill Match Comparison")
-        plt.gca().invert_yaxis()
-        st.pyplot(plt)
-
-        # DOWNLOAD CSV
+        # ----------------------- СКАЧАТЬ CSV -----------------------
         csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="📥 Download Summary CSV",
-            data=csv,
-            file_name='resume_skill_evaluation_summary.csv',
-            mime='text/csv',
-        )
+        st.download_button("📥 Download Summary CSV", csv, "resume_skill_evaluation_summary.csv", mime="text/csv")
 
 # ----------------------- FAQ -----------------------
 st.markdown("---")
 st.subheader("📘 FAQ: Frequently Asked Questions")
-
 with st.expander("🔹 What is considered a mandatory skill?"):
     st.write("Mandatory skills are core competencies such as financial analysis, data analysis, teamwork, communication, etc., required for success in Goldman Sachs Australia's graduate programs.")
-
 with st.expander("🔹 How is the score calculated?"):
     st.write("Each mandatory skill match earns 2 points. Each optional skill match earns 1 point.")
-
 with st.expander("🔹 What types of personal data are anonymized?"):
     st.write("Names, locations, organizations, email addresses, phone numbers, dates, and nationalities are anonymized to ensure unbiased evaluation.")
