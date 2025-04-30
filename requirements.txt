@@ -6,4 +6,4 @@ python-docx
 PyMuPDF
 matplotlib
 PyPDF2
-pandas
+plotly
