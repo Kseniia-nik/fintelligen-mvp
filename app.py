@@ -20,8 +20,18 @@ st.markdown(f"""
         background-color: {bg_color} !important;
         color: {text_color} !important;
     }}
-    h1, h2, h3, h4 {{
+    h1 {{
+        font-size: 50px !important;
+        font-weight: 700 !important;
         color: #003087 !important;
+        margin-bottom: 0 !important;
+    }}
+    h2, h3, h4 {{
+        font-family: 'IBM Plex Sans', sans-serif !important;
+        font-weight: 600 !important;
+        color: #003087 !important;
+        margin-top: 1.2em;
+        margin-bottom: 0.6em;
     }}
     .stButton > button {{
         background-color: #003087 !important;
