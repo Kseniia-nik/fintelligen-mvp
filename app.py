@@ -7,13 +7,14 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
+# Logo and Title
 st.image("Goldman-Sachs.png", width=100)
 st.markdown("<h1 style='text-align: center; color: #0E2F44;'>Fintelligen</h1>", unsafe_allow_html=True)
 st.markdown("### AI Resume Evaluator for Goldman Sachs")
 
 # Instructions block
 st.markdown("""
-<div style="background-color: #e6f2ff; padding: 20px; border-radius: 8px; margin-top: 10px;">
+<div style="background-color: #e6f2ff; padding: 20px; border-radius: 15px; margin-top: 10px;">
     <h4>📋 Instructions for HR</h4>
     <ol>
         <li><strong>Upload one or more resumes</strong> (formats: PDF, DOCX).</li>
@@ -75,7 +76,7 @@ if uploaded_files:
 
         anonymized_text = anonymize_text(text)
         matched, total = score_skills(anonymized_text, selected_skills)
-        percent = int((matched / total) * 100)
+        percent = int((matched / total) * 100) if total > 0 else 0
         summary = f"✅ Match: {matched} of {total} keywords ({percent}%)"
 
         names.append(anonymized_name)
@@ -83,26 +84,53 @@ if uploaded_files:
         previews.append(anonymized_text[:1500])
         insights.append(summary)
 
-    df = pd.DataFrame({"Resume": names, "Skill Matches": scores, "Match Summary": insights})
-    st.subheader("📊 Skill Score Table")
-    st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
+    df = pd.DataFrame({
+        "Resume": names,
+        "Skill Matches": scores,
+        "Match Summary": insights
+    })
 
-    st.subheader("📈 Skill Match Comparison")
+    # Skill Score Table Block
+    st.markdown("""
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
+    <h3>📊 Skill Score Table</h3>
+    """, unsafe_allow_html=True)
+    st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Skill Bar Chart Block
+    st.markdown("""
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
+    <h3>📈 Skill Match Comparison</h3>
+    """, unsafe_allow_html=True)
     fig, ax = plt.subplots()
     ax.barh(df["Resume"], df["Skill Matches"], color="#2E86C1")
     ax.set_xlabel("Matched Skills")
     ax.set_title("Top Resume Matches")
     plt.gca().invert_yaxis()
     st.pyplot(fig)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    st.subheader("🧾 Resume Previews (Anonymized)")
+    # Resume Previews Block
+    st.markdown("""
+    <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
+    <h3>🧾 Resume Previews (Anonymized)</h3>
+    """, unsafe_allow_html=True)
     for name, text, insight in zip(names, previews, insights):
         with st.expander(f"{name} – {insight}"):
             st.text(text)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# FAQ
-st.subheader("❓ FAQ")
+# FAQ Block
+st.markdown("""
+<div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
+<h3>❓ FAQ</h3>
+""", unsafe_allow_html=True)
+
 with st.expander("What skills are evaluated?"):
     st.write("You can select relevant keywords like Python, Communication, Leadership, etc. from the skill filter above.")
+
 with st.expander("How is my data handled?"):
     st.write("Everything is processed in-memory. No data is stored or shared.")
+
+st.markdown("</div>", unsafe_allow_html=True)
