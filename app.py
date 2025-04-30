@@ -7,11 +7,22 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === THEME COLORS & STYLES ===
+# === THEME SELECTION ===
+st.sidebar.markdown("🎨 **Theme Settings**")
+theme_option = st.sidebar.selectbox("Choose color scheme", ["Classic", "Modern", "Slate"])
+
+if theme_option == "Classic":
+    accent_color = "#003087"
+elif theme_option == "Modern":
+    accent_color = "#1E40AF"
+elif theme_option == "Slate":
+    accent_color = "#334155"
+
 bg_color = "#f8f9fa"
 text_color = "#212529"
 card_color = "#ffffff"
 
+# === GLOBAL CSS ===
 st.markdown(f"""
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -23,18 +34,18 @@ st.markdown(f"""
     h1 {{
         font-size: 50px !important;
         font-weight: 700 !important;
-        color: #003087 !important;
+        color: {accent_color} !important;
         margin-bottom: 0 !important;
     }}
     h2, h3, h4 {{
         font-family: 'IBM Plex Sans', sans-serif !important;
         font-weight: 600 !important;
-        color: #003087 !important;
+        color: {accent_color} !important;
         margin-top: 1.2em;
         margin-bottom: 0.6em;
     }}
     .stButton > button {{
-        background-color: #003087 !important;
+        background-color: {accent_color} !important;
         color: white !important;
         padding: 10px 20px;
         border-radius: 8px;
@@ -56,7 +67,7 @@ st.markdown(f"""
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background: conic-gradient(#003087 {{percent}}%, #dee2e6 {{percent}}%);
+        background: conic-gradient({accent_color} {{percent}}%, #dee2e6 {{percent}}%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -71,9 +82,9 @@ st.markdown(f"""
 # === HEADER ===
 col1, col2 = st.columns([5, 1])
 with col1:
-    st.markdown("""
-        <h1 style='font-size: 50px; font-weight: 700; margin-bottom: 0;'>Fintelligen</h1>
-        <h3 style='font-size: 24px; font-weight: 400; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>
+    st.markdown(f"""
+        <h1>Fintelligen</h1>
+        <h3 style='font-size: 24px; font-weight: 400; color: {accent_color};'>AI Resume Evaluator for Goldman Sachs</h3>
     """, unsafe_allow_html=True)
 with col2:
     st.image("goldman.jpeg", width=160)
@@ -167,13 +178,13 @@ if uploaded_files:
             y="Resume",
             orientation="h",
             color="Skill Matches",
-            color_continuous_scale=["#dee2e6", "#003087"],
+            color_continuous_scale=["#dee2e6", accent_color],
             title="Top Resume Matches",
             height=400
         )
 
         fig.update_layout(
-            title_font=dict(size=22, color="#003087", family="IBM Plex Sans"),
+            title_font=dict(size=22, color=accent_color, family="IBM Plex Sans"),
             xaxis_title="Matched Skills",
             yaxis_title=None,
             plot_bgcolor=bg_color,
@@ -191,7 +202,7 @@ if uploaded_files:
         for name, data in zip(names, insights):
             with st.expander(f"{name}"):
                 if show_summary:
-                    st.markdown(f"<div class='ring' style='background: conic-gradient(#003087 {data['percent']}%, #dee2e6 {data['percent']}%); color: {text_color};'>{data['percent']}%</div><br>", unsafe_allow_html=True)
+                    st.markdown(f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%); color: {text_color};'>{data['percent']}%</div><br>", unsafe_allow_html=True)
                     st.markdown(f"**🎯 Match Summary:** {data['summary']}")
                 st.markdown("---")
                 st.markdown("**📄 Anonymized Text:**")
