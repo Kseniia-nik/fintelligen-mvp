@@ -25,13 +25,12 @@ st.markdown(
 
 # ----------------------- ШАПКА: ЛОГО + БРЕНД -----------------------
 st.image("https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/images/Goldman-Sachs.png", width=400)
-
 st.markdown(
-    \"\"\"
+    """
     <h1 style='text-align: center; color: #004080;'>Fintelligen</h1>
     <h4 style='text-align: center; color: gray;'>AI Resume Evaluator</h4>
     <p style='text-align: center; color: darkred;'>Powered by Goldman Sachs Australia Graduate Criteria</p>
-    \"\"\",
+    """,
     unsafe_allow_html=True
 )
 
