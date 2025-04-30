@@ -7,10 +7,12 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === Global CSS ===
+# === Global CSS + Google Fonts ===
 st.markdown("""
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body {
+        html, body, [class*="css"]  {
+            font-family: 'Inter', sans-serif !important;
             background-color: #f8f9fa !important;
             color: #212529 !important;
         }
@@ -53,15 +55,13 @@ with col1:
     """, unsafe_allow_html=True)
 with col2:
     st.image("goldman.jpeg", width=160)
-    
+
 # === Sidebar Navigation ===
 st.sidebar.header("🧭 Navigation & Filters")
-
 show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
 show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
 show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
 show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
-
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 10, 0)
 
 # === Instructions block ===
@@ -81,12 +81,10 @@ st.markdown("""
         <li>❓ See the <strong>FAQ</strong> section below for common questions.</li>
     </ol>
     <p><em>⏱️ Processing is fast and local. You may upload up to <strong>50 resumes</strong> at once.</em></p>
-</div>
-""", unsafe_allow_html=True)
+</div>""", unsafe_allow_html=True)
 
 # === Upload and Filters ===
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
-
 all_skills = ["python", "sql", "data analysis", "communication", "problem solving", "teamwork", "leadership", "project management", "finance", "machine learning"]
 selected_skills = st.multiselect("🧠 Filter by Skill Keywords", options=all_skills, default=["python", "sql", "communication"])
 
@@ -148,9 +146,8 @@ if uploaded_files:
         st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
 
         st.markdown("<hr />", unsafe_allow_html=True)
-
         fig, ax = plt.subplots()
-        ax.barh(df["Resume"], df["Skill Matches"], color="#2E86C1")
+        ax.barh(df["Resume"], df["Skill Matches"], color="#003087")
         ax.set_xlabel("Matched Skills")
         ax.set_title("Top Resume Matches")
         plt.gca().invert_yaxis()
@@ -172,10 +169,8 @@ if uploaded_files:
 # === FAQ ===
 if show_faq:
     st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
-
     with st.expander("What skills are evaluated?"):
         st.write("You can select relevant keywords like Python, Communication, Leadership, etc. from the skill filter above.")
     with st.expander("How is my data handled?"):
         st.write("Everything is processed in-memory. No data is stored or shared.")
-
     st.markdown("</div>", unsafe_allow_html=True)
