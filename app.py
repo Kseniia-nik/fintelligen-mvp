@@ -45,13 +45,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # === Header with logo ===
-col1, col2 = st.columns([4, 1])
+col1, col2 = st.columns([5, 1])
 with col1:
-    st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
-    st.markdown("### AI Resume Evaluator for Goldman Sachs")
+    st.markdown("""
+        <h1 style='font-size: 50px; font-weight: 800; margin-bottom: 0;'>Fintelligen</h1>
+        <h3 style='font-size: 26px; font-weight: 500; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>
+    """, unsafe_allow_html=True)
 with col2:
-    st.image("Goldman-Sachs.png", width=120)
-
+    st.image("Goldman-Sachs.png", width=160)
+    
 # === Sidebar Navigation ===
 st.sidebar.header("🧭 Navigation & Filters")
 
