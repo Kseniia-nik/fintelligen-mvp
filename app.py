@@ -2,21 +2,20 @@ import streamlit as st
 from PyPDF2 import PdfReader
 from docx import Document
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === DEFAULT COLORS (Light Theme) ===
+# === GLOBAL STYLES (light theme only) ===
 bg_color = "#f8f9fa"
 text_color = "#212529"
 card_color = "#ffffff"
 
-# === GLOBAL STYLES ===
 st.markdown(f"""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-    html, body, [class*="css"]  {{
+    html, body, [class*="css"] {{
         font-family: 'Inter', sans-serif !important;
         background-color: {bg_color} !important;
         color: {text_color} !important;
@@ -42,7 +41,6 @@ st.markdown(f"""
         border-radius: 15px;
         box-shadow: 0 6px 14px rgba(0,0,0,0.07);
         margin-top: 40px;
-        transition: all 0.3s ease-in-out;
     }}
     .ring {{
         width: 100px;
@@ -70,12 +68,12 @@ with col1:
 with col2:
     st.image("goldman.jpeg", width=160)
 
-# === SIDEBAR FILTERS ===
+# === SIDEBAR ===
 st.sidebar.header("🧭 Navigation & Filters")
-show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
-show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
-show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
-show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
+show_summary = st.sidebar.checkbox("Show Match Summary", value=True)
+show_table = st.sidebar.checkbox("Show Skill Matrix & Chart", value=True)
+show_resumes = st.sidebar.checkbox("Show Anonymized Resumes", value=True)
+show_faq = st.sidebar.checkbox("Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 10, 0)
 
 # === INSTRUCTIONS ===
@@ -83,20 +81,20 @@ st.markdown(f"""
 <div class="block">
     <h4>📋 Instructions for HR</h4>
     <ol>
-        <li><strong>Upload resumes</strong> (PDF/DOCX).</li>
-        <li>Tool will:
+        <li><strong>Upload one or more resumes</strong> (PDF, DOCX).</li>
+        <li>The tool will:
             <ul>
-                <li><strong>Anonymize</strong> contact details.</li>
-                <li><strong>Score</strong> key competencies.</li>
-                <li><strong>Visualize</strong> results.</li>
+                <li><strong>Anonymize</strong> contact details</li>
+                <li><strong>Score key skills</strong> based on Goldman Sachs job criteria</li>
+                <li><strong>Visualize</strong> results with graphs and summaries</li>
             </ul>
         </li>
     </ol>
-    <p><em>Upload up to <strong>50 resumes</strong>. Fully in-browser & secure.</em></p>
+    <p><em>You can upload up to <strong>50 resumes</strong>. Fully secure, local processing.</em></p>
 </div>
 """, unsafe_allow_html=True)
 
-# === UPLOAD ===
+# === FILE UPLOAD ===
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
 all_skills = ["python", "sql", "data analysis", "communication", "problem solving", "teamwork", "leadership", "project management", "finance", "machine learning"]
 selected_skills = st.multiselect("🧠 Filter by Skill Keywords", options=all_skills, default=["python", "sql", "communication"])
@@ -147,20 +145,37 @@ if uploaded_files:
 
     df = pd.DataFrame({"Resume": names, "Skill Matches": scores, "Match Summary": [i["summary"] for i in insights]})
 
-    # === SKILL MATRIX TABLE & CHART ===
+    # === PLOTLY CHART ===
     if show_table and not df.empty:
         st.markdown(f"<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
         st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
         st.markdown("<hr />", unsafe_allow_html=True)
-        fig, ax = plt.subplots()
-        ax.barh(df["Resume"], df["Skill Matches"], color="#003087")
-        ax.set_xlabel("Matched Skills")
-        ax.set_title("Top Resume Matches")
-        plt.gca().invert_yaxis()
-        st.pyplot(fig)
+
+        fig = px.bar(
+            df.sort_values("Skill Matches", ascending=True),
+            x="Skill Matches",
+            y="Resume",
+            orientation="h",
+            color="Skill Matches",
+            color_continuous_scale=["#dee2e6", "#003087"],
+            title="Top Resume Matches",
+            height=400
+        )
+
+        fig.update_layout(
+            title_font=dict(size=22, color="#003087", family="Inter"),
+            xaxis_title="Matched Skills",
+            yaxis_title=None,
+            plot_bgcolor=bg_color,
+            paper_bgcolor=bg_color,
+            font=dict(family="Inter", color=text_color),
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # === RESUME CARDS WITH RINGS ===
+    # === RESUME CARDS ===
     if show_resumes:
         st.markdown(f"<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
         for name, data in zip(names, insights):
