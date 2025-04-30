@@ -7,7 +7,7 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === Global CSS Styles ===
+# === Global CSS ===
 st.markdown("""
     <style>
         body {
@@ -44,10 +44,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# === Header ===
-st.image("Goldman-Sachs.png", width=100)
-st.markdown("<h1 style='text-align: center;'>Fintelligen</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+# === Header with logo ===
+col1, col2 = st.columns([4, 1])
+with col1:
+    st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
+    st.markdown("### AI Resume Evaluator for Goldman Sachs")
+with col2:
+    st.image("goldman_logo.png", width=120)
 
 # === Sidebar Navigation ===
 st.sidebar.header("🧭 Navigation & Filters")
