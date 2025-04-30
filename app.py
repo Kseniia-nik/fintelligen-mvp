@@ -9,14 +9,17 @@ st.set_page_config(page_title="Fintelligen", layout="centered")
 
 # === THEME SELECTION ===
 st.sidebar.markdown("🎨 **Theme Settings**")
-theme_option = st.sidebar.selectbox("Choose color scheme", ["Classic", "Modern", "Slate"])
+theme_option = st.sidebar.selectbox("Choose color scheme", ["Classic", "Modern", "Slate"], index=2)
 
 if theme_option == "Classic":
     accent_color = "#003087"
+    brand_color = accent_color
 elif theme_option == "Modern":
     accent_color = "#1E40AF"
+    brand_color = accent_color
 elif theme_option == "Slate":
     accent_color = "#334155"
+    brand_color = "#0052CC"  # яркий синий только для логотипа
 
 bg_color = "#f8f9fa"
 text_color = "#212529"
@@ -34,7 +37,7 @@ st.markdown(f"""
     h1 {{
         font-size: 50px !important;
         font-weight: 700 !important;
-        color: {accent_color} !important;
+        color: {brand_color} !important;
         margin-bottom: 0 !important;
     }}
     h2, h3, h4 {{
@@ -89,7 +92,7 @@ with col1:
 with col2:
     st.image("goldman.jpeg", width=160)
 
-# === SIDEBAR FILTERS ===
+# === SIDEBAR ===
 st.sidebar.header("🧭 Navigation & Filters")
 show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
 show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
@@ -212,29 +215,20 @@ if uploaded_files:
 # === FAQ ===
 if show_faq:
     st.markdown(f"<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
-
     with st.expander("What skills are evaluated?"):
-        st.write("You can select relevant keywords like Python, Communication, Leadership, etc. from the skill filter above.")
-
+        st.write("You can select relevant keywords like Python, Communication, Leadership, etc.")
     with st.expander("Is my data stored anywhere?"):
         st.write("No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.")
-
     with st.expander("How is the skill match percentage calculated?"):
         st.write("The tool counts how many selected skills are found in the resume and divides it by the total number of selected skills.")
-
     with st.expander("Can I upload multiple resumes?"):
         st.write("Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.")
-
     with st.expander("Can I change the keywords to match different roles?"):
         st.write("Absolutely. You can customize the skill list depending on the job description or team needs.")
-
     with st.expander("Does the tool understand synonyms or context?"):
         st.write("Not yet. The current version checks for exact keyword matches. Future versions may include semantic AI-based matching.")
-
     with st.expander("Can I download the results?"):
         st.write("Coming soon: export to PDF and CSV will be supported in the next release.")
-
     with st.expander("Can this tool reduce hiring bias?"):
         st.write("Yes, anonymization removes personal identifiers like name, email, and phone. This helps focus evaluation on skills.")
-
     st.markdown("</div>", unsafe_allow_html=True)
