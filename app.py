@@ -7,12 +7,10 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === THEME SWITCH ===
-theme = st.sidebar.radio("🎨 Select Theme", options=["Light", "Dark"], index=0)
-
-bg_color = "#f8f9fa" if theme == "Light" else "#121212"
-text_color = "#212529" if theme == "Light" else "#f1f1f1"
-card_color = "#ffffff" if theme == "Light" else "#1e1e1e"
+# === DEFAULT COLORS (Light Theme) ===
+bg_color = "#f8f9fa"
+text_color = "#212529"
+card_color = "#ffffff"
 
 # === GLOBAL STYLES ===
 st.markdown(f"""
