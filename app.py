@@ -50,7 +50,7 @@ with col1:
     st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
     st.markdown("### AI Resume Evaluator for Goldman Sachs")
 with col2:
-    st.image("goldman_logo.png", width=120)
+    st.image("Goldman-Sachs.png", width=120)
 
 # === Sidebar Navigation ===
 st.sidebar.header("🧭 Navigation & Filters")
