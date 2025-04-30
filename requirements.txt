@@ -1,6 +1,9 @@
 streamlit
-PyMuPDF
-python-docx
 pandas
-matplotlib
 Pillow
+streamlit
+python-docx
+PyMuPDF
+matplotlib
+PyPDF2
+pandas
