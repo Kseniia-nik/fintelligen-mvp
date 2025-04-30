@@ -7,20 +7,9 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === THEME SELECTION ===
-st.sidebar.markdown("🎨 **Theme Settings**")
-theme_option = st.sidebar.selectbox("Choose color scheme", ["Classic", "Modern", "Slate"], index=2)
-
-if theme_option == "Classic":
-    accent_color = "#003087"
-    brand_color = accent_color
-elif theme_option == "Modern":
-    accent_color = "#1E40AF"
-    brand_color = accent_color
-elif theme_option == "Slate":
-    accent_color = "#334155"
-    brand_color = "#0052CC"  # яркий синий только для логотипа
-
+# === COLORS (Slate + Brand Blue) ===
+accent_color = "#334155"  # интерфейс
+brand_color = "#0052CC"   # заголовок "Fintelligen"
 bg_color = "#f8f9fa"
 text_color = "#212529"
 card_color = "#ffffff"
@@ -41,7 +30,6 @@ st.markdown(f"""
         margin-bottom: 0 !important;
     }}
     h2, h3, h4 {{
-        font-family: 'IBM Plex Sans', sans-serif !important;
         font-weight: 600 !important;
         color: {accent_color} !important;
         margin-top: 1.2em;
@@ -57,7 +45,7 @@ st.markdown(f"""
         font-size: 16px;
     }}
     .stButton > button:hover {{
-        background-color: #002060 !important;
+        background-color: #1f2937 !important;
     }}
     .block {{
         background-color: {card_color};
@@ -99,24 +87,6 @@ show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
 show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
 show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 10, 0)
-
-# === INSTRUCTIONS ===
-st.markdown(f"""
-<div class="block">
-    <h4>📋 Instructions for HR</h4>
-    <ol>
-        <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
-        <li>Tool will:
-            <ul>
-                <li><strong>Anonymize</strong> personal details</li>
-                <li><strong>Score</strong> skill match</li>
-                <li><strong>Visualize</strong> best-fit resumes</li>
-            </ul>
-        </li>
-    </ol>
-    <p><em>Upload up to <strong>50 resumes</strong>. No data is stored or shared.</em></p>
-</div>
-""", unsafe_allow_html=True)
 
 # === FILE UPLOAD ===
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
@@ -167,25 +137,70 @@ if uploaded_files:
             })
             percents.append(percent)
 
-    df = pd.DataFrame({"Resume": names, "Skill Matches": scores, "Match Summary": [i["summary"] for i in insights]})
+    df = pd.DataFrame({
+        "Anonymized Resume": names,
+        "Original Filename": [f.name for f in uploaded_files],
+        "Skill Matches": scores,
+        "Match Summary": [i["summary"] for i in insights],
+        "⭐ Shortlist": [False] * len(names)
+    })
 
-    # === PLOTLY CHART ===
+    # === RESET SHORTLIST ===
+    if "clear_shortlist" not in st.session_state:
+        st.session_state.clear_shortlist = False
+
+    if st.button("🗑 Clear Shortlist"):
+        st.session_state.clear_shortlist = True
+
+    if st.session_state.clear_shortlist:
+        df["⭐ Shortlist"] = False
+        st.session_state.clear_shortlist = False
+
+    # === INTERACTIVE TABLE ===
+    st.markdown(f"<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
+    edited_df = st.data_editor(
+        df,
+        use_container_width=True,
+        num_rows="dynamic",
+        hide_index=True,
+        column_config={
+            "Skill Matches": st.column_config.NumberColumn(format="%d"),
+            "Anonymized Resume": st.column_config.TextColumn(),
+            "Original Filename": st.column_config.TextColumn(),
+            "Match Summary": st.column_config.TextColumn(width="large"),
+            "⭐ Shortlist": st.column_config.CheckboxColumn(default=False)
+        }
+    )
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # === SHORTLISTED ===
+    shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
+    if not shortlisted.empty:
+        st.markdown(f"<div class='block'><h3>⭐ Shortlisted Candidates</h3>", unsafe_allow_html=True)
+        st.dataframe(shortlisted, use_container_width=True)
+
+        csv_shortlisted = shortlisted.to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="⬇️ Download Shortlisted (CSV)",
+            data=csv_shortlisted,
+            file_name="shortlisted_candidates.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # === CHART ===
     if show_table and not df.empty:
         st.markdown(f"<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
-        st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
-        st.markdown("<hr />", unsafe_allow_html=True)
-
         fig = px.bar(
             df.sort_values("Skill Matches", ascending=True),
             x="Skill Matches",
-            y="Resume",
+            y="Anonymized Resume",
             orientation="h",
             color="Skill Matches",
             color_continuous_scale=["#dee2e6", accent_color],
-            title="Top Resume Matches",
             height=400
         )
-
         fig.update_layout(
             title_font=dict(size=22, color=accent_color, family="IBM Plex Sans"),
             xaxis_title="Matched Skills",
@@ -195,11 +210,10 @@ if uploaded_files:
             font=dict(family="IBM Plex Sans", color=text_color),
             margin=dict(l=20, r=20, t=60, b=20)
         )
-
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # === RESUME CARDS ===
+    # === RESUME PREVIEW ===
     if show_resumes:
         st.markdown(f"<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
         for name, data in zip(names, insights):
@@ -228,7 +242,7 @@ if show_faq:
     with st.expander("Does the tool understand synonyms or context?"):
         st.write("Not yet. The current version checks for exact keyword matches. Future versions may include semantic AI-based matching.")
     with st.expander("Can I download the results?"):
-        st.write("Coming soon: export to PDF and CSV will be supported in the next release.")
+        st.write("You can now download full and shortlisted results as CSV files.")
     with st.expander("Can this tool reduce hiring bias?"):
         st.write("Yes, anonymization removes personal identifiers like name, email, and phone. This helps focus evaluation on skills.")
     st.markdown("</div>", unsafe_allow_html=True)
