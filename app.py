@@ -7,18 +7,16 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === Global custom CSS ===
+# === Global CSS Styles ===
 st.markdown("""
     <style>
         body {
             background-color: #f8f9fa !important;
             color: #212529 !important;
         }
-
         h1, h2, h3, h4 {
             color: #003087 !important;
         }
-
         .stButton > button {
             background-color: #003087 !important;
             color: white !important;
@@ -28,12 +26,9 @@ st.markdown("""
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             font-size: 16px;
         }
-
         .stButton > button:hover {
             background-color: #002060 !important;
-            color: white !important;
         }
-
         .block {
             background-color: #ffffff;
             padding: 20px;
@@ -41,23 +36,28 @@ st.markdown("""
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             margin-top: 40px;
         }
-
         hr {
             border: none;
             border-top: 1px solid #dee2e6;
             margin: 40px 0;
         }
-
-        .stMarkdown h3 {
-            margin-bottom: 1rem;
-        }
     </style>
 """, unsafe_allow_html=True)
 
-# === Header and Intro ===
+# === Header ===
 st.image("Goldman-Sachs.png", width=100)
 st.markdown("<h1 style='text-align: center;'>Fintelligen</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+
+# === Sidebar Navigation ===
+st.sidebar.header("🧭 Navigation & Filters")
+
+show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
+show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
+show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
+show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
+
+match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 10, 0)
 
 # === Instructions block ===
 st.markdown("""
@@ -79,13 +79,13 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# === Upload + Filter ===
+# === Upload and Filters ===
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
 
 all_skills = ["python", "sql", "data analysis", "communication", "problem solving", "teamwork", "leadership", "project management", "finance", "machine learning"]
 selected_skills = st.multiselect("🧠 Filter by Skill Keywords", options=all_skills, default=["python", "sql", "communication"])
 
-# === Helper functions ===
+# === Helpers ===
 def extract_text_from_pdf(file):
     reader = PdfReader(file)
     return "".join(page.extract_text() or "" for page in reader.pages)
@@ -122,44 +122,55 @@ if uploaded_files:
 
         anonymized_text = anonymize_text(text)
         matched, total = score_skills(anonymized_text, selected_skills)
-        percent = int((matched / total) * 100) if total > 0 else 0
-        summary = f"✅ Match: {matched} of {total} keywords ({percent}%)"
 
-        names.append(anonymized_name)
-        scores.append(matched)
-        previews.append(anonymized_text[:1500])
-        insights.append(summary)
+        if matched >= match_threshold:
+            percent = int((matched / total) * 100) if total > 0 else 0
+            summary = f"✅ Match: {matched} of {total} keywords ({percent}%)"
+            names.append(anonymized_name)
+            scores.append(matched)
+            previews.append(anonymized_text[:1500])
+            insights.append({
+                "summary": summary,
+                "text": anonymized_text,
+                "matches": matched
+            })
 
-    df = pd.DataFrame({"Resume": names, "Skill Matches": scores, "Match Summary": insights})
+    df = pd.DataFrame({"Resume": names, "Skill Matches": scores, "Match Summary": [i["summary"] for i in insights]})
 
-    # === Skill Score Table ===
-    st.markdown("<div class='block'><h3>📊 Skill Score Table</h3>", unsafe_allow_html=True)
-    st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
+    # === Skill Matrix Section ===
+    if show_table and not df.empty:
+        st.markdown("<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
+        st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
+
+        st.markdown("<hr />", unsafe_allow_html=True)
+
+        fig, ax = plt.subplots()
+        ax.barh(df["Resume"], df["Skill Matches"], color="#2E86C1")
+        ax.set_xlabel("Matched Skills")
+        ax.set_title("Top Resume Matches")
+        plt.gca().invert_yaxis()
+        st.pyplot(fig)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # === Resume Previews & Summaries ===
+    if show_resumes:
+        st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
+        for name, data in zip(names, insights):
+            with st.expander(f"{name}"):
+                if show_summary:
+                    st.markdown(f"**🎯 Match Summary:** {data['summary']}")
+                st.markdown("---")
+                st.markdown("**📄 Anonymized Text:**")
+                st.text(data["text"])
+        st.markdown("</div>", unsafe_allow_html=True)
+
+# === FAQ ===
+if show_faq:
+    st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
+
+    with st.expander("What skills are evaluated?"):
+        st.write("You can select relevant keywords like Python, Communication, Leadership, etc. from the skill filter above.")
+    with st.expander("How is my data handled?"):
+        st.write("Everything is processed in-memory. No data is stored or shared.")
+
     st.markdown("</div>", unsafe_allow_html=True)
-
-    # === Bar Chart ===
-    st.markdown("<div class='block'><h3>📈 Skill Match Comparison</h3>", unsafe_allow_html=True)
-    fig, ax = plt.subplots()
-    ax.barh(df["Resume"], df["Skill Matches"], color="#2E86C1")
-    ax.set_xlabel("Matched Skills")
-    ax.set_title("Top Resume Matches")
-    plt.gca().invert_yaxis()
-    st.pyplot(fig)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    # === Resume Previews ===
-    st.markdown("<div class='block'><h3>🧾 Resume Previews (Anonymized)</h3>", unsafe_allow_html=True)
-    for name, text, insight in zip(names, previews, insights):
-        with st.expander(f"{name} – {insight}"):
-            st.text(text)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# === FAQ block ===
-st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
-
-with st.expander("What skills are evaluated?"):
-    st.write("You can select relevant keywords like Python, Communication, Leadership, etc. from the skill filter above.")
-with st.expander("How is my data handled?"):
-    st.write("Everything is processed in-memory. No data is stored or shared.")
-
-st.markdown("</div>", unsafe_allow_html=True)
