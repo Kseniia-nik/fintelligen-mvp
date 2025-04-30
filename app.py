@@ -7,16 +7,16 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === GLOBAL STYLES (light theme only) ===
+# === THEME COLORS & STYLES ===
 bg_color = "#f8f9fa"
 text_color = "#212529"
 card_color = "#ffffff"
 
 st.markdown(f"""
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
     html, body, [class*="css"] {{
-        font-family: 'Inter', sans-serif !important;
+        font-family: 'IBM Plex Sans', sans-serif !important;
         background-color: {bg_color} !important;
         color: {text_color} !important;
     }}
@@ -62,18 +62,18 @@ st.markdown(f"""
 col1, col2 = st.columns([5, 1])
 with col1:
     st.markdown("""
-        <h1 style='font-size: 50px; font-weight: 800; margin-bottom: 0;'>Fintelligen</h1>
-        <h3 style='font-size: 26px; font-weight: 500; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>
+        <h1 style='font-size: 50px; font-weight: 700; margin-bottom: 0;'>Fintelligen</h1>
+        <h3 style='font-size: 24px; font-weight: 400; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>
     """, unsafe_allow_html=True)
 with col2:
     st.image("goldman.jpeg", width=160)
 
-# === SIDEBAR ===
+# === SIDEBAR FILTERS ===
 st.sidebar.header("🧭 Navigation & Filters")
-show_summary = st.sidebar.checkbox("Show Match Summary", value=True)
-show_table = st.sidebar.checkbox("Show Skill Matrix & Chart", value=True)
-show_resumes = st.sidebar.checkbox("Show Anonymized Resumes", value=True)
-show_faq = st.sidebar.checkbox("Show FAQ", value=True)
+show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
+show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
+show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
+show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 10, 0)
 
 # === INSTRUCTIONS ===
@@ -81,16 +81,16 @@ st.markdown(f"""
 <div class="block">
     <h4>📋 Instructions for HR</h4>
     <ol>
-        <li><strong>Upload one or more resumes</strong> (PDF, DOCX).</li>
-        <li>The tool will:
+        <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
+        <li>Tool will:
             <ul>
-                <li><strong>Anonymize</strong> contact details</li>
-                <li><strong>Score key skills</strong> based on Goldman Sachs job criteria</li>
-                <li><strong>Visualize</strong> results with graphs and summaries</li>
+                <li><strong>Anonymize</strong> personal details</li>
+                <li><strong>Score</strong> skill match</li>
+                <li><strong>Visualize</strong> best-fit resumes</li>
             </ul>
         </li>
     </ol>
-    <p><em>You can upload up to <strong>50 resumes</strong>. Fully secure, local processing.</em></p>
+    <p><em>Upload up to <strong>50 resumes</strong>. No data is stored or shared.</em></p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -163,12 +163,12 @@ if uploaded_files:
         )
 
         fig.update_layout(
-            title_font=dict(size=22, color="#003087", family="Inter"),
+            title_font=dict(size=22, color="#003087", family="IBM Plex Sans"),
             xaxis_title="Matched Skills",
             yaxis_title=None,
             plot_bgcolor=bg_color,
             paper_bgcolor=bg_color,
-            font=dict(family="Inter", color=text_color),
+            font=dict(family="IBM Plex Sans", color=text_color),
             margin=dict(l=20, r=20, t=60, b=20)
         )
 
@@ -188,7 +188,6 @@ if uploaded_files:
                 st.text(data["text"])
         st.markdown("</div>", unsafe_allow_html=True)
 
-# === FAQ ===
 # === FAQ ===
 if show_faq:
     st.markdown(f"<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
