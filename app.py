@@ -7,12 +7,39 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# Logo and Title
-st.image("Goldman-Sachs.png", width=100)
-st.markdown("<h1 style='text-align: center; color: #0E2F44;'>Fintelligen</h1>", unsafe_allow_html=True)
-st.markdown("### AI Resume Evaluator for Goldman Sachs")
+# 🔷 Custom CSS for global styles
+st.markdown("""
+    <style>
+        body {
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+        }
+        h1, h2, h3, h4 {
+            color: #003087 !important;
+        }
+        .stButton > button {
+            background-color: #c59d5f;
+            color: white;
+            border-radius: 8px;
+            border: none;
+        }
+        .stButton > button:hover {
+            background-color: #b58a4d;
+            color: white;
+        }
+        .block-container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-# Instructions block
+# 🔷 Header
+st.image("Goldman-Sachs.png", width=100)
+st.markdown("<h1 style='text-align: center;'>Fintelligen</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+
+# 🔷 Instructions block
 st.markdown("""
 <div style="background-color: #e6f2ff; padding: 20px; border-radius: 15px; margin-top: 10px;">
     <h4>📋 Instructions for HR</h4>
@@ -32,14 +59,14 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Upload resumes
+# 🔷 File uploader
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
 
-# Skill filter
+# 🔷 Skill filter
 all_skills = ["python", "sql", "data analysis", "communication", "problem solving", "teamwork", "leadership", "project management", "finance", "machine learning"]
 selected_skills = st.multiselect("🧠 Filter by Skill Keywords", options=all_skills, default=["python", "sql", "communication"])
 
-# Helper functions
+# 🔷 Helper functions
 def extract_text_from_pdf(file):
     reader = PdfReader(file)
     return "".join(page.extract_text() or "" for page in reader.pages)
@@ -59,7 +86,7 @@ def score_skills(text, keywords):
     total = len(keywords)
     return matched, total
 
-# Resume processing
+# 🔷 Resume processing
 scores, names, previews, insights = [], [], [], []
 
 if uploaded_files:
@@ -84,13 +111,9 @@ if uploaded_files:
         previews.append(anonymized_text[:1500])
         insights.append(summary)
 
-    df = pd.DataFrame({
-        "Resume": names,
-        "Skill Matches": scores,
-        "Match Summary": insights
-    })
+    df = pd.DataFrame({"Resume": names, "Skill Matches": scores, "Match Summary": insights})
 
-    # Skill Score Table Block
+    # 🔷 Skill Score Table
     st.markdown("""
     <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
     <h3>📊 Skill Score Table</h3>
@@ -98,7 +121,7 @@ if uploaded_files:
     st.dataframe(df.sort_values("Skill Matches", ascending=False), use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Skill Bar Chart Block
+    # 🔷 Bar Chart
     st.markdown("""
     <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
     <h3>📈 Skill Match Comparison</h3>
@@ -111,7 +134,7 @@ if uploaded_files:
     st.pyplot(fig)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Resume Previews Block
+    # 🔷 Resume Previews
     st.markdown("""
     <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
     <h3>🧾 Resume Previews (Anonymized)</h3>
@@ -121,7 +144,7 @@ if uploaded_files:
             st.text(text)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# FAQ Block
+# 🔷 FAQ Block
 st.markdown("""
 <div style="background-color: #ffffff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 30px;">
 <h3>❓ FAQ</h3>
@@ -129,7 +152,6 @@ st.markdown("""
 
 with st.expander("What skills are evaluated?"):
     st.write("You can select relevant keywords like Python, Communication, Leadership, etc. from the skill filter above.")
-
 with st.expander("How is my data handled?"):
     st.write("Everything is processed in-memory. No data is stored or shared.")
 
