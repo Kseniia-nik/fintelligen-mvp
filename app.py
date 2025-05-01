@@ -17,6 +17,7 @@ card_color = "#ffffff"          # Card background
 
 # === GLOBAL STYLE ===
 st.markdown("""
+<style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 html, body, [class*="css"] {
