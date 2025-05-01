@@ -7,14 +7,14 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === COLORS (Slate + Brand Blue) ===
-accent_color = "#334155"  # интерфейс
-brand_color = "#0052CC"   # заголовок "Fintelligen"
+# === COLORS ===
+accent_color = "#334155"
+brand_color = "#0052CC"
 bg_color = "#f8f9fa"
 text_color = "#212529"
 card_color = "#ffffff"
 
-# === GLOBAL CSS ===
+# === GLOBAL STYLE ===
 st.markdown(f"""
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -75,7 +75,8 @@ col1, col2 = st.columns([5, 1])
 with col1:
     st.markdown(f"""
         <h1>Fintelligen</h1>
-        <h3 style='font-size: 24px; font-weight: 400; color: {accent_color};'>AI Resume Evaluator for Goldman Sachs</h3>
+        <h3 style='font-size: 24px; font-weight: 400; color: {accent_color};'>
+        AI Resume Evaluator for Goldman Sachs</h3>
     """, unsafe_allow_html=True)
 with col2:
     st.image("goldman.jpeg", width=160)
@@ -86,12 +87,21 @@ show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
 show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
 show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
 show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
-match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 10, 0)
+match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 14, 0)
+
+# === GOLDMAN SACHS FIXED SKILLS ===
+goldman_skills = [
+    "financial analysis", "investment banking", "capital markets", "excel", "valuation",
+    "risk management", "mergers and acquisitions", "quantitative analysis", "data analytics",
+    "communication", "problem solving", "teamwork", "python", "sql"
+]
+selected_skills = goldman_skills
+
+st.markdown("🧠 **Goldman Sachs core skillset is applied automatically:**")
+st.markdown(", ".join(goldman_skills))
 
 # === FILE UPLOAD ===
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
-all_skills = ["python", "sql", "data analysis", "communication", "problem solving", "teamwork", "leadership", "project management", "finance", "machine learning"]
-selected_skills = st.multiselect("🧠 Filter by Skill Keywords", options=all_skills, default=["python", "sql", "communication"])
 
 # === HELPERS ===
 def extract_text_from_pdf(file):
@@ -112,6 +122,25 @@ def score_skills(text, keywords):
     matched = sum(skill in text.lower() for skill in keywords)
     total = len(keywords)
     return matched, total
+
+# === INSTRUCTIONS ===
+st.markdown(f"""
+<div class="block">
+    <h4>📋 Instructions for HR</h4>
+    <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at Goldman Sachs.</p>
+    <ol>
+        <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
+        <li>The tool will:
+            <ul>
+                <li><strong>Anonymize</strong> personal details</li>
+                <li><strong>Evaluate</strong> Goldman Sachs-relevant skills</li>
+                <li><strong>Visualize</strong> match scores and shortlist results</li>
+            </ul>
+        </li>
+    </ol>
+    <p><em>Resume data is not stored or shared. Up to <strong>50 files</strong> can be uploaded at once.</em></p>
+</div>
+""", unsafe_allow_html=True)
 
 # === PROCESSING ===
 scores, names, previews, insights, percents = [], [], [], [], []
@@ -145,7 +174,7 @@ if uploaded_files:
         "⭐ Shortlist": [False] * len(names)
     })
 
-    # === RESET SHORTLIST ===
+    # === SHORTLIST RESET BUTTON ===
     if "clear_shortlist" not in st.session_state:
         st.session_state.clear_shortlist = False
 
@@ -173,7 +202,7 @@ if uploaded_files:
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # === SHORTLISTED ===
+    # === SHORTLISTED BLOCK ===
     shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
     if not shortlisted.empty:
         st.markdown(f"<div class='block'><h3>⭐ Shortlisted Candidates</h3>", unsafe_allow_html=True)
@@ -213,7 +242,7 @@ if uploaded_files:
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # === RESUME PREVIEW ===
+    # === RESUME RESULTS ===
     if show_resumes:
         st.markdown(f"<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
         for name, data in zip(names, insights):
@@ -230,19 +259,13 @@ if uploaded_files:
 if show_faq:
     st.markdown(f"<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
     with st.expander("What skills are evaluated?"):
-        st.write("You can select relevant keywords like Python, Communication, Leadership, etc.")
+        st.write("Goldman Sachs core skills for analysts, including financial, analytical, and technical competencies.")
     with st.expander("Is my data stored anywhere?"):
         st.write("No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.")
-    with st.expander("How is the skill match percentage calculated?"):
-        st.write("The tool counts how many selected skills are found in the resume and divides it by the total number of selected skills.")
     with st.expander("Can I upload multiple resumes?"):
         st.write("Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.")
-    with st.expander("Can I change the keywords to match different roles?"):
-        st.write("Absolutely. You can customize the skill list depending on the job description or team needs.")
-    with st.expander("Does the tool understand synonyms or context?"):
-        st.write("Not yet. The current version checks for exact keyword matches. Future versions may include semantic AI-based matching.")
     with st.expander("Can I download the results?"):
-        st.write("You can now download full and shortlisted results as CSV files.")
-    with st.expander("Can this tool reduce hiring bias?"):
-        st.write("Yes, anonymization removes personal identifiers like name, email, and phone. This helps focus evaluation on skills.")
+        st.write("Yes. Use the download button under shortlisted results.")
+    with st.expander("How does this reduce bias?"):
+        st.write("Personal identifiers are anonymized before evaluation, promoting fair skill-based review.")
     st.markdown("</div>", unsafe_allow_html=True)
