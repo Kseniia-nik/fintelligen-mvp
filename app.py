@@ -173,10 +173,22 @@ if "df" in locals() and not df.empty and show_resumes:
     """, unsafe_allow_html=True)
 
     for i, row in edited_df.iterrows():
-        with st.expander(f"{row['Anonymized Resume']} — {row['Match Summary']}"):
-            st.code(insights[i]["text"], language="markdown")
+        # Подготовим строку: Candidate_12345 — 9 / 14 (64%)
+        summary = insights[i]["summary"]
+        percent = insights[i]["percent"]
+        anonym_name = row["Anonymized Resume"]
+        exp_title = f"{anonym_name} — {summary}"
+
+        # Выводим каждый результат в раскрывшемся блоке
+        with st.expander(exp_title):
+            st.markdown(f"""
+            <div style='background-color: #f1f3f5; padding: 1rem; border-radius: 10px;'>
+            <pre style='white-space: pre-wrap;'>{insights[i]["text"]}</pre>
+            </div>
+            """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === SKILL MATRIX ===
 scores, names, previews, insights, percents = [], [], [], [], []
