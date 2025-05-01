@@ -74,6 +74,14 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
+ .main .block-container {
+        max-width: 1100px;
+        padding: 1rem 2rem;
+        margin: auto;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # === HEADER WITH LOGO ===
 col1, col2 = st.columns([6, 1])
 with col1:
@@ -86,9 +94,19 @@ with col1:
         </div>
     """, unsafe_allow_html=True)
 with col2:
-    st.markdown("<div style='padding-top: 6px;'>", unsafe_allow_html=True)
-    st.image("goldman.jpeg", width=120)
+    st.markdown("<div style='padding-top: 8px;'>", unsafe_allow_html=True)
+    st.image("goldman.jpeg", width=72)
     st.markdown("</div>", unsafe_allow_html=True)
+
+# [Continue app logic from here – uploads, instructions, filters, evaluation blocks, etc.]
+
+# === FOOTER ===
+st.markdown("""
+    <hr style='margin-top: 3rem; margin-bottom: 1rem;'>
+    <p style='text-align: center; font-size: 14px; color: #6c757d;'>
+        Fintelligen does not store or transmit uploaded data. All resume evaluations are performed securely in memory.
+    </p>
+""", unsafe_allow_html=True)
     
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
