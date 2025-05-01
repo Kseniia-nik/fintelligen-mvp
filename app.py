@@ -169,8 +169,11 @@ if uploaded_files:
     if not df.empty:
         with st.container():
             st.markdown("<div class='block'>", unsafe_allow_html=True)
-            st.markdown("### 📊 Skill Matrix — Resume vs. Core Skills", unsafe_allow_html=True)
 
+            # Заголовок внутри блока, с отступом
+            st.markdown("<h3 style='margin-top: 0.5rem;'>📊 Skill Matrix — Resume vs. Core Skills</h3>", unsafe_allow_html=True)
+
+            # Построение графика
             fig = px.bar(
                 df.sort_values("Skill Matches", ascending=True),
                 x="Skill Matches",
@@ -190,9 +193,8 @@ if uploaded_files:
             )
 
             st.plotly_chart(fig, use_container_width=True)
+
             st.markdown("</div>", unsafe_allow_html=True)
-
-
 
     # === TABLE ===
     st.markdown("<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
