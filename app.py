@@ -34,10 +34,15 @@ h1 {{
 h2, h3, h4 {{
     font-weight: 600 !important;
     color: {accent_color} !important;
-    margin-top: 0.2em;
+    margin-top: 0 !important;
     margin-bottom: 0.1em !important;
     line-height: 1.2em !important;
 }}
+
+.block:first-of-type {{
+    margin-top: 0.2rem !important;
+}}
+
 
 .stButton > button {{
     background-color: {accent_color} !important;
