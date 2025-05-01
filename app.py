@@ -75,15 +75,19 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # === HEADER ===
-col1, col2 = st.columns([5, 1])
+col1, col2 = st.columns([7, 1])
 with col1:
     st.markdown(f"""
-        <h1>Fintelligen</h1>
-        <h3 style='font-size: 24px; font-weight: 400; color: {accent_color}; margin-bottom: 0.5em;'>
-        AI Resume Evaluator for Goldman Sachs</h3>
+        <div style='display: flex; flex-direction: column; justify-content: center;'>
+            <h1 style='margin-bottom: 0.2em;'>Fintelligen</h1>
+            <h3 style='font-size: 22px; font-weight: 500; color: {accent_color}; margin-top: 0;'>
+                AI Resume Evaluator for Goldman Sachs
+            </h3>
+        </div>
     """, unsafe_allow_html=True)
 with col2:
-    st.image("goldman.jpeg", width=140)
+    st.image("goldman.jpeg", width=100)
+
 
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
