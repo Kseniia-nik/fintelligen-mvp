@@ -16,10 +16,31 @@ text_color = "#212529"          # Almost black
 card_color = "#ffffff"          # Card background
 
 # === GLOBAL STYLE ===
-# === GLOBAL STYLE ===
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+h1 {
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    color: #003087 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.1em !important;
+}
+
+h2, h3, h4 {
+    font-weight: 600 !important;
+    color: #003087 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.1em !important;
+    line-height: 1.2em !important;
+}
+
 .block:first-of-type {
     margin-top: 0.2rem !important;
 }
