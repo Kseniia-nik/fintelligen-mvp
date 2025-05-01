@@ -93,20 +93,6 @@ h2, h3, h4 {
 
 """, unsafe_allow_html=True)
 
-# === HEADER ===
-col1, col2 = st.columns([6, 1])
-with col1:
-    st.markdown(f"<h1>Fintelligen</h1>", unsafe_allow_html=True)
-    st.markdown(
-        f"<h3 style='font-size: 22px; font-weight: 500; color: {accent_color}; margin-top: 0.2em; margin-bottom: 0.2em;'>AI Resume Evaluator for Goldman Sachs</h3>",
-        unsafe_allow_html=True
-    )
-with col2:
-    st.markdown("<div style='padding-top: 4px;'>", unsafe_allow_html=True)
-    st.image("goldman.jpeg", width=144)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-
 # === FOOTER ===
 st.markdown("""
     <hr style='margin-top: 3rem; margin-bottom: 1rem;'>
