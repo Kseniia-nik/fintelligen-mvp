@@ -237,17 +237,23 @@ if show_resumes:
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# === FAQ ===
+# === FAQ BLOCK ===
 if show_faq:
-    st.markdown(\"<div class='block'><h3>❓ FAQ</h3>\", unsafe_allow_html=True)
-    with st.expander(\"What skills are evaluated?\"):
-        st.write(\"Goldman Sachs core skills for analysts, including financial, analytical, and technical competencies.\")
-    with st.expander(\"Is my data stored anywhere?\"):
-        st.write(\"No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.\")
-    with st.expander(\"Can I upload multiple resumes?\"):
-        st.write(\"Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.\")
-    with st.expander(\"Can I download the results?\"):
-        st.write(\"Yes. Use the 'Download Shortlisted' button after selecting candidates.\")
-    with st.expander(\"How does this reduce bias?\"):
-        st.write(\"Personal identifiers are anonymized before evaluation, promoting fair skill-based review.\")
-    st.markdown(\"</div>\", unsafe_allow_html=True)
+    st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
+
+    with st.expander("What skills are evaluated?"):
+        st.write("Goldman Sachs core skills for analysts, including financial, analytical, and technical competencies.")
+
+    with st.expander("Is my data stored anywhere?"):
+        st.write("No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.")
+
+    with st.expander("Can I upload multiple resumes?"):
+        st.write("Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.")
+
+    with st.expander("Can I download the results?"):
+        st.write("Yes. Use the 'Download Shortlisted' button after selecting candidates.")
+
+    with st.expander("How does this reduce bias?"):
+        st.write("Personal identifiers are anonymized before evaluation, promoting fair skill-based review.")
+
+    st.markdown("</div>", unsafe_allow_html=True)
