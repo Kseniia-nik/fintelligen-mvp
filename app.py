@@ -157,31 +157,40 @@ if uploaded_files:
     })
 
 # === SKILL MATRIX ===
-if not df.empty:
-    with st.container():
-        st.markdown("<div class='block'>", unsafe_allow_html=True)
-        st.markdown("### 📊 Skill Matrix — Resume vs. Core Skills", unsafe_allow_html=True)
+if uploaded_files:
+    df = pd.DataFrame({
+        "Anonymized Resume": names,
+        "Original Filename": [f.name for f in uploaded_files],
+        "Skill Matches": scores,
+        "Match Summary": [i["summary"] for i in insights],
+        "⭐ Shortlist": [False] * len(names)
+    })
 
-        fig = px.bar(
-            df.sort_values("Skill Matches", ascending=True),
-            x="Skill Matches",
-            y="Anonymized Resume",
-            orientation="h",
-            color="Skill Matches",
-            color_continuous_scale=["#dee2e6", accent_color],
-            height=400
-        )
-        fig.update_layout(
-            xaxis_title="Matched Skills",
-            yaxis_title=None,
-            plot_bgcolor=bg_color,
-            paper_bgcolor=bg_color,
-            font=dict(family="Inter", color=text_color),
-            margin=dict(l=20, r=20, t=40, b=20)
-        )
+    if not df.empty:
+        with st.container():
+            st.markdown("<div class='block'>", unsafe_allow_html=True)
+            st.markdown("### 📊 Skill Matrix — Resume vs. Core Skills", unsafe_allow_html=True)
 
-        st.plotly_chart(fig, use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+            fig = px.bar(
+                df.sort_values("Skill Matches", ascending=True),
+                x="Skill Matches",
+                y="Anonymized Resume",
+                orientation="h",
+                color="Skill Matches",
+                color_continuous_scale=["#dee2e6", accent_color],
+                height=400
+            )
+            fig.update_layout(
+                xaxis_title="Matched Skills",
+                yaxis_title=None,
+                plot_bgcolor=bg_color,
+                paper_bgcolor=bg_color,
+                font=dict(family="Inter", color=text_color),
+                margin=dict(l=20, r=20, t=40, b=20)
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
 
 
