@@ -182,14 +182,16 @@ if "df" in locals() and not df.empty and show_summary:
 # === SKILL MATRIX ===
 scores, names, previews, insights, percents = [], [], [], [], []
 if uploaded_files:
+    # ✅ Создаём df только если длины всех списков совпадают
+if names and len(names) == len(scores) == len(insights):
     df = pd.DataFrame({
         "Anonymized Resume": names,
-        "Original Filename": [f.name for f in uploaded_files],
+        "Original Filename": [f.name for f in uploaded_files][:len(names)],
         "Skill Matches": scores,
         "Match Summary": [i["summary"] for i in insights],
         "⭐ Shortlist": [False] * len(names)
     })
-
+    
     if not df.empty:
         
         # Заголовок внутри блока, с отступом
