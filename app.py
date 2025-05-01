@@ -250,17 +250,7 @@ if "df" in locals() and not df.empty:
     st.markdown("---")
 
     # === FILTERS ===
-    # ✅ Единственное место для слайдера
-    st.markdown("#### 🎛️ Filters")
-    match_threshold = st.slider(
-        "Minimum Skill Matches",
-        min_value=0,
-        max_value=20,
-        value=0,
-        help="Only resumes with this many or more matched skills will be considered."
-    )
-
-    st.markdown("---")
+ 
    
     st.markdown("---")
 
