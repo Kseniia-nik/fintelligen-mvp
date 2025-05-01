@@ -220,21 +220,22 @@ if uploaded_files:
             use_container_width=True
         )
 
-    # === ANONYMIZED RESUMES ===
-    if show_resumes:
-        st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
-        for name, data in zip(names, insights):
-            with st.expander(f"{name}"):
-                if show_summary:
-                    st.markdown(
-                        f\"\"\"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);'>{data['percent']}%</div>\"\"\", 
-                        unsafe_allow_html=True
-                    )
-                    st.markdown(f\"**🎯 Match Summary:** {data['summary']}\")
-                st.markdown(\"---\") 
-                st.markdown(\"**📄 Anonymized Text:**\") 
-                st.text(data[\"text\"]) 
-        st.markdown(\"</div>\", unsafe_allow_html=True)
+  # === ANONYMIZED RESUMES ===
+if show_resumes:
+    st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
+    for name, data in zip(names, insights):
+        with st.expander(f"{name}"):
+            if show_summary:
+                st.markdown(
+                    f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);'>{data['percent']}%</div>",
+                    unsafe_allow_html=True
+                )
+                st.markdown(f"**🎯 Match Summary:** {data['summary']}")
+            st.markdown("---")
+            st.markdown("**📄 Anonymized Text:**")
+            st.text(data["text"])
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === FAQ ===
 if show_faq:
