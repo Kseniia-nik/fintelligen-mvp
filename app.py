@@ -35,7 +35,7 @@ h2, h3, h4 {{
     font-weight: 600 !important;
     color: {accent_color} !important;
     margin-top: 0.2em;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.1em !important;
     line-height: 1.2em !important;
 }}
 
