@@ -18,8 +18,8 @@ card_color = "#ffffff"          # Card background
 # === GLOBAL STYLE ===
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-/html, body, [class*="css"] {
+
+html, body, [class*="css"] {
     font-family: 'Inter', sans-serif !important;
     background-color: #f8f9fa !important;
     color: #212529 !important;
@@ -81,8 +81,8 @@ h2, h3, h4 {
     font-weight: 600;
     font-size: 18px;
     margin: auto;
-}/
-</style>
+}
+
 """, unsafe_allow_html=True)
 
 # === HEADER ===
