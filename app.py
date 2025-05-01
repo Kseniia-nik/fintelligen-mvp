@@ -17,10 +17,6 @@ with col2:
 # УБИРАЕМ воздух 👇
 st.markdown("<div style='margin-top: -1rem;'></div>", unsafe_allow_html=True)
 
-# Caption
-st.caption("Fintelligen does not store or transmit uploaded data...")
-
-
 # === THEME COLORS (Goldman Sachs branding) ===
 accent_color = "#003087"       # Goldman Blue
 highlight_color = "#c59d5f"     # Goldman Gold
