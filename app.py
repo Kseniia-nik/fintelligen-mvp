@@ -111,6 +111,15 @@ uploaded_files = st.file_uploader(
     accept_multiple_files=True
 )
 
+# === MATCH THRESHOLD SLIDER (Define early) ===
+match_threshold = st.slider(
+    "Minimum Skill Matches",
+    min_value=0,
+    max_value=20,
+    value=0,
+    help="Only resumes with this many or more matched skills will be considered."
+)
+
 # === STATUS AFTER UPLOAD ===
 
 if uploaded_files:
@@ -138,9 +147,8 @@ def score_skills(text, keywords):
 
 # === SKILL MATRIX ===
 scores, names, previews, insights, percents = [], [], [], [], []
-if uploaded_files:
-    scores, names, previews, insights, percents = [], [], [], [], []
 
+if uploaded_files:
     with st.spinner("🔍 Analyzing resumes..."):
         for file in uploaded_files:
             filename = file.name
