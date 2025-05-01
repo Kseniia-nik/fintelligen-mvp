@@ -232,6 +232,13 @@ if "df" in locals() and not df.empty:
         },
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
+col1, col2 = st.columns([1, 1])
+        with col1:
+            if st.button("🗑 Clear Shortlist"):
+                edited_df["⭐ Shortlist"] = False
+        with col2:
+            csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
+            st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
   # === SIDEBAR ===
 with st.sidebar:
@@ -270,14 +277,7 @@ with st.sidebar:
         st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
         st.caption(f"→ {top_match_score}")
 
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            if st.button("🗑 Clear Shortlist"):
-                edited_df["⭐ Shortlist"] = False
-        with col2:
-            csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
-            st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
-
+        
     st.markdown("</div>", unsafe_allow_html=True)
 
 
