@@ -7,14 +7,14 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === THEME ===
+# === THEME COLORS ===
 accent_color = "#334155"
 brand_color = "#0052CC"
 bg_color = "#f8f9fa"
 text_color = "#212529"
 card_color = "#ffffff"
 
-# === GLOBAL STYLE ===
+# === GLOBAL STYLE OVERRIDES ===
 st.markdown(f"""
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -32,8 +32,8 @@ st.markdown(f"""
     h2, h3, h4 {{
         font-weight: 600 !important;
         color: {accent_color} !important;
-        margin-top: 1.2em;
-        margin-bottom: 0.6em;
+        margin-top: 1em !important;
+        margin-bottom: 0.5em !important;
     }}
     .stButton > button {{
         background-color: {accent_color} !important;
@@ -50,8 +50,8 @@ st.markdown(f"""
         background-color: {card_color};
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 6px 14px rgba(0,0,0,0.07);
-        margin-top: 40px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        margin: 20px 0;
     }}
     .ring {{
         width: 100px;
@@ -68,19 +68,18 @@ st.markdown(f"""
     }}
 </style>
 """, unsafe_allow_html=True)
-
 # === HEADER ===
 col1, col2 = st.columns([5, 1])
 with col1:
     st.markdown(f"""
         <h1>Fintelligen</h1>
-        <h3 style='font-size: 24px; font-weight: 400; color: {accent_color};'>
+        <h3 style='font-size: 24px; font-weight: 400; color: {accent_color}; margin-bottom: 0.5em;'>
         AI Resume Evaluator for Goldman Sachs</h3>
     """, unsafe_allow_html=True)
 with col2:
     st.image("goldman.jpeg", width=160)
 
-# === INSTRUCTIONS ===
+# === INSTRUCTIONS RIGHT AFTER TITLE ===
 st.markdown(f"""
 <div class="block">
     <h4>📋 Instructions for HR</h4>
@@ -95,11 +94,11 @@ st.markdown(f"""
             </ul>
         </li>
     </ol>
-    <p><em>Resume data is not stored or shared. Up to <strong>50 files</strong> can be uploaded at once.</em></p>
+    <p><em>Resume data is not stored or shared. You may upload up to <strong>50 files</strong>.</em></p>
 </div>
 """, unsafe_allow_html=True)
 
-# === SIDEBAR ===
+st.markdown("<div style='margin-top: 1em;'></div>", unsafe_allow_html=True)
 st.sidebar.header("🧭 Navigation & Filters")
 show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
 show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
@@ -107,7 +106,6 @@ show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
 show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 14, 0)
 
-# === FIXED SKILL SET ===
 goldman_skills = [
     "financial analysis", "investment banking", "capital markets", "excel", "valuation",
     "risk management", "mergers and acquisitions", "quantitative analysis", "data analytics",
@@ -118,10 +116,7 @@ selected_skills = goldman_skills
 st.markdown("🧠 **Goldman Sachs core skillset is applied automatically:**")
 st.markdown(", ".join(goldman_skills))
 
-# === FILE UPLOAD ===
 uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
-
-# === HELPERS ===
 def extract_text_from_pdf(file):
     reader = PdfReader(file)
     return "".join(page.extract_text() or "" for page in reader.pages)
@@ -141,7 +136,6 @@ def score_skills(text, keywords):
     total = len(keywords)
     return matched, total
 
-# === PROCESSING ===
 scores, names, previews, insights, percents = [], [], [], [], []
 
 if uploaded_files:
@@ -173,9 +167,10 @@ if uploaded_files:
         "⭐ Shortlist": [False] * len(names)
     })
 
-    # === CHART FIRST ===
     if show_table and not df.empty:
-        st.markdown(f"<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-top: 1em;'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
+
         fig = px.bar(
             df.sort_values("Skill Matches", ascending=True),
             x="Skill Matches",
@@ -198,8 +193,9 @@ if uploaded_files:
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # === INTERACTIVE TABLE ===
-    st.markdown(f"<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 1em;'></div>", unsafe_allow_html=True)
+    st.markdown("<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
+
     edited_df = st.data_editor(
         df,
         use_container_width=True,
@@ -215,7 +211,6 @@ if uploaded_files:
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # === CLEAR SHORTLIST BUTTON ===
     if "clear_shortlist" not in st.session_state:
         st.session_state.clear_shortlist = False
 
@@ -226,7 +221,6 @@ if uploaded_files:
         df["⭐ Shortlist"] = False
         st.session_state.clear_shortlist = False
 
-    # === SHORTLIST DOWNLOAD ONLY ===
     shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
     if not shortlisted.empty:
         csv_shortlisted = shortlisted.to_csv(index=False).encode("utf-8")
@@ -237,31 +231,41 @@ if uploaded_files:
             mime="text/csv",
             use_container_width=True
         )
-
-    # === ANONYMIZED PREVIEWS ===
+    # === ANONYMIZED RESUMES ===
     if show_resumes:
+        st.markdown("<div style='margin-top: 1em;'></div>", unsafe_allow_html=True)
         st.markdown(f"<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
         for name, data in zip(names, insights):
             with st.expander(f"{name}"):
                 if show_summary:
-                    st.markdown(f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%); color: {text_color};'>{data['percent']}%</div><br>", unsafe_allow_html=True)
+                    st.markdown(
+                        f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%); color: {text_color};'>{data['percent']}%</div><br>",
+                        unsafe_allow_html=True
+                    )
                     st.markdown(f"**🎯 Match Summary:** {data['summary']}")
                 st.markdown("---")
                 st.markdown("**📄 Anonymized Text:**")
                 st.text(data["text"])
         st.markdown("</div>", unsafe_allow_html=True)
 
-# === FAQ ===
+# === FAQ BLOCK ===
 if show_faq:
-    st.markdown(f"<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 1em;'></div>", unsafe_allow_html=True)
+    st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
+
     with st.expander("What skills are evaluated?"):
         st.write("Goldman Sachs core skills for analysts, including financial, analytical, and technical competencies.")
+
     with st.expander("Is my data stored anywhere?"):
         st.write("No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.")
+
     with st.expander("Can I upload multiple resumes?"):
         st.write("Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.")
+
     with st.expander("Can I download the results?"):
-        st.write("Yes. Use the download button under shortlisted results.")
+        st.write("Yes. Use the 'Download Shortlisted' button after selecting candidates.")
+
     with st.expander("How does this reduce bias?"):
         st.write("Personal identifiers are anonymized before evaluation, promoting fair skill-based review.")
+
     st.markdown("</div>", unsafe_allow_html=True)
