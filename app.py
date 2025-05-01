@@ -74,10 +74,10 @@ with st.expander("📋 Instructions for HR", expanded=True):
 
 # === SIDEBAR ===
 st.sidebar.header("🧭 Navigation & Filters")
-show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
-show_matrix  = st.sidebar.checkbox("📊 Show Skill Matrix", value=True)
-show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
-show_faq     = st.sidebar.checkbox("❓ Show FAQ", value=True)
+show_summary   = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
+show_matrix    = st.sidebar.checkbox("📊 Show Skill Matrix", value=True)
+show_resumes   = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
+show_faq       = st.sidebar.checkbox("❓ Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 14, 0)
 
 # === CORE COMPETENCIES ===
@@ -123,8 +123,10 @@ if not df.empty:
 # === CLEAR SHORTLIST ===
 if "clear_shortlist" not in st.session_state:
     st.session_state.clear_shortlist = False
+
 if st.button("🗑 Clear Shortlist", use_container_width=True):
     st.session_state.clear_shortlist = True
+
 if st.session_state.clear_shortlist:
     # Сбросьте метки shortlisting в df
     st.session_state.clear_shortlist = False
@@ -135,7 +137,7 @@ if not df.empty and "⭐ Shortlist" in df.columns:
     if not shortlisted.empty:
         st.download_button(
             label="⬇️ Download Shortlisted (CSV)",
-            data=shortlisted.to_csv(index=False).encode('utf-8'),
+            data=shortlisted.to_csv(index=False).encode("utf-8"),
             file_name="shortlisted_candidates.csv"
         )
 
@@ -162,4 +164,3 @@ st.markdown(f"""
   Fintelligen does not store or transmit uploaded data. All resume evaluations are performed securely in memory.
 </p>
 """, unsafe_allow_html=True)
-
