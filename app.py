@@ -163,38 +163,21 @@ def score_skills(text, keywords):
     total = len(keywords)
     return matched, total
 
-# === ANALYZE RESUMES ===
-scores, names, previews, insights, percents = [], [], [], [], []
-
-if uploaded_files:
-    with st.spinner("🔍 Analyzing resumes..."):
-        for file in uploaded_files:
-            filename = file.name
-            anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
-            text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
-            anonymized_text = anonymize_text(text)
-            matched, total = score_skills(anonymized_text, selected_skills)
-
-            if matched >= match_threshold:
-                percent = int((matched / total) * 100) if total > 0 else 0
-                scores.append(matched)
-                names.append(anonymized_name)
-                previews.append(anonymized_text[:1500])
-                insights.append({
-                    "summary": f"{matched} / {total} keywords ({percent}%)",
-                    "text": anonymized_text,
-                    "matches": matched,
-                    "percent": percent
-                })
-                percents.append(percent)
-
-        df = pd.DataFrame({
-            "Anonymized Resume": names,
-            "Original Filename": [f.name for f in uploaded_files],
-            "Skill Matches": scores,
-            "Match Summary": [i["summary"] for i in insights],
-            "⭐ Shortlist": [False] * len(names)
-        })
+# === ANONYMIZED RESUMES ===
+if show_resumes:
+    st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
+    for name, data in zip(names, insights):
+        with st.expander(f"{name}"):
+            if show_summary:
+                st.markdown(
+                    f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);'>{data['percent']}%</div>",
+                    unsafe_allow_html=True
+                )
+                st.markdown(f"**🎯 Match Summary:** {data['summary']}")
+            st.markdown("---")
+            st.markdown("**📄 Anonymized Text:**")
+            st.text(data["text"])
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # === SKILL MATRIX ===
 if uploaded_files:
