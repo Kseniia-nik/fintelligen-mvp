@@ -164,19 +164,23 @@ def score_skills(text, keywords):
     return matched, total
 
 # === ANONYMIZED RESUMES ===
-if show_resumes:
+if show_resumes and "names" in locals() and "insights" in locals() and names and insights:
     st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
+    
     for name, data in zip(names, insights):
         with st.expander(f"{name}"):
             if show_summary:
                 st.markdown(
-                    f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);'>{data['percent']}%</div>",
+                    f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);"
+                    f" border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; "
+                    f"font-weight: bold; font-size: 20px; margin-bottom: 10px;'>{data['percent']}%</div>",
                     unsafe_allow_html=True
                 )
                 st.markdown(f"**🎯 Match Summary:** {data['summary']}")
             st.markdown("---")
             st.markdown("**📄 Anonymized Text:**")
             st.text(data["text"])
+    
     st.markdown("</div>", unsafe_allow_html=True)
 
 # === SKILL MATRIX ===
