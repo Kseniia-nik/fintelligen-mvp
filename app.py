@@ -250,7 +250,7 @@ if "df" in locals() and not df.empty:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# === ANONYMIZED RESUMES ===
+ # === ANONYMIZED RESUMES ===
 if show_resumes:
     st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
     for name, data in zip(names, insights):
@@ -265,6 +265,7 @@ if show_resumes:
             st.markdown("**📄 Anonymized Text:**")
             st.text(data["text"])
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === FAQ SECTION ===
 if show_faq:
