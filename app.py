@@ -218,10 +218,9 @@ if not df.empty:
             edited_df["⭐ Shortlist"] = False
     with col2:
         csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
-        st.download_button("📥 Download CSV", csv, "shortlisted_resumes.csv", "text/csv")
+        st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
-
 
   # === ANONYMIZED RESUMES ===
 if show_resumes:
