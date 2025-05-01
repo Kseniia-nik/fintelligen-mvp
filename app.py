@@ -5,94 +5,69 @@ import pandas as pd
 import plotly.express as px
 import re
 
+# === THEME COLORS (Goldman Sachs branding) ===
+accent_color    = "#003087"  # Goldman Blue
+highlight_color = "#c59d5f"  # Goldman Gold
+bg_color        = "#f8f9fa"  # Light background
+text_color      = "#212529"  # Almost black
+card_color      = "#ffffff"  # Card background
+
+# === GLOBAL STYLE ===
+st.markdown(f"""
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body, [class*="css"] {{
+      font-family: 'Inter', sans-serif !important;
+      background-color: {bg_color} !important;
+      color: {text_color} !important;
+  }}
+
+  h1, h3 {{
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+  }}
+
+  .stButton > button {{
+      background-color: {accent_color} !important;
+      color: white !important;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+  }}
+  .stButton > button:hover {{
+      background-color: #002366 !important;
+  }}
+
+  .block {{
+      background-color: {card_color} !important;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 0.5rem !important;
+  }}
+  .block h3 {{
+      margin-top: 0.3rem !important;
+      margin-bottom: 0.3rem !important;
+  }}
+</style>
+""", unsafe_allow_html=True)
+
 # === PAGE CONFIG ===
-# Заголовок и логотип
 col1, col2 = st.columns([0.85, 0.15])
 with col1:
-    st.markdown("<h1 style='margin-bottom: 0.2rem;'>Fintelligen</h1>", unsafe_allow_html=True)
-    st.markdown("<h3 style='margin-top: 0rem; margin-bottom: 0.1rem; font-weight: 600; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+    st.markdown(
+        "<h1 style='margin-bottom:0.2rem;'>Fintelligen</h1>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f"<h3 style='font-weight:600; color: {accent_color};'>"
+        "AI Resume Evaluator for Goldman Sachs"
+        "</h3>",
+        unsafe_allow_html=True
+    )
 with col2:
     st.image("goldman.jpeg", width=80)
 
-# УБИРАЕМ воздух 👇
-st.markdown("<div style='margin-top: -1rem;'></div>", unsafe_allow_html=True)
-
-# === THEME COLORS (Goldman Sachs branding) ===
-accent_color = "#003087"       # Goldman Blue
-highlight_color = "#c59d5f"     # Goldman Gold
-bg_color = "#f8f9fa"            # Light background
-text_color = "#212529"          # Almost black
-card_color = "#ffffff"          # Card background
-
-# === GLOBAL STYLE ===
-st.markdown("""
-<style>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif !important;
-    background-color: #f8f9fa !important;
-    color: #212529 !important;
-}
-
-h1 {
-    font-size: 42px !important;
-    font-weight: 700 !important;
-    color: #003087 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.1em !important;
-}
-
-h2, h3, h4 {
-    font-weight: 600 !important;
-    color: #003087 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.1em !important;
-    line-height: 1.2em !important;
-}
-
-.block:first-of-type {
-    margin-top: 0.1rem !important;
-}
-
-.main .block-container {
-    max-width: 1100px;
-    padding: 0.5rem 1.5rem;
-    margin: auto;
-}
-
-.stButton > button {
-    background-color: #003087 !important;
-    color: white !important;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-}
-.stButton > button:hover {
-    background-color: #002366 !important;
-}
-
-.block {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-}
-
-.ring {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: conic-gradient(#003087 {{percent}}%, #dee2e6 {{percent}}%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
-    margin: auto;
-
-""", unsafe_allow_html=True)
 
 # === FOOTER ===
 st.markdown("""
