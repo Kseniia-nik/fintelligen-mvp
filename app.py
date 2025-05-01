@@ -119,12 +119,6 @@ with st.sidebar:
 
     st.markdown("---")
 
-    # Info
-    st.markdown("#### ℹ️ Status")
-    if "uploaded_files" in locals() and uploaded_files:
-        st.success(f"{len(uploaded_files)} resumes uploaded.")
-    else:
-        st.info("No resumes uploaded yet.")
 
 # === SKILLS ===
 goldman_skills = [
@@ -144,6 +138,12 @@ uploaded_files = st.file_uploader(
     type=["pdf", "docx"],
     accept_multiple_files=True
 )
+
+# === STATUS AFTER UPLOAD ===
+if uploaded_files:
+    st.success(f"✅ {len(uploaded_files)} resume(s) uploaded successfully.")
+else:
+    st.info("ℹ️ Please upload at least one resume to begin analysis.")
 
 # === FUNCTIONS ===
 def extract_text_from_pdf(file):
