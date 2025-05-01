@@ -55,8 +55,17 @@ h3 {{
 h1 a, h2 a, h3 a {{
     display: none !important;
 }}
+
+.block {{
+    background-color: {card_color} !important;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}}
 </style>
 """, unsafe_allow_html=True)
+
 
 # === HEADER: TITLE + LOGO ===
 col1, col2 = st.columns([0.85, 0.15])
@@ -147,9 +156,12 @@ if uploaded_files:
         "⭐ Shortlist": [False] * len(names)
     })
 
-    # === SKILL MATRIX ===
-    if show_table and not df.empty:
-        st.markdown("<div class='block'><h3>📊 Skill Matrix — Resume vs. Core Skills</h3>", unsafe_allow_html=True)
+# === SKILL MATRIX ===
+if show_table and not df.empty:
+    with st.container():
+        st.markdown("<div class='block'>", unsafe_allow_html=True)
+        st.markdown("### 📊 Skill Matrix — Resume vs. Core Skills", unsafe_allow_html=True)
+
         fig = px.bar(
             df.sort_values("Skill Matches", ascending=True),
             x="Skill Matches",
@@ -164,11 +176,13 @@ if uploaded_files:
             yaxis_title=None,
             plot_bgcolor=bg_color,
             paper_bgcolor=bg_color,
-            font=dict(family="IBM Plex Sans", color=text_color),
+            font=dict(family="Inter", color=text_color),
             margin=dict(l=20, r=20, t=40, b=20)
         )
+
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
+
 
     # === TABLE ===
     st.markdown("<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
