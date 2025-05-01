@@ -43,7 +43,7 @@ h2, h3, h4 {
 }
 
 .block:first-of-type {
-    margin-top: 0.2rem !important;
+    margin-top: 0.1rem !important;
 }
 
 .main .block-container {
