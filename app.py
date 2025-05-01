@@ -31,11 +31,13 @@ st.markdown(f"""
         margin-bottom: 0.2em !important;
     }}
     h2, h3, h4 {{
-        font-weight: 600 !important;
-        color: {accent_color} !important;
-        margin-top: 1em !important;
-        margin-bottom: 0.3em !important;
-    }}
+    font-weight: 600 !important;
+    color: {accent_color} !important;
+    margin-top: 0.4em !important;
+    margin-bottom: 0.2em !important;
+    line-height: 1.2em !important;
+}}
+
     .stButton > button {{
         background-color: {accent_color} !important;
         color: white !important;
