@@ -227,26 +227,7 @@ with st.sidebar:
     st.markdown("## 🧭 Navigation & Filters")
     st.markdown("---")
 
-    # === DASHBOARD ===
-if "edited_df" in locals() and not edited_df.empty:
-
-    total_resumes = len(edited_df)
-    total_skills = len(selected_skills)
-    shortlisted = edited_df["⭐ Shortlist"].sum()
-    avg_percent = round(edited_df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
-
-    top_match_row = edited_df.loc[edited_df["Skill Matches"].idxmax()]
-    top_match_name = top_match_row["Anonymized Resume"]
-    top_match_score = top_match_row["Match Summary"]
-
-    st.markdown("#### 📊 Summary Dashboard")
-    st.success(f"📂 **Resumes Uploaded:** `{total_resumes}`")
-    st.info(f"⭐ **Shortlisted:** `{shortlisted}`")
-    st.warning(f"📈 **Average Match:** `{avg_percent}%`")
-    st.markdown(f"🏆 **Top Match:** `{top_match_name}`")
-    st.caption(f"→ _{top_match_score}_")
-
-    # Display toggles
+    # === DISPLAY TOGGLES ===
     st.markdown("#### 📑 Display Options")
     show_summary = st.toggle("🎯 Show Match Summary", value=True)
     show_table = st.toggle("📊 Show Skill Matrix & Chart", value=True)
@@ -255,9 +236,35 @@ if "edited_df" in locals() and not edited_df.empty:
 
     st.markdown("---")
 
-    # Filters
+    # === FILTERS ===
     st.markdown("#### 🎛️ Filters")
-    match_threshold = st.slider("Minimum Skill Matches", 0, 20, 0)
+    match_threshold = st.slider(
+        "Minimum Skill Matches",
+        min_value=0,
+        max_value=20,
+        value=0,
+        help="Only resumes with this many or more matched skills will be considered."
+    )
+
+    st.markdown("---")
+
+    # === DASHBOARD ===
+    if "edited_df" in locals() and not edited_df.empty:
+        total_resumes = len(edited_df)
+        total_skills = len(selected_skills)
+        shortlisted = edited_df["⭐ Shortlist"].sum()
+        avg_percent = round(edited_df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
+
+        top_match_row = edited_df.loc[edited_df["Skill Matches"].idxmax()]
+        top_match_name = top_match_row["Anonymized Resume"]
+        top_match_score = top_match_row["Match Summary"]
+
+        st.markdown("#### 📊 Summary Dashboard")
+        st.success(f"**Resumes Uploaded:** `{total_resumes}`")
+        st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
+        st.warning(f"**📈 Average Match:** `{avg_percent}%`")
+        st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
+        st.caption(f"→ {top_match_score}")
 
 
     col1, col2 = st.columns([1, 1])
