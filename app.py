@@ -81,6 +81,25 @@ with col1:
 with col2:
     st.image("goldman.jpeg", width=160)
 
+# === INSTRUCTIONS IMMEDIATELY AFTER TITLE ===
+st.markdown(f"""
+<div class="block">
+    <h4>📋 Instructions for HR</h4>
+    <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at Goldman Sachs.</p>
+    <ol>
+        <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
+        <li>The tool will:
+            <ul>
+                <li><strong>Anonymize</strong> personal details</li>
+                <li><strong>Evaluate</strong> Goldman Sachs-relevant skills</li>
+                <li><strong>Visualize</strong> match scores and shortlist results</li>
+            </ul>
+        </li>
+    </ol>
+    <p><em>Resume data is not stored or shared. Up to <strong>50 files</strong> can be uploaded at once.</em></p>
+</div>
+""", unsafe_allow_html=True)
+
 # === SIDEBAR ===
 st.sidebar.header("🧭 Navigation & Filters")
 show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
@@ -89,7 +108,7 @@ show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
 show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 14, 0)
 
-# === GOLDMAN SACHS FIXED SKILLS ===
+# === FIXED GOLDMAN SKILLS ===
 goldman_skills = [
     "financial analysis", "investment banking", "capital markets", "excel", "valuation",
     "risk management", "mergers and acquisitions", "quantitative analysis", "data analytics",
@@ -123,25 +142,6 @@ def score_skills(text, keywords):
     total = len(keywords)
     return matched, total
 
-# === INSTRUCTIONS ===
-st.markdown(f"""
-<div class="block">
-    <h4>📋 Instructions for HR</h4>
-    <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at Goldman Sachs.</p>
-    <ol>
-        <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
-        <li>The tool will:
-            <ul>
-                <li><strong>Anonymize</strong> personal details</li>
-                <li><strong>Evaluate</strong> Goldman Sachs-relevant skills</li>
-                <li><strong>Visualize</strong> match scores and shortlist results</li>
-            </ul>
-        </li>
-    </ol>
-    <p><em>Resume data is not stored or shared. Up to <strong>50 files</strong> can be uploaded at once.</em></p>
-</div>
-""", unsafe_allow_html=True)
-
 # === PROCESSING ===
 scores, names, previews, insights, percents = [], [], [], [], []
 
@@ -174,17 +174,6 @@ if uploaded_files:
         "⭐ Shortlist": [False] * len(names)
     })
 
-    # === SHORTLIST RESET BUTTON ===
-    if "clear_shortlist" not in st.session_state:
-        st.session_state.clear_shortlist = False
-
-    if st.button("🗑 Clear Shortlist"):
-        st.session_state.clear_shortlist = True
-
-    if st.session_state.clear_shortlist:
-        df["⭐ Shortlist"] = False
-        st.session_state.clear_shortlist = False
-
     # === INTERACTIVE TABLE ===
     st.markdown(f"<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
     edited_df = st.data_editor(
@@ -202,7 +191,18 @@ if uploaded_files:
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # === SHORTLISTED BLOCK ===
+    # === SHORTLIST RESET BUTTON (NOW AFTER TABLE) ===
+    if "clear_shortlist" not in st.session_state:
+        st.session_state.clear_shortlist = False
+
+    if st.button("🗑 Clear Shortlist", use_container_width=True):
+        st.session_state.clear_shortlist = True
+
+    if st.session_state.clear_shortlist:
+        df["⭐ Shortlist"] = False
+        st.session_state.clear_shortlist = False
+
+    # === SHORTLISTED RESULTS ===
     shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
     if not shortlisted.empty:
         st.markdown(f"<div class='block'><h3>⭐ Shortlisted Candidates</h3>", unsafe_allow_html=True)
@@ -218,7 +218,7 @@ if uploaded_files:
         )
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # === CHART ===
+    # === PLOTLY CHART ===
     if show_table and not df.empty:
         st.markdown(f"<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
         fig = px.bar(
@@ -242,7 +242,7 @@ if uploaded_files:
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # === RESUME RESULTS ===
+    # === RESUME PREVIEW ===
     if show_resumes:
         st.markdown(f"<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
         for name, data in zip(names, insights):
