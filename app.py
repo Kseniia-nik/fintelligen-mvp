@@ -206,15 +206,15 @@ if "df" in locals() and not df.empty:
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>🧾 Resume Evaluation Table</h3>
     """, unsafe_allow_html=True)
 
-   edited_df = st.data_editor(
-    df_with_index,
-    use_container_width=True,
-    hide_index=True,  # 👈 Скрываем левый индекс
-    column_config={
-        "⭐ Shortlist": st.column_config.CheckboxColumn("⭐ Shortlist", default=False)
-    },
-    disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
-)
+    edited_df = st.data_editor(
+        df_with_index,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "⭐ Shortlist": st.column_config.CheckboxColumn("⭐ Shortlist", default=False)
+        },
+        disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
+    )
 
     col1, col2 = st.columns([1, 1])
     with col1:
@@ -225,7 +225,6 @@ if "df" in locals() and not df.empty:
         st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
-
 
 # === FAQ SECTION ===
 st.markdown(f"""
