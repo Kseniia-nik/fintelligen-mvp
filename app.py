@@ -6,14 +6,19 @@ import plotly.express as px
 import re
 
 # === PAGE CONFIG ===
+# Заголовок и логотип
 col1, col2 = st.columns([0.85, 0.15])
-
 with col1:
     st.markdown("<h1 style='margin-bottom: 0.2rem;'>Fintelligen</h1>", unsafe_allow_html=True)
     st.markdown("<h3 style='margin-top: 0rem; margin-bottom: 0.5rem; font-weight: 600; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
-
 with col2:
     st.image("goldman.jpeg", width=80)
+
+# УБИРАЕМ воздух 👇
+st.markdown("<div style='margin-top: -1rem;'></div>", unsafe_allow_html=True)
+
+# Caption
+st.caption("Fintelligen does not store or transmit uploaded data...")
 
 
 # === THEME COLORS (Goldman Sachs branding) ===
