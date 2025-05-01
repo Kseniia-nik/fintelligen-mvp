@@ -164,7 +164,7 @@ def score_skills(text, keywords):
     return matched, total
 
 # === ANONYMIZED RESUME RESULTS ===
-if not df.empty and show_summary:
+if "df" in locals() and not df.empty and show_summary:
     st.markdown(f"""
     <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
@@ -175,7 +175,6 @@ if not df.empty and show_summary:
             st.code(insights[i]["text"], language="markdown")
 
     st.markdown("</div>", unsafe_allow_html=True)
-
 
 # === SKILL MATRIX ===
 if uploaded_files:
