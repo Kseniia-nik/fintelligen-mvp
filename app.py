@@ -179,24 +179,23 @@ if uploaded_files:
         df.sort_values("Skill Matches", ascending=True),
         x="Skill Matches",
         y="Anonymized Resume",
-                orientation="h",
-                color="Skill Matches",
-                color_continuous_scale=["#dee2e6", accent_color],
-                height=400
+        orientation="h",
+        color="Skill Matches",
+        color_continuous_scale=["#dee2e6", accent_color],
+        height=400
             )
         fig.update_layout(
-                xaxis_title="Matched Skills",
-                yaxis_title=None,
-                plot_bgcolor=bg_color,
-                paper_bgcolor=bg_color,
-                font=dict(family="Inter", color=text_color),
-                margin=dict(l=20, r=20, t=40, b=20)
+        xaxis_title="Matched Skills",
+        yaxis_title=None,
+        plot_bgcolor=bg_color,
+        paper_bgcolor=bg_color,
+        font=dict(family="Inter", color=text_color),
+        margin=dict(l=20, r=20, t=40, b=20)
             )
 
-            st.plotly_chart(fig, use_container_width=True)
-            st.markdown("</div>", unsafe_allow_html=True)
-
-           
+        st.plotly_chart(fig, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+   
 
     # === TABLE ===
     st.markdown("<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
