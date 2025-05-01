@@ -3,7 +3,7 @@ from PyPDF2 import PdfReader
 from docx import Document
 import pandas as pd
 import plotly.express as px
-import re
+import re 
 
 # === THEME COLORS ===
 accent_color    = "#003087"
