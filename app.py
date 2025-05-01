@@ -167,7 +167,7 @@ if uploaded_files:
     })
 
     if not df.empty:
-        with st.container():
+        
             st.markdown("<div class='block'>", unsafe_allow_html=True)
 
             # Заголовок внутри блока, с отступом
