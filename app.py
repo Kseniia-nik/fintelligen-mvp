@@ -49,8 +49,12 @@ st.markdown(f"""
       margin-top: 0.3rem !important;
       margin-bottom: 0.3rem !important;
   }}
-<style>
+ /* Убираем якорь streamlitApp */
+  h1 a, h2 a, h3 a {{
+      display: none !important;
+  }}
 
+</style>
 """, unsafe_allow_html=True)
 
 # === PAGE CONFIG ===
