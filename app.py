@@ -157,7 +157,7 @@ if uploaded_files:
     })
 
 # === SKILL MATRIX ===
-if show_table and not df.empty:
+if not df.empty:
     with st.container():
         st.markdown("<div class='block'>", unsafe_allow_html=True)
         st.markdown("### 📊 Skill Matrix — Resume vs. Core Skills", unsafe_allow_html=True)
@@ -182,6 +182,7 @@ if show_table and not df.empty:
 
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
+
 
 
     # === TABLE ===
