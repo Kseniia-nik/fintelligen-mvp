@@ -268,32 +268,33 @@ if "df" in locals() and not df.empty:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # === FAQ SECTION ===
-st.markdown(f"""
-<div class='block'>
-    <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>❓ Frequently Asked Questions (FAQ)</h3>
-</div>
-""", unsafe_allow_html=True)
+if show_faq:
+    st.markdown(f"""
+    <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>❓ Frequently Asked Questions (FAQ)</h3>
+    </div>
+    """, unsafe_allow_html=True)
 
-with st.expander("🧠 How does the system assess core competencies in a resume?"):
-    st.markdown("The AI scans resumes for keywords and contextual patterns aligned with Goldman Sachs' core skills, using a hybrid of rule-based and language model techniques.")
+    with st.expander("🧠 How does the system assess core competencies in a resume?"):
+        st.markdown("The AI scans resumes for keywords and contextual patterns aligned with Goldman Sachs' core skills, using a hybrid of rule-based and language model techniques.")
 
-with st.expander("📊 What does the “Skill Match” score represent?"):
-    st.markdown("It shows how many of the predefined core competencies (e.g., leadership, teamwork, problem-solving) are detected in the resume — higher scores indicate stronger alignment.")
+    with st.expander("📊 What does the “Skill Match” score represent?"):
+        st.markdown("It shows how many of the predefined core competencies (e.g., leadership, teamwork, problem-solving) are detected in the resume — higher scores indicate stronger alignment.")
 
-with st.expander("📎 What file types are supported for upload?"):
-    st.markdown("The system currently supports `.pdf` and `.docx` files only.")
+    with st.expander("📎 What file types are supported for upload?"):
+        st.markdown("The system currently supports `.pdf` and `.docx` files only.")
 
-with st.expander("📁 Can I analyze multiple resumes at once?"):
-    st.markdown("Yes — you can upload and evaluate up to 50 resumes simultaneously for comparison.")
+    with st.expander("📁 Can I analyze multiple resumes at once?"):
+        st.markdown("Yes — you can upload and evaluate up to 50 resumes simultaneously for comparison.")
 
-with st.expander("🛡️ Is any candidate data stored or shared externally?"):
-    st.markdown("No. All processing happens in memory and nothing is stored, saved, or sent outside your session.")
+    with st.expander("🛡️ Is any candidate data stored or shared externally?"):
+        st.markdown("No. All processing happens in memory and nothing is stored, saved, or sent outside your session.")
 
-with st.expander("🔍 Can I filter candidates based on skill match or shortlist status?"):
-    st.markdown("Yes — use the interactive table to filter, sort, and manually shortlist candidates as needed.")
+    with st.expander("🔍 Can I filter candidates based on skill match or shortlist status?"):
+        st.markdown("Yes — use the interactive table to filter, sort, and manually shortlist candidates as needed.")
 
-with st.expander("📥 Can I export shortlisted candidates and their evaluation scores?"):
-    st.markdown("Absolutely. Click “Download Shortlist” to get a CSV file of all shortlisted candidates and their matched skill data.")
+    with st.expander("📥 Can I export shortlisted candidates and their evaluation scores?"):
+        st.markdown("Absolutely. Click “Download Shortlist” to get a CSV file of all shortlisted candidates and their matched skill data.")
 
 # === FOOTER ===
 st.markdown("""
