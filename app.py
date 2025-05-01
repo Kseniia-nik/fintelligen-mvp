@@ -8,36 +8,35 @@ import re
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === THEME COLORS ===
-accent_color = "#334155"
-brand_color = "#0052CC"
-bg_color = "#f8f9fa"
-text_color = "#212529"
-card_color = "#ffffff"
+# === THEME COLORS (Goldman Sachs branding) ===
+accent_color = "#003087"       # Goldman Blue
+highlight_color = "#c59d5f"     # Goldman Gold
+bg_color = "#f8f9fa"            # Light background
+text_color = "#212529"          # Almost black
+card_color = "#ffffff"          # Card background
 
 # === GLOBAL STYLE ===
 st.markdown(f"""
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
     html, body, [class*="css"] {{
-        font-family: 'IBM Plex Sans', sans-serif !important;
+        font-family: 'Inter', sans-serif !important;
         background-color: {bg_color} !important;
         color: {text_color} !important;
     }}
     h1 {{
         font-size: 42px !important;
         font-weight: 700 !important;
-        color: {brand_color} !important;
+        color: {accent_color} !important;
         margin-bottom: 0.2em !important;
     }}
     h2, h3, h4 {{
-    font-weight: 600 !important;
-    color: {accent_color} !important;
-    margin-top: 0.4em !important;
-    margin-bottom: 0.2em !important;
-    line-height: 1.2em !important;
-}}
-
+        font-weight: 600 !important;
+        color: {accent_color} !important;
+        margin-top: 0.4em !important;
+        margin-bottom: 0.2em !important;
+        line-height: 1.2em !important;
+    }}
     .stButton > button {{
         background-color: {accent_color} !important;
         color: white !important;
@@ -46,13 +45,13 @@ st.markdown(f"""
         font-size: 16px;
     }}
     .stButton > button:hover {{
-        background-color: #1f2937 !important;
+        background-color: #002366 !important;
     }}
     .block {{
         background-color: {card_color};
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         margin-bottom: 1.5rem;
     }}
     .ring {{
