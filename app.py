@@ -248,7 +248,7 @@ with st.sidebar:
 
     st.markdown("---")
 
-    # === DASHBOARD ===
+    # === SUMMARY DASHBOARD ===
     if "edited_df" in locals() and not edited_df.empty:
         total_resumes = len(edited_df)
         total_skills = len(selected_skills)
@@ -265,6 +265,15 @@ with st.sidebar:
         st.warning(f"**📈 Average Match:** `{avg_percent}%`")
         st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
         st.caption(f"→ {top_match_score}")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🗑 Clear Shortlist"):
+                edited_df["⭐ Shortlist"] = False
+        with col2:
+            csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
+            st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
+
 
 
     col1, col2 = st.columns([1, 1])
