@@ -163,52 +163,19 @@ def score_skills(text, keywords):
     total = len(keywords)
     return matched, total
 
-# === ANALYZE RESUMES & CREATE DATAFRAME ===
-scores, names, previews, insights, percents = [], [], [], [], []
+# === ANONYMIZED RESUME RESULTS ===
+if not df.empty and show_summary:
+    st.markdown(f"""
+    <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
+    """, unsafe_allow_html=True)
 
-if uploaded_files:
-    with st.spinner("🔍 Analyzing resumes..."):
-        for file in uploaded_files:
-            filename = file.name
-            anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
+    for i, row in edited_df.iterrows():
+        with st.expander(f"{row['Anonymized Resume']} — {row['Match Summary']}"):
+            st.code(insights[i]["text"], language="markdown")
 
-            # Определение типа файла
-            if filename.lower().endswith(".pdf"):
-                text = extract_text_from_pdf(file)
-            elif filename.lower().endswith(".docx"):
-                text = extract_text_from_docx(file)
-            else:
-                st.warning(f"⚠️ Unsupported file type: {filename}")
-                continue
+    st.markdown("</div>", unsafe_allow_html=True)
 
-            anonymized_text = anonymize_text(text)
-            matched, total = score_skills(anonymized_text, selected_skills)
-
-            # Только если соответствует порогу
-            if matched >= match_threshold:
-                percent = int((matched / total) * 100) if total > 0 else 0
-                scores.append(matched)
-                names.append(anonymized_name)
-                previews.append(anonymized_text[:1500])
-                insights.append({
-                    "summary": f"{matched} / {total} keywords ({percent}%)",
-                    "text": anonymized_text,
-                    "matches": matched,
-                    "percent": percent
-                })
-                percents.append(percent)
-
-    # Построение таблицы, если есть совпадения
-    if names:
-        df = pd.DataFrame({
-            "Anonymized Resume": names,
-            "Original Filename": [f.name for f in uploaded_files if f.name.endswith(".pdf") or f.name.endswith(".docx")][:len(names)],
-            "Skill Matches": scores,
-            "Match Summary": [i["summary"] for i in insights],
-            "⭐ Shortlist": [False] * len(names)
-        })
-    else:
-        df = pd.DataFrame()  # Пустой DataFrame — чтобы избежать ошибок позже
 
 # === SKILL MATRIX ===
 if uploaded_files:
