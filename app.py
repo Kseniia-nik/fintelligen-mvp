@@ -196,39 +196,32 @@ if uploaded_files:
         st.markdown("</div>", unsafe_allow_html=True)
    
 
-    # === TABLE ===
-    st.markdown("<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
+   # === RESUME EVALUATION TABLE ===
+if not df.empty:
+    st.markdown(f"""
+    <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>🧾 Resume Evaluation Table</h3>
+    """, unsafe_allow_html=True)
+
     edited_df = st.data_editor(
         df,
         use_container_width=True,
-        hide_index=True,
         column_config={
-            "Skill Matches": st.column_config.NumberColumn(format="%d"),
-            "⭐ Shortlist": st.column_config.CheckboxColumn(default=False)
-        }
+            "⭐ Shortlist": st.column_config.CheckboxColumn("⭐ Shortlist", default=False)
+        },
+        disabled=["Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
+
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        if st.button("🗑 Clear Shortlist"):
+            edited_df["⭐ Shortlist"] = False
+    with col2:
+        csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
+        st.download_button("📥 Download CSV", csv, "shortlisted_resumes.csv", "text/csv")
+
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # === CLEAR SHORTLIST ===
-    if "clear_shortlist" not in st.session_state:
-        st.session_state.clear_shortlist = False
-
-    if st.button("🗑 Clear Shortlist", use_container_width=True):
-        st.session_state.clear_shortlist = True
-
-    if st.session_state.clear_shortlist:
-        df["⭐ Shortlist"] = False
-        st.session_state.clear_shortlist = False
-
-    shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
-    if not shortlisted.empty:
-        st.download_button(
-            label="⬇️ Download Shortlisted (CSV)",
-            data=shortlisted.to_csv(index=False).encode("utf-8"),
-            file_name="shortlisted_candidates.csv",
-            mime="text/csv",
-            use_container_width=True
-        )
 
   # === ANONYMIZED RESUMES ===
 if show_resumes:
