@@ -230,12 +230,12 @@ if "df" in locals() and not df.empty:
         top_match_score = top_match_row["Match Summary"]
 
         with st.sidebar:
-    st.markdown("### 🎯 Summary Dashboard")
-    st.success(f"**Resumes Uploaded:** `{total_resumes}`")
-    st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
-    st.warning(f"**📈 Average Match:** `{avg_percent}%`")
-    st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
-    st.caption(f"→ {top_match_score}")
+            st.markdown("### 🎯 Summary Dashboard")
+            st.success(f"**Resumes Uploaded:** `{total_resumes}`")
+            st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
+            st.warning(f"**📈 Average Match:** `{avg_percent}%`")
+            st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
+            st.caption(f"→ {top_match_score}")
 
 
 # === ANONYMIZED RESUME RESULTS ===
