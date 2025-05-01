@@ -155,6 +155,27 @@ if uploaded_files:
         "⭐ Shortlist": [False] * len(names)
     })
 
+# === EVALUATION STATUS ===
+if uploaded_files and "df" in locals() and not df.empty:
+    st.markdown(f"""
+    <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>✅ Evaluation</h3>
+        <div style='
+            background-color: #e6f4ea;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: #155724;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        '>
+            ✅ Resume successfully analyzed
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 # === SKILL MATRIX ===
 if uploaded_files:
     df = pd.DataFrame({
