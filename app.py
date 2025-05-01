@@ -167,26 +167,24 @@ if uploaded_files:
     })
 
     if not df.empty:
-        
-            st.markdown("<div class='block'>", unsafe_allow_html=True)
-
-            # Заголовок внутри блока, с отступом
-            st.markdown(f"""
-            <div class='block'>
-            <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📊 Skill Matrix — Resume vs. Core Skills</h3>
-            """, unsafe_allow_html=True)
+        st.markdown("<div class='block'>", unsafe_allow_html=True)
+        # Заголовок внутри блока, с отступом
+        st.markdown(f"""
+        <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📊 Skill Matrix — Resume vs. Core Skills</h3>
+        """, unsafe_allow_html=True)
             
-            # Построение графика
-            fig = px.bar(
-                df.sort_values("Skill Matches", ascending=True),
-                x="Skill Matches",
-                y="Anonymized Resume",
+        # Построение графика
+        fig = px.bar(
+        df.sort_values("Skill Matches", ascending=True),
+        x="Skill Matches",
+        y="Anonymized Resume",
                 orientation="h",
                 color="Skill Matches",
                 color_continuous_scale=["#dee2e6", accent_color],
                 height=400
             )
-            fig.update_layout(
+        fig.update_layout(
                 xaxis_title="Matched Skills",
                 yaxis_title=None,
                 plot_bgcolor=bg_color,
