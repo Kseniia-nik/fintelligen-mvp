@@ -139,49 +139,63 @@ st.markdown("🧠 **Goldman Sachs core skillset is applied automatically:**")
 st.markdown(", ".join(goldman_skills))
 
 # === FILE UPLOAD ===
-uploaded_files = st.file_uploader("📂 Upload Resume(s)", type=["pdf", "docx"], accept_multiple_files=True)
+st.markdown("## 📤 Upload Resumes")
+uploaded_files = st.file_uploader(
+    "Upload multiple resumes (.pdf or .docx)",
+    type=["pdf", "docx"],
+    accept_multiple_files=True
+)
 
-def extract_text_from_pdf(file): return "".join(page.extract_text() or "" for page in PdfReader(file).pages)
-def extract_text_from_docx(file): return "\n".join([p.text for p in Document(file).paragraphs])
+# === FUNCTIONS ===
+def extract_text_from_pdf(file):
+    return "".join(page.extract_text() or "" for page in PdfReader(file).pages)
+
+def extract_text_from_docx(file):
+    return "\n".join([p.text for p in Document(file).paragraphs])
+
 def anonymize_text(text):
     text = re.sub(r'[\w\.-]+@[\w\.-]+', '[email]', text)
     text = re.sub(r'\b\d{10,}\b', '[phone]', text)
     text = re.sub(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', '[name]', text)
     return text
+
 def score_skills(text, keywords):
     matched = sum(skill in text.lower() for skill in keywords)
     total = len(keywords)
     return matched, total
 
+# === ANALYZE RESUMES ===
 scores, names, previews, insights, percents = [], [], [], [], []
 
 if uploaded_files:
-    for file in uploaded_files:
-        filename = file.name
-        anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
-        text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
-        anonymized_text = anonymize_text(text)
-        matched, total = score_skills(anonymized_text, selected_skills)
-        if matched >= match_threshold:
-            percent = int((matched / total) * 100) if total > 0 else 0
-            scores.append(matched)
-            names.append(anonymized_name)
-            previews.append(anonymized_text[:1500])
-            insights.append({
-                "summary": f"{matched} / {total} keywords ({percent}%)",
-                "text": anonymized_text,
-                "matches": matched,
-                "percent": percent
-            })
-            percents.append(percent)
+    with st.spinner("🔍 Analyzing resumes..."):
+        for file in uploaded_files:
+            filename = file.name
+            anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
+            text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
+            anonymized_text = anonymize_text(text)
+            matched, total = score_skills(anonymized_text, selected_skills)
 
-    df = pd.DataFrame({
-        "Anonymized Resume": names,
-        "Original Filename": [f.name for f in uploaded_files],
-        "Skill Matches": scores,
-        "Match Summary": [i["summary"] for i in insights],
-        "⭐ Shortlist": [False] * len(names)
-    })
+            if matched >= match_threshold:
+                percent = int((matched / total) * 100) if total > 0 else 0
+                scores.append(matched)
+                names.append(anonymized_name)
+                previews.append(anonymized_text[:1500])
+                insights.append({
+                    "summary": f"{matched} / {total} keywords ({percent}%)",
+                    "text": anonymized_text,
+                    "matches": matched,
+                    "percent": percent
+                })
+                percents.append(percent)
+
+        df = pd.DataFrame({
+            "Anonymized Resume": names,
+            "Original Filename": [f.name for f in uploaded_files],
+            "Skill Matches": scores,
+            "Match Summary": [i["summary"] for i in insights],
+            "⭐ Shortlist": [False] * len(names)
+        })
 
 # === SKILL MATRIX ===
 if uploaded_files:
