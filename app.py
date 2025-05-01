@@ -222,20 +222,17 @@ if not df.empty:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-  # === ANONYMIZED RESUMES ===
-if show_resumes:
-    st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
-    for name, data in zip(names, insights):
-        with st.expander(f"{name}"):
-            if show_summary:
-                st.markdown(
-                    f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);'>{data['percent']}%</div>",
-                    unsafe_allow_html=True
-                )
-                st.markdown(f"**🎯 Match Summary:** {data['summary']}")
-            st.markdown("---")
-            st.markdown("**📄 Anonymized Text:**")
-            st.text(data["text"])
+ # === ANONYMIZED RESUME RESULTS ===
+if not df.empty and show_summary:
+    st.markdown(f"""
+    <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
+    """, unsafe_allow_html=True)
+
+    for i, row in edited_df.iterrows():
+        with st.expander(f"{row['Anonymized Resume']} — {row['Match Summary']}"):
+            st.code(insights[i]["text"], language="markdown")
+
     st.markdown("</div>", unsafe_allow_html=True)
 
 
