@@ -261,27 +261,38 @@ if "df" in locals() and not df.empty:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # === ANONYMIZED RESUME RESULTS ===
-if "edited_df" in locals() and not edited_df.empty and show_resumes:
+if "df" in locals() and not df.empty and show_resumes:
+
     st.markdown(f"""
     <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
     """, unsafe_allow_html=True)
 
     for i, row in edited_df.iterrows():
-        if i < len(insights):
-            summary = insights[i]["summary"]
-            text = insights[i]["text"]
-            anonymized_name = row["Anonymized Resume"]
+        percent = insights[i]["percent"]
 
-            with st.expander(f"{anonymized_name} — {summary}"):
-                st.markdown(f"""
-                <div style='background-color: #f1f3f5; padding: 1rem; border-radius: 10px;'>
-                    <pre style='white-space: pre-wrap; font-size: 14px;'>{text}</pre>
-                </div>
-                """, unsafe_allow_html=True)
+        # Градиентная плашка
+        match_bar = f"""
+        <div style='
+            background: linear-gradient(to right, {accent_color} {percent}%, #e9ecef {100 - percent}%);
+            border-radius: 8px;
+            padding: 6px 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 0.5rem;
+        '>
+            {percent}% match
+        </div>
+        """
+
+        with st.expander(f"📄 {row['Anonymized Resume']} — {row['Match Summary']}"):
+            st.markdown(match_bar, unsafe_allow_html=True)
+            st.markdown("**📄 Anonymized Text:**")
+            st.code(insights[i]["text"], language="markdown")
 
     st.markdown("</div>", unsafe_allow_html=True)
-
+    
 # === FAQ SECTION ===
 if show_faq:
     st.markdown(f"""
