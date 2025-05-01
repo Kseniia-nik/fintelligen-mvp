@@ -78,7 +78,7 @@ goldman_skills = [
 ]
 selected_skills = goldman_skills
 
-st.markdown("🧠 **Goldman Sachs core skillset is applied automatically:**")
+st.markdown(" **Goldman Sachs core skillset is applied automatically:**")
 st.markdown(", ".join(goldman_skills))
 
 # === FILE UPLOAD ===
@@ -92,10 +92,10 @@ uploaded_files = st.file_uploader(
 # === SIDEBAR ===
 with st.sidebar:
     st.markdown("### 📂 Show/Hide Sections")
-    show_matrix  = st.toggle("📊 Show Skill Matrix", value=True)
-    show_table   = st.toggle("🧾 Show Resume Table", value=True)
-    show_results = st.toggle("📄 Show Anonymized Results", value=True)
-    show_faq     = st.toggle("❓ Show FAQ", value=True)
+    show_matrix  = st.toggle("Show Skill Matrix", value=True)
+    show_table   = st.toggle("Show Resume Table", value=True)
+    show_results = st.toggle("Show Anonymized Results", value=True)
+    show_faq     = st.toggle("Show FAQ", value=True)
 
     st.markdown("---")
     st.markdown("### 🎛️ Filters")
@@ -177,18 +177,18 @@ if "df" in locals() and not df.empty:
     top_match_score = top_match_row["Match Summary"]
 
     with st.sidebar:
-        st.markdown("### 🎯 Summary Dashboard")
+        st.markdown("### Summary Dashboard")
         st.success(f"**Resumes Uploaded:** `{total_resumes}`")
-        st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
-        st.warning(f"**📈 Avg Match:** `{avg_percent}%`")
-        st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
+        st.info(f"**Shortlisted:** `{shortlisted}`")
+        st.warning(f"**Avg Match:** `{avg_percent}%`")
+        st.markdown(f"**Top Match:** `{top_match_name}`")
         st.caption(f"→ {top_match_score}")
 
 # === SKILL MATRIX ===
 if "df" in locals() and not df.empty and show_matrix:
     st.markdown(f"""
     <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📊 Skill Matrix — Resume vs. Core Skills</h3>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'> Skill Matrix — Resume vs. Core Skills</h3>
     """, unsafe_allow_html=True)
 
     fig = px.bar(
