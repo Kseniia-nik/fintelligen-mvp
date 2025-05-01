@@ -5,21 +5,18 @@ import pandas as pd
 import plotly.express as px
 import re
 
-# === THEME COLORS (Goldman Sachs branding) ===
-accent_color    = "#003087"  # Goldman Blue
-highlight_color = "#c59d5f"  # Goldman Gold
-bg_color        = "#f8f9fa"  # Light background
-text_color      = "#212529"  # Almost black
-card_color      = "#ffffff"  # Card background
+# === THEME COLORS ===
+accent_color    = "#003087"
+highlight_color = "#c59d5f"
+bg_color        = "#f8f9fa"
+text_color      = "#212529"
+card_color      = "#ffffff"
 
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === GLOBAL STYLES ===
-st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-""", unsafe_allow_html=True)
-
+# === FONT AND GLOBAL STYLE ===
+st.markdown("<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' rel='stylesheet'>", unsafe_allow_html=True)
 st.markdown(f"""
 <style>
 html, body, [class*="css"] {{
@@ -50,7 +47,7 @@ h3 {{
 </style>
 """, unsafe_allow_html=True)
 
-# === HEADER: TITLE + LOGO ===
+# === HEADER ===
 col1, col2 = st.columns([0.85, 0.15])
 with col1:
     st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
@@ -94,7 +91,14 @@ uploaded_files = st.file_uploader(
 
 # === SIDEBAR ===
 with st.sidebar:
-    st.markdown("#### 🎛️ Filters")
+    st.markdown("### 📂 Show/Hide Sections")
+    show_matrix  = st.toggle("📊 Show Skill Matrix", value=True)
+    show_table   = st.toggle("🧾 Show Resume Table", value=True)
+    show_results = st.toggle("📄 Show Anonymized Results", value=True)
+    show_faq     = st.toggle("❓ Show FAQ", value=True)
+
+    st.markdown("---")
+    st.markdown("### 🎛️ Filters")
     match_threshold = st.slider(
         "Minimum Skill Matches",
         min_value=0,
@@ -102,13 +106,13 @@ with st.sidebar:
         value=0,
         help="Only resumes with this many or more matched skills will be considered."
     )
-    show_faq = st.toggle("❓ Show FAQ", value=True)
 
 # === STATUS AFTER UPLOAD ===
 if uploaded_files:
     st.success(f"✅ {len(uploaded_files)} resume(s) uploaded successfully.")
 else:
     st.info("ℹ️ Please upload at least one resume to begin analysis.")
+
 # === FUNCTIONS ===
 def extract_text_from_pdf(file):
     return "".join(page.extract_text() or "" for page in PdfReader(file).pages)
@@ -162,8 +166,26 @@ if names and len(names) == len(scores) == len(insights):
         "⭐ Shortlist": [False] * len(names)
     })
 
-# === SKILL MATRIX CHART ===
+# === SUMMARY DASHBOARD IN SIDEBAR ===
 if "df" in locals() and not df.empty:
+    total_resumes = len(df)
+    total_skills = len(selected_skills)
+    shortlisted = df["⭐ Shortlist"].sum()
+    avg_percent = round(df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
+    top_match_row = df.loc[df["Skill Matches"].idxmax()]
+    top_match_name = top_match_row["Anonymized Resume"]
+    top_match_score = top_match_row["Match Summary"]
+
+    with st.sidebar:
+        st.markdown("### 🎯 Summary Dashboard")
+        st.success(f"**Resumes Uploaded:** `{total_resumes}`")
+        st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
+        st.warning(f"**📈 Avg Match:** `{avg_percent}%`")
+        st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
+        st.caption(f"→ {top_match_score}")
+
+# === SKILL MATRIX ===
+if "df" in locals() and not df.empty and show_matrix:
     st.markdown(f"""
     <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📊 Skill Matrix — Resume vs. Core Skills</h3>
@@ -189,8 +211,8 @@ if "df" in locals() and not df.empty:
     st.plotly_chart(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# === RESUME EVALUATION TABLE ===
-if "df" in locals() and not df.empty:
+# === RESUME TABLE ===
+if "df" in locals() and not df.empty and show_table:
     df_with_index = df.copy()
     df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
 
@@ -218,33 +240,15 @@ if "df" in locals() and not df.empty:
         st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
-    # === DASHBOARD ===
-    if "edited_df" in locals() and not edited_df.empty:
-        total_resumes = len(edited_df)
-        total_skills = len(selected_skills)
-        shortlisted = edited_df["⭐ Shortlist"].sum()
-        avg_percent = round(edited_df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
 
-        top_match_row = edited_df.loc[edited_df["Skill Matches"].idxmax()]
-        top_match_name = top_match_row["Anonymized Resume"]
-        top_match_score = top_match_row["Match Summary"]
-
-        with st.sidebar:
-            st.markdown("### 🎯 Summary Dashboard")
-            st.success(f"**Resumes Uploaded:** `{total_resumes}`")
-            st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
-            st.warning(f"**📈 Average Match:** `{avg_percent}%`")
-            st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
-            st.caption(f"→ {top_match_score}")
-
-
-# === ANONYMIZED RESUME RESULTS ===
+# === ANONYMIZED RESUMES ===
+if "df" in locals() and not df.empty and show_results:
     st.markdown(f"""
     <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
     """, unsafe_allow_html=True)
 
-    for i, row in edited_df.iterrows():
+    for i, row in df.iterrows():
         percent = insights[i]["percent"]
 
         match_bar = f"""
@@ -267,6 +271,7 @@ if "df" in locals() and not df.empty:
             st.code(insights[i]["text"], language="markdown")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === FAQ SECTION ===
 if show_faq:
