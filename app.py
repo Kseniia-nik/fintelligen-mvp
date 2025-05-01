@@ -24,14 +24,12 @@ html, body, [class*="css"] {{
     background-color: {bg_color} !important;
     color: {text_color} !important;
 }}
-
 h1 {{
     font-size: 42px !important;
     font-weight: 700 !important;
     color: {accent_color} !important;
     margin-bottom: 0.2em !important;
 }}
-
 h2, h3, h4 {{
     font-weight: 600 !important;
     color: {accent_color} !important;
@@ -39,7 +37,6 @@ h2, h3, h4 {{
     margin-bottom: 0.2em !important;
     line-height: 1.2em !important;
 }}
-
 .stButton > button {{
     background-color: {accent_color} !important;
     color: white !important;
@@ -47,11 +44,9 @@ h2, h3, h4 {{
     border-radius: 8px;
     font-size: 16px;
 }}
-
 .stButton > button:hover {{
     background-color: #002366 !important;
 }}
-
 .block {{
     background-color: {card_color};
     padding: 20px;
@@ -59,7 +54,6 @@ h2, h3, h4 {{
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     margin-bottom: 1.5rem;
 }}
-
 .ring {{
     width: 100px;
     height: 100px;
@@ -72,7 +66,6 @@ h2, h3, h4 {{
     font-size: 18px;
     margin: auto;
 }}
-
 .main .block-container {{
     max-width: 1100px;
     padding: 1rem 2rem;
