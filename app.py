@@ -194,12 +194,10 @@ if uploaded_files:
 
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
-   
 
 
 # === RESUME EVALUATION TABLE ===
-if not df.empty:
-    # Добавляем визуальную нумерацию с 1
+if "df" in locals() and not df.empty:
     df_with_index = df.copy()
     df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
 
@@ -226,6 +224,7 @@ if not df.empty:
         st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === FAQ SECTION ===
 st.markdown(f"""
