@@ -166,8 +166,7 @@ def score_skills(text, keywords):
     return matched, total
 
 # === ANONYMIZED RESUME RESULTS ===
-
-if "df" in locals() and not df.empty and show_summary:
+if "df" in locals() and not df.empty and show_resumes:
     st.markdown(f"""
     <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
@@ -175,9 +174,31 @@ if "df" in locals() and not df.empty and show_summary:
 
     for i, row in edited_df.iterrows():
         with st.expander(f"{row['Anonymized Resume']} — {row['Match Summary']}"):
+            if show_summary:
+                st.markdown(
+                    f"""
+                    <div class='ring' style='
+                        width: 80px;
+                        height: 80px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                        background: conic-gradient({accent_color} {insights[i]['percent']}%, #dee2e6 {insights[i]['percent']}%);
+                    '>{insights[i]['percent']}%</div>
+                    """, unsafe_allow_html=True
+                )
+                st.markdown(f"**🎯 Match Summary:** {row['Match Summary']}")
+
+            st.markdown("---")
+            st.markdown("**📄 Anonymized Text:**")
             st.code(insights[i]["text"], language="markdown")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === SKILL MATRIX ===
 scores, names, previews, insights, percents = [], [], [], [], []
