@@ -93,15 +93,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
 
 # === SIDEBAR ===
 with st.sidebar:
-    st.markdown("## 🧭 Navigation & Filters")
-
-    # Upload block
-    st.markdown("#### 📤 Upload Resumes")
-    uploaded_files = st.file_uploader(
-        "Upload multiple resumes (.pdf or .docx)",
-        accept_multiple_files=True,
-        type=["pdf", "docx"]
-    )
+    st.markdown("## Navigation & Filters")
 
     st.markdown("---")
 
