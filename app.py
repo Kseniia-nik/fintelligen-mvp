@@ -86,10 +86,9 @@ with col1:
         </div>
     """, unsafe_allow_html=True)
 with col2:
-    st.markdown("<div style='padding-top: 4px;'>", unsafe_allow_html=True)
-    st.image("goldman.jpeg", width=96)
+    st.markdown("<div style='padding-top: 6px;'>", unsafe_allow_html=True)
+    st.image("goldman.jpeg", width=120)
     st.markdown("</div>", unsafe_allow_html=True)
-
     
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
