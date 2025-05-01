@@ -121,11 +121,10 @@ with st.sidebar:
 
     # Info
     st.markdown("#### ℹ️ Status")
-    if uploaded_files:
+    if "uploaded_files" in locals() and uploaded_files:
         st.success(f"{len(uploaded_files)} resumes uploaded.")
     else:
         st.info("No resumes uploaded yet.")
-
 
 # === SKILLS ===
 goldman_skills = [
