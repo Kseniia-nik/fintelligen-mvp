@@ -74,7 +74,7 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# === HEADER ===
+# === HEADER WITH LOGO ===
 col1, col2 = st.columns([6, 1])
 with col1:
     st.markdown(f"""
@@ -85,24 +85,11 @@ with col1:
             </h3>
         </div>
     """, unsafe_allow_html=True)
-
 with col2:
-    st.markdown(f"""
-        <div style='
-            width: 72px;
-            height: 72px;
-            background-color: #e9ecef;
-            border-radius: 16px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        '>
-            <img src='goldman.jpeg' style='width: 100%; height: auto; border-radius: 8px;' />
-        </div>
-    """, unsafe_allow_html=True)
-
+    st.markdown("<div style='padding-top: 8px;'>", unsafe_allow_html=True)
+    st.image("goldman.jpeg", width=72)
+    st.markdown("</div>", unsafe_allow_html=True)
+    
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
     st.markdown("""
