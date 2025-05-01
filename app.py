@@ -12,13 +12,23 @@ bg_color        = "#f8f9fa"  # Light background
 text_color      = "#212529"  # Almost black
 card_color      = "#ffffff"  # Card background
 
-# === GLOBAL STYLE ===
-# Load custom font link
+import streamlit as st
+
+# === PAGE CONFIG ===
+st.set_page_config(page_title="Fintelligen", layout="centered")
+
+# === THEME COLORS ===
+accent_color = "#003087"
+bg_color = "#f8f9fa"
+text_color = "#212529"
+card_color = "#ffffff"
+
+# === LOAD FONT LINK ===
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 """, unsafe_allow_html=True)
 
-# Apply custom CSS styles with variables
+# === GLOBAL STYLE ===
 st.markdown(f"""
 <style>
 html, body, [class*="css"] {{
@@ -27,34 +37,19 @@ html, body, [class*="css"] {{
     color: {text_color} !important;
 }}
 
-h1, h3 {{
+h1 {{
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    color: {accent_color} !important;
     margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 0.2rem !important;
 }}
 
-.stButton > button {{
-    background-color: {accent_color} !important;
-    color: white !important;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-}}
-
-.stButton > button:hover {{
-    background-color: #002366 !important;
-}}
-
-.block {{
-    background-color: {card_color} !important;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+h3 {{
+    font-weight: 600 !important;
+    color: {accent_color} !important;
+    margin-top: 0 !important;
     margin-bottom: 0.5rem !important;
-}}
-
-.block h3 {{
-    margin-top: 0.3rem !important;
-    margin-bottom: 0.3rem !important;
 }}
 
 h1 a, h2 a, h3 a {{
@@ -63,10 +58,16 @@ h1 a, h2 a, h3 a {{
 </style>
 """, unsafe_allow_html=True)
 
+# === HEADER: TITLE + LOGO ===
+col1, col2 = st.columns([0.85, 0.15])
 
+with col1:
+    st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
+    st.markdown("<h3>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
 
+with col2:
+    st.image("goldman.jpeg", width=80)
 
-    
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
     st.markdown("""
