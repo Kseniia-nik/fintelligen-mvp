@@ -97,6 +97,26 @@ with st.sidebar:
 
     st.markdown("---")
 
+    # === DASHBOARD IN SIDEBAR ===
+    if "df" in locals() and not df.empty:
+    total_resumes = len(df)
+    total_skills = len(selected_skills)
+    shortlisted = edited_df["⭐ Shortlist"].sum()
+    avg_percent = round(df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
+
+    top_match_row = df.loc[df["Skill Matches"].idxmax()]
+    top_match_name = top_match_row["Anonymized Resume"]
+    top_match_score = top_match_row["Match Summary"]
+
+    st.markdown("#### 📊 Summary Dashboard")
+    st.markdown(f"- **Resumes Uploaded:** {total_resumes}")
+    st.markdown(f"- **Shortlisted:** {shortlisted}")
+    st.markdown(f"- **Average Match:** {avg_percent}%")
+    st.markdown(f"- **Top Match:** `{top_match_name}`")
+    st.markdown(f"  &nbsp;&nbsp;&nbsp;&nbsp;_→ {top_match_score}_")
+
+    st.markdown("---")
+
     # Display options
     st.markdown("#### 📑 Display Options")
     show_summary = st.toggle("🎯 Show Match Summary", value=True)
