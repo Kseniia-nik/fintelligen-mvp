@@ -140,7 +140,7 @@ uploaded_files = st.file_uploader(
 )
 
 # === STATUS AFTER UPLOAD ===
-scores, names, previews, insights, percents = [], [], [], [], []
+
 
 if uploaded_files:
     st.success(f"✅ {len(uploaded_files)} resume(s) uploaded successfully.")
@@ -166,6 +166,7 @@ def score_skills(text, keywords):
     return matched, total
 
 # === ANONYMIZED RESUME RESULTS ===
+
 if "df" in locals() and not df.empty and show_summary:
     st.markdown(f"""
     <div class='block'>
@@ -179,6 +180,7 @@ if "df" in locals() and not df.empty and show_summary:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # === SKILL MATRIX ===
+scores, names, previews, insights, percents = [], [], [], [], []
 if uploaded_files:
     df = pd.DataFrame({
         "Anonymized Resume": names,
