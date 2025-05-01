@@ -140,6 +140,8 @@ uploaded_files = st.file_uploader(
 )
 
 # === STATUS AFTER UPLOAD ===
+scores, names, previews, insights, percents = [], [], [], [], []
+
 if uploaded_files:
     st.success(f"✅ {len(uploaded_files)} resume(s) uploaded successfully.")
 else:
