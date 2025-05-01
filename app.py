@@ -86,9 +86,22 @@ with col1:
         </div>
     """, unsafe_allow_html=True)
 with col2:
-    st.markdown("<div style='padding-top: 8px;'>", unsafe_allow_html=True)
-    st.image("goldman.jpeg", width=72)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style='
+            width: 104px;
+            height: 104px;
+            background-color: #f0f2f5;
+            border-radius: 16px;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        '>
+            <img src='goldman.jpeg' style='width: 90px; height: auto; border-radius: 8px;' />
+        </div>
+    """, unsafe_allow_html=True)
+
     
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
