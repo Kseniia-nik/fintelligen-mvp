@@ -222,7 +222,7 @@ if "df" in locals() and not df.empty:
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
 
-   # === SIDEBAR ===
+  # === SIDEBAR ===
 with st.sidebar:
     st.markdown("## 🧭 Navigation & Filters")
     st.markdown("---")
@@ -233,6 +233,7 @@ with st.sidebar:
     show_table = st.toggle("📊 Show Skill Matrix & Chart", value=True)
     show_resumes = st.toggle("📄 Show Anonymized Resumes", value=True)
     show_faq = st.toggle("❓ Show FAQ", value=True)
+
     st.markdown("---")
 
     # === FILTERS ===
@@ -244,16 +245,15 @@ with st.sidebar:
         value=0,
         help="Only resumes with this many or more matched skills will be considered."
     )
+
     st.markdown("---")
 
-    # === SUMMARY DASHBOARD ===
+    # === DASHBOARD ===
     if "edited_df" in locals() and not edited_df.empty:
         total_resumes = len(edited_df)
         total_skills = len(selected_skills)
         shortlisted = edited_df["⭐ Shortlist"].sum()
-        avg_percent = round(
-            edited_df["Skill Matches"].sum() / (total_resumes * total_skills) * 100
-        )
+        avg_percent = round(edited_df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
 
         top_match_row = edited_df.loc[edited_df["Skill Matches"].idxmax()]
         top_match_name = top_match_row["Anonymized Resume"]
@@ -266,7 +266,7 @@ with st.sidebar:
         st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
         st.caption(f"→ {top_match_score}")
 
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 1])
         with col1:
             if st.button("🗑 Clear Shortlist"):
                 edited_df["⭐ Shortlist"] = False
@@ -274,7 +274,7 @@ with st.sidebar:
             csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
             st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
-    st.markdown("---")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 # === ANONYMIZED RESUME RESULTS ===
