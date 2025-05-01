@@ -16,73 +16,71 @@ text_color = "#212529"          # Almost black
 card_color = "#ffffff"          # Card background
 
 # === GLOBAL STYLE ===
-st.markdown(f"""
+st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-html, body, [class*="css"] {{
+html, body, [class*="css"] {
     font-family: 'Inter', sans-serif !important;
-    background-color: {bg_color} !important;
-    color: {text_color} !important;
-}}
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
 
-h1 {{
+h1 {
     font-size: 42px !important;
     font-weight: 700 !important;
-    color: {accent_color} !important;
+    color: #003087 !important;
     margin-top: 0 !important;
     margin-bottom: 0.1em !important;
-}}
-
-h2, h3, h4 {{
+}
+h2, h3, h4 {
     font-weight: 600 !important;
-    color: {accent_color} !important;
+    color: #003087 !important;
     margin-top: 0 !important;
     margin-bottom: 0.1em !important;
     line-height: 1.2em !important;
-}}
+}
 
-.block:first-of-type {{
+.block:first-of-type {
     margin-top: 0.2rem !important;
-}}
+}
 
-.main .block-container {{
+.main .block-container {
     max-width: 1100px;
     padding: 0.5rem 1.5rem;
     margin: auto;
-}}
+}
 
-.stButton > button {{
-    background-color: {accent_color} !important;
+.stButton > button {
+    background-color: #003087 !important;
     color: white !important;
     padding: 10px 20px;
     border-radius: 8px;
     font-size: 16px;
-}}
-
-.stButton > button:hover {{
+}
+.stButton > button:hover {
     background-color: #002366 !important;
-}}
+}
 
-.block {{
-    background-color: {card_color};
+.block {
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     margin-bottom: 1.5rem;
-}}
+}
 
-.ring {{
+.ring {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: conic-gradient({accent_color} {{percent}}%, #dee2e6 {{percent}}%);
+    background: conic-gradient(#003087 {{percent}}%, #dee2e6 {{percent}}%);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     font-size: 18px;
     margin: auto;
-}}
+}
 </style>
 """, unsafe_allow_html=True)
 
