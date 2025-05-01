@@ -83,7 +83,9 @@ h2, h3, h4 {
     font-size: 18px;
     margin: auto;
 }
-
+h3 + div {
+    margin-top: 0.3rem !important;
+}
 """, unsafe_allow_html=True)
 
 # === HEADER ===
