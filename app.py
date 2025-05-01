@@ -90,10 +90,6 @@ h2, h3, h4 {
     font-weight: 600;
     font-size: 18px;
     margin: auto;
-}
-h3 + div, h1 + div {
-    margin-top: 0.2rem !important;
-}
 
 """, unsafe_allow_html=True)
 
