@@ -13,65 +13,56 @@ text_color      = "#212529"  # Almost black
 card_color      = "#ffffff"  # Card background
 
 # === GLOBAL STYLE ===
-st.markdown(f"""
+# Load custom font link
+st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+""", unsafe_allow_html=True)
+
+# Apply custom CSS styles with variables
+st.markdown(f"""
 <style>
-  html, body, [class*="css"] {{
-      font-family: 'Inter', sans-serif !important;
-      background-color: {bg_color} !important;
-      color: {text_color} !important;
-  }}
+html, body, [class*="css"] {{
+    font-family: 'Inter', sans-serif !important;
+    background-color: {bg_color} !important;
+    color: {text_color} !important;
+}}
 
-  h1, h3 {{
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
-  }}
+h1, h3 {{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}}
 
-  .stButton > button {{
-      background-color: {accent_color} !important;
-      color: white !important;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-  }}
-  .stButton > button:hover {{
-      background-color: #002366 !important;
-  }}
+.stButton > button {{
+    background-color: {accent_color} !important;
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+}}
 
-  .block {{
-      background-color: {card_color} !important;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      margin-bottom: 0.5rem !important;
-  }}
-  .block h3 {{
-      margin-top: 0.3rem !important;
-      margin-bottom: 0.3rem !important;
-  }}
- /* Убираем якорь streamlitApp */
-  h1 a, h2 a, h3 a {{
-      display: none !important;
-  }}
+.stButton > button:hover {{
+    background-color: #002366 !important;
+}}
 
+.block {{
+    background-color: {card_color} !important;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 0.5rem !important;
+}}
+
+.block h3 {{
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.3rem !important;
+}}
+
+h1 a, h2 a, h3 a {{
+    display: none !important;
+}}
 </style>
 """, unsafe_allow_html=True)
 
-# === PAGE CONFIG ===
-col1, col2 = st.columns([0.85, 0.15])
-with col1:
-    st.markdown(
-        "<h1 style='margin-bottom:0.2rem;'>Fintelligen</h1>",
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        f"<h3 style='font-weight:600; color: {accent_color};'>"
-        "AI Resume Evaluator for Goldman Sachs"
-        "</h3>",
-        unsafe_allow_html=True
-    )
-with col2:
-    st.image("goldman.jpeg", width=80)
 
 
 
