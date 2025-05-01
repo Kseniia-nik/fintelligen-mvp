@@ -111,6 +111,17 @@ uploaded_files = st.file_uploader(
     accept_multiple_files=True
 )
 
+# === MATCH THRESHOLD SLIDER (must be before resume processing!) ===
+with st.sidebar:
+    st.markdown("#### 🎛️ Filters")
+    match_threshold = st.slider(
+        "Minimum Skill Matches",
+        min_value=0,
+        max_value=20,
+        value=0,
+        help="Only resumes with this many or more matched skills will be considered."
+    )
+
 # === STATUS AFTER UPLOAD ===
 
 if uploaded_files:
@@ -235,16 +246,6 @@ if "df" in locals() and not df.empty:
     st.markdown("</div>", unsafe_allow_html=True)
 
   # === SIDEBAR ===
-with st.sidebar:
-    st.markdown("## 🧭 Navigation & Filters")
-    st.markdown("---")
-
-    # === DISPLAY TOGGLES ===
-    st.markdown("#### 📑 Display Options")
-    show_summary = st.toggle("🎯 Show Match Summary", value=True)
-    show_table = st.toggle("📊 Show Skill Matrix & Chart", value=True)
-    show_resumes = st.toggle("📄 Show Anonymized Resumes", value=True)
-    show_faq = st.toggle("❓ Show FAQ", value=True)
 
     st.markdown("---")
 
