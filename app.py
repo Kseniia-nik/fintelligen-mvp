@@ -92,12 +92,47 @@ with st.expander("📋 Instructions for HR", expanded=True):
     """)
 
 # === SIDEBAR ===
-st.sidebar.header("🧭 Navigation & Filters")
-show_summary = st.sidebar.checkbox("🎯 Show Match Summary", value=True)
-show_table = st.sidebar.checkbox("📊 Show Skill Matrix & Chart", value=True)
-show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
-show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
-match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 14, 0)
+with st.sidebar:
+    st.markdown("## 🧭 Navigation & Filters")
+
+    # Upload block
+    st.markdown("#### 📤 Upload Resumes")
+    uploaded_files = st.file_uploader(
+        "Upload multiple resumes (.pdf or .docx)",
+        accept_multiple_files=True,
+        type=["pdf", "docx"]
+    )
+
+    st.markdown("---")
+
+    # Display options
+    st.markdown("#### 📑 Display Options")
+    show_summary = st.checkbox("🎯 Show Match Summary", value=True)
+    show_table = st.checkbox("📊 Show Skill Matrix & Chart", value=True)
+    show_resumes = st.checkbox("📄 Show Anonymized Resumes", value=True)
+    show_faq = st.checkbox("❓ Show FAQ", value=True)
+
+    st.markdown("---")
+
+    # Filters
+    st.markdown("#### 🎛️ Filters")
+    match_threshold = st.slider(
+        "Minimum Skill Matches",
+        min_value=0,
+        max_value=20,
+        value=0,
+        help="Only resumes with this many or more matched skills will be considered."
+    )
+
+    st.markdown("---")
+
+    # Info
+    st.markdown("#### ℹ️ Status")
+    if uploaded_files:
+        st.success(f"{len(uploaded_files)} resumes uploaded.")
+    else:
+        st.info("No resumes uploaded yet.")
+
 
 # === SKILLS ===
 goldman_skills = [
