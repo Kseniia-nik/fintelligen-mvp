@@ -228,7 +228,8 @@ with st.sidebar:
     st.markdown("---")
 
     # === DASHBOARD ===
-if not edited_df.empty:
+if "edited_df" in locals() and not edited_df.empty:
+
     total_resumes = len(edited_df)
     total_skills = len(selected_skills)
     shortlisted = edited_df["⭐ Shortlist"].sum()
@@ -244,7 +245,6 @@ if not edited_df.empty:
     st.warning(f"📈 **Average Match:** `{avg_percent}%`")
     st.markdown(f"🏆 **Top Match:** `{top_match_name}`")
     st.caption(f"→ _{top_match_score}_")
-
 
     # Display toggles
     st.markdown("#### 📑 Display Options")
