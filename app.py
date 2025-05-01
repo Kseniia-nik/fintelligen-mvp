@@ -75,34 +75,33 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # === HEADER ===
-col1, col2 = st.columns([7, 1])
+col1, col2 = st.columns([6, 1])
 with col1:
     st.markdown(f"""
         <div style='display: flex; flex-direction: column; justify-content: center;'>
-            <h1 style='margin-bottom: 0.2em;'>Fintelligen</h1>
-            <h3 style='font-size: 22px; font-weight: 500; color: {accent_color}; margin-top: 0;'>
+            <h1 style='margin-bottom: 0.1em; font-size: 42px; color: {accent_color};'>Fintelligen</h1>
+            <h3 style='font-size: 22px; font-weight: 500; color: {accent_color}; margin-top: 0.2em;'>
                 AI Resume Evaluator for Goldman Sachs
             </h3>
         </div>
     """, unsafe_allow_html=True)
+
 with col2:
     st.markdown(f"""
         <div style='
-            width: 100px;
-            height: 100px;
-            background-color: #f0f2f5;
+            width: 72px;
+            height: 72px;
+            background-color: #e9ecef;
             border-radius: 16px;
             padding: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         '>
-            <img src='https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/goldman.jpeg' style='width: 100%; height: auto; border-radius: 8px;' />
+            <img src='goldman.jpeg' style='width: 100%; height: auto; border-radius: 8px;' />
         </div>
     """, unsafe_allow_html=True)
-
-
 
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
