@@ -232,7 +232,7 @@ if "df" in locals() and not df.empty:
         },
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
-col1, col2 = st.columns([1, 1])
+     col1, col2 = st.columns([1, 1])
         with col1:
             if st.button("🗑 Clear Shortlist"):
                 edited_df["⭐ Shortlist"] = False
