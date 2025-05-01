@@ -24,6 +24,7 @@ html, body, [class*="css"] {{
     background-color: {bg_color} !important;
     color: {text_color} !important;
 }}
+
 h1 {{
     font-size: 42px !important;
     font-weight: 700 !important;
@@ -31,6 +32,7 @@ h1 {{
     margin-top: 0 !important;
     margin-bottom: 0.1em !important;
 }}
+
 h2, h3, h4 {{
     font-weight: 600 !important;
     color: {accent_color} !important;
@@ -43,6 +45,11 @@ h2, h3, h4 {{
     margin-top: 0.2rem !important;
 }}
 
+.main .block-container {{
+    max-width: 1100px;
+    padding: 0.5rem 1.5rem;
+    margin: auto;
+}}
 
 .stButton > button {{
     background-color: {accent_color} !important;
@@ -51,9 +58,11 @@ h2, h3, h4 {{
     border-radius: 8px;
     font-size: 16px;
 }}
+
 .stButton > button:hover {{
     background-color: #002366 !important;
 }}
+
 .block {{
     background-color: {card_color};
     padding: 20px;
@@ -61,6 +70,7 @@ h2, h3, h4 {{
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     margin-bottom: 1.5rem;
 }}
+
 .ring {{
     width: 100px;
     height: 100px;
@@ -71,11 +81,6 @@ h2, h3, h4 {{
     justify-content: center;
     font-weight: 600;
     font-size: 18px;
-    margin: auto;
-}}
-.main .block-container {{
-    max-width: 1100px;
-    padding: 0.5rem 1.5rem;
     margin: auto;
 }}
 </style>
