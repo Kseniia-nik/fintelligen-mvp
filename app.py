@@ -69,13 +69,7 @@ with col2:
     st.image("goldman.jpeg", width=80)
 
 
-# === FOOTER ===
-st.markdown("""
-    <hr style='margin-top: 3rem; margin-bottom: 1rem;'>
-    <p style='text-align: center; font-size: 14px; color: #6c757d;'>
-        Fintelligen does not store or transmit uploaded data. All resume evaluations are performed securely in memory.
-    </p>
-""", unsafe_allow_html=True)
+
     
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
@@ -250,3 +244,11 @@ if show_faq:
         st.write("Personal identifiers are anonymized before evaluation, promoting fair skill-based review.")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+# === FOOTER ===
+st.markdown("""
+    <hr style='margin-top: 3rem; margin-bottom: 1rem;'>
+    <p style='text-align: center; font-size: 14px; color: #6c757d;'>
+        Fintelligen does not store or transmit uploaded data. All resume evaluations are performed securely in memory.
+    </p>
+""", unsafe_allow_html=True)
