@@ -73,6 +73,7 @@ col1, col2 = st.columns([0.85, 0.15])
 with col1:
     st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
     st.markdown("<h3>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+
 with col2:
     st.image("goldman.jpeg", width=80)
 
@@ -127,6 +128,7 @@ def score_skills(text, keywords):
 
 scores, names, previews, insights, percents = [], [], [], [], []
 
+
 if uploaded_files:
     with st.spinner("🔍 Analyzing resumes..."):
         scores, names, previews, insights, percents = [], [], [], [], []
@@ -160,39 +162,43 @@ if uploaded_files:
         })
 
 
-# === EVALUATION STATUS ===
-if uploaded_files and "df" in locals() and not df.empty:
-    st.markdown(f"""
-    <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>✅ Evaluation</h3>
-        <div style='
-            background-color: #e6f4ea;
-            padding: 1rem;
-            border-radius: 10px;
-            font-size: 1rem;
-            color: #155724;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        '>
-            ✅ Resume successfully analyzed
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
 # === SKILL MATRIX ===
+
 if uploaded_files:
-    df = pd.DataFrame({
-        "Anonymized Resume": names,
-        "Original Filename": [f.name for f in uploaded_files],
-        "Skill Matches": scores,
-        "Match Summary": [i["summary"] for i in insights],
-        "⭐ Shortlist": [False] * len(names)
-    })
+    with st.spinner("🔍 Analyzing resumes..."):
+        scores, names, previews, insights, percents = [], [], [], [], []
+
+        for file in uploaded_files:
+            filename = file.name
+            anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
+            text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
+            anonymized_text = anonymize_text(text)
+            matched, total = score_skills(anonymized_text, selected_skills)
+
+            if matched >= match_threshold:
+                percent = int((matched / total) * 100) if total > 0 else 0
+                scores.append(matched)
+                names.append(anonymized_name)
+                previews.append(anonymized_text[:1500])
+                insights.append({
+                    "summary": f"{matched} / {total} keywords ({percent}%)",
+                    "text": anonymized_text,
+                    "matches": matched,
+                    "percent": percent
+                })
+                percents.append(percent)
+
+        df = pd.DataFrame({
+            "Anonymized Resume": names,
+            "Original Filename": [f.name for f in uploaded_files],
+            "Skill Matches": scores,
+            "Match Summary": [i["summary"] for i in insights],
+            "⭐ Shortlist": [False] * len(names)
+        })
+
 
     if not df.empty:
-        
+        st.markdown("<div class='block'>", unsafe_allow_html=True)
         # Заголовок внутри блока, с отступом
         st.markdown(f"""
         <div class='block'>
@@ -220,65 +226,79 @@ if uploaded_files:
 
         st.plotly_chart(fig, use_container_width=True)
         st.markdown("</div>", unsafe_allow_html=True)
+   
 
-
-# === RESUME EVALUATION TABLE ===
-if "df" in locals() and not df.empty:
-    df_with_index = df.copy()
-    df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
-
-    st.markdown(f"""
-    <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>🧾 Resume Evaluation Table</h3>
-    """, unsafe_allow_html=True)
-
+    # === TABLE ===
+    st.markdown("<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
     edited_df = st.data_editor(
-        df_with_index,
+        df,
         use_container_width=True,
         hide_index=True,
         column_config={
-            "⭐ Shortlist": st.column_config.CheckboxColumn("⭐ Shortlist", default=False)
-        },
-        disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
+            "Skill Matches": st.column_config.NumberColumn(format="%d"),
+            "⭐ Shortlist": st.column_config.CheckboxColumn(default=False)
+        }
     )
-
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        if st.button("🗑 Clear Shortlist"):
-            edited_df["⭐ Shortlist"] = False
-    with col2:
-        csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
-        st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
-
     st.markdown("</div>", unsafe_allow_html=True)
 
-# === FAQ SECTION ===
-st.markdown(f"""
-<div class='block'>
-    <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>❓ Frequently Asked Questions (FAQ)</h3>
-</div>
-""", unsafe_allow_html=True)
+    # === CLEAR SHORTLIST ===
+    if "clear_shortlist" not in st.session_state:
+        st.session_state.clear_shortlist = False
 
-with st.expander("🧠 How does the system assess core competencies in a resume?"):
-    st.markdown("The AI scans resumes for keywords and contextual patterns aligned with Goldman Sachs' core skills, using a hybrid of rule-based and language model techniques.")
+    if st.button("🗑 Clear Shortlist", use_container_width=True):
+        st.session_state.clear_shortlist = True
 
-with st.expander("📊 What does the “Skill Match” score represent?"):
-    st.markdown("It shows how many of the predefined core competencies (e.g., leadership, teamwork, problem-solving) are detected in the resume — higher scores indicate stronger alignment.")
+    if st.session_state.clear_shortlist:
+        df["⭐ Shortlist"] = False
+        st.session_state.clear_shortlist = False
 
-with st.expander("📎 What file types are supported for upload?"):
-    st.markdown("The system currently supports `.pdf` and `.docx` files only.")
+    shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
+    if not shortlisted.empty:
+        st.download_button(
+            label="⬇️ Download Shortlisted (CSV)",
+            data=shortlisted.to_csv(index=False).encode("utf-8"),
+            file_name="shortlisted_candidates.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
 
-with st.expander("📁 Can I analyze multiple resumes at once?"):
-    st.markdown("Yes — you can upload and evaluate up to 50 resumes simultaneously for comparison.")
+  # === ANONYMIZED RESUMES ===
+if show_resumes:
+    st.markdown("<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
+    for name, data in zip(names, insights):
+        with st.expander(f"{name}"):
+            if show_summary:
+                st.markdown(
+                    f"<div class='ring' style='background: conic-gradient({accent_color} {data['percent']}%, #dee2e6 {data['percent']}%);'>{data['percent']}%</div>",
+                    unsafe_allow_html=True
+                )
+                st.markdown(f"**🎯 Match Summary:** {data['summary']}")
+            st.markdown("---")
+            st.markdown("**📄 Anonymized Text:**")
+            st.text(data["text"])
+    st.markdown("</div>", unsafe_allow_html=True)
 
-with st.expander("🛡️ Is any candidate data stored or shared externally?"):
-    st.markdown("No. All processing happens in memory and nothing is stored, saved, or sent outside your session.")
 
-with st.expander("🔍 Can I filter candidates based on skill match or shortlist status?"):
-    st.markdown("Yes — use the interactive table to filter, sort, and manually shortlist candidates as needed.")
+# === FAQ BLOCK ===
+if show_faq:
+    st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
 
-with st.expander("📥 Can I export shortlisted candidates and their evaluation scores?"):
-    st.markdown("Absolutely. Click “Download Shortlist” to get a CSV file of all shortlisted candidates and their matched skill data.")
+    with st.expander("What skills are evaluated?"):
+        st.write("Goldman Sachs core skills for analysts, including financial, analytical, and technical competencies.")
+
+    with st.expander("Is my data stored anywhere?"):
+        st.write("No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.")
+
+    with st.expander("Can I upload multiple resumes?"):
+        st.write("Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.")
+
+    with st.expander("Can I download the results?"):
+        st.write("Yes. Use the 'Download Shortlisted' button after selecting candidates.")
+
+    with st.expander("How does this reduce bias?"):
+        st.write("Personal identifiers are anonymized before evaluation, promoting fair skill-based review.")
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # === FOOTER ===
 st.markdown("""
