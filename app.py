@@ -16,6 +16,7 @@ text_color = "#212529"          # Almost black
 card_color = "#ffffff"          # Card background
 
 # === GLOBAL STYLE ===
+
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -83,6 +84,7 @@ h2, h3, h4 {
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # === HEADER ===
 col1, col2 = st.columns([6, 1])
