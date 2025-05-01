@@ -86,7 +86,6 @@ h2, h3, h4 {{
 </style>
 """, unsafe_allow_html=True)
 
-
 # === HEADER ===
 col1, col2 = st.columns([6, 1])
 with col1:
