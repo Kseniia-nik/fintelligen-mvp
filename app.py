@@ -107,10 +107,11 @@ with st.sidebar:
 
     # Display options
     st.markdown("#### 📑 Display Options")
-    show_summary = st.checkbox("🎯 Show Match Summary", value=True)
-    show_table = st.checkbox("📊 Show Skill Matrix & Chart", value=True)
-    show_resumes = st.checkbox("📄 Show Anonymized Resumes", value=True)
-    show_faq = st.checkbox("❓ Show FAQ", value=True)
+    show_summary = st.toggle("🎯 Show Match Summary", value=True)
+    show_table = st.toggle("📊 Show Skill Matrix & Chart", value=True)
+    show_resumes = st.toggle("📄 Show Anonymized Resumes", value=True)
+    show_faq = st.toggle("❓ Show FAQ", value=True)
+
 
     st.markdown("---")
 
