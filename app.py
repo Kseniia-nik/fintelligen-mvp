@@ -7,7 +7,7 @@ import re
 
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === COLORS ===
+# === THEME ===
 accent_color = "#334155"
 brand_color = "#0052CC"
 bg_color = "#f8f9fa"
@@ -41,7 +41,6 @@ st.markdown(f"""
         padding: 10px 20px;
         border-radius: 8px;
         border: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         font-size: 16px;
     }}
     .stButton > button:hover {{
@@ -81,7 +80,7 @@ with col1:
 with col2:
     st.image("goldman.jpeg", width=160)
 
-# === INSTRUCTIONS IMMEDIATELY AFTER TITLE ===
+# === INSTRUCTIONS ===
 st.markdown(f"""
 <div class="block">
     <h4>📋 Instructions for HR</h4>
@@ -108,7 +107,7 @@ show_resumes = st.sidebar.checkbox("📄 Show Anonymized Resumes", value=True)
 show_faq = st.sidebar.checkbox("❓ Show FAQ", value=True)
 match_threshold = st.sidebar.slider("Minimum Skill Matches", 0, 14, 0)
 
-# === FIXED GOLDMAN SKILLS ===
+# === FIXED SKILL SET ===
 goldman_skills = [
     "financial analysis", "investment banking", "capital markets", "excel", "valuation",
     "risk management", "mergers and acquisitions", "quantitative analysis", "data analytics",
@@ -174,6 +173,31 @@ if uploaded_files:
         "⭐ Shortlist": [False] * len(names)
     })
 
+    # === CHART FIRST ===
+    if show_table and not df.empty:
+        st.markdown(f"<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
+        fig = px.bar(
+            df.sort_values("Skill Matches", ascending=True),
+            x="Skill Matches",
+            y="Anonymized Resume",
+            orientation="h",
+            color="Skill Matches",
+            color_continuous_scale=["#dee2e6", accent_color],
+            height=400,
+            title="Top Resume Matches"
+        )
+        fig.update_layout(
+            title_font=dict(size=22, color=accent_color, family="IBM Plex Sans"),
+            xaxis_title="Matched Skills",
+            yaxis_title=None,
+            plot_bgcolor=bg_color,
+            paper_bgcolor=bg_color,
+            font=dict(family="IBM Plex Sans", color=text_color),
+            margin=dict(l=20, r=20, t=60, b=20)
+        )
+        st.plotly_chart(fig, use_container_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
     # === INTERACTIVE TABLE ===
     st.markdown(f"<div class='block'><h3>🧾 Resume Evaluation Table</h3>", unsafe_allow_html=True)
     edited_df = st.data_editor(
@@ -191,7 +215,7 @@ if uploaded_files:
     )
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # === SHORTLIST RESET BUTTON (NOW AFTER TABLE) ===
+    # === CLEAR SHORTLIST BUTTON ===
     if "clear_shortlist" not in st.session_state:
         st.session_state.clear_shortlist = False
 
@@ -202,12 +226,9 @@ if uploaded_files:
         df["⭐ Shortlist"] = False
         st.session_state.clear_shortlist = False
 
-    # === SHORTLISTED RESULTS ===
+    # === SHORTLIST DOWNLOAD ONLY ===
     shortlisted = edited_df[edited_df["⭐ Shortlist"] == True]
     if not shortlisted.empty:
-        st.markdown(f"<div class='block'><h3>⭐ Shortlisted Candidates</h3>", unsafe_allow_html=True)
-        st.dataframe(shortlisted, use_container_width=True)
-
         csv_shortlisted = shortlisted.to_csv(index=False).encode("utf-8")
         st.download_button(
             label="⬇️ Download Shortlisted (CSV)",
@@ -216,33 +237,8 @@ if uploaded_files:
             mime="text/csv",
             use_container_width=True
         )
-        st.markdown("</div>", unsafe_allow_html=True)
 
-    # === PLOTLY CHART ===
-    if show_table and not df.empty:
-        st.markdown(f"<div class='block'><h3>📊 Skill Matrix</h3>", unsafe_allow_html=True)
-        fig = px.bar(
-            df.sort_values("Skill Matches", ascending=True),
-            x="Skill Matches",
-            y="Anonymized Resume",
-            orientation="h",
-            color="Skill Matches",
-            color_continuous_scale=["#dee2e6", accent_color],
-            height=400
-        )
-        fig.update_layout(
-            title_font=dict(size=22, color=accent_color, family="IBM Plex Sans"),
-            xaxis_title="Matched Skills",
-            yaxis_title=None,
-            plot_bgcolor=bg_color,
-            paper_bgcolor=bg_color,
-            font=dict(family="IBM Plex Sans", color=text_color),
-            margin=dict(l=20, r=20, t=60, b=20)
-        )
-        st.plotly_chart(fig, use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # === RESUME PREVIEW ===
+    # === ANONYMIZED PREVIEWS ===
     if show_resumes:
         st.markdown(f"<div class='block'><h3>📄 Anonymized Resume Results</h3>", unsafe_allow_html=True)
         for name, data in zip(names, insights):
