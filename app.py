@@ -128,32 +128,37 @@ def score_skills(text, keywords):
 scores, names, previews, insights, percents = [], [], [], [], []
 
 if uploaded_files:
-    for file in uploaded_files:
-        filename = file.name
-        anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
-        text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
-        anonymized_text = anonymize_text(text)
-        matched, total = score_skills(anonymized_text, selected_skills)
-        if matched >= match_threshold:
-            percent = int((matched / total) * 100) if total > 0 else 0
-            scores.append(matched)
-            names.append(anonymized_name)
-            previews.append(anonymized_text[:1500])
-            insights.append({
-                "summary": f"{matched} / {total} keywords ({percent}%)",
-                "text": anonymized_text,
-                "matches": matched,
-                "percent": percent
-            })
-            percents.append(percent)
+    with st.spinner("🔍 Analyzing resumes..."):
+        scores, names, previews, insights, percents = [], [], [], [], []
 
-    df = pd.DataFrame({
-        "Anonymized Resume": names,
-        "Original Filename": [f.name for f in uploaded_files],
-        "Skill Matches": scores,
-        "Match Summary": [i["summary"] for i in insights],
-        "⭐ Shortlist": [False] * len(names)
-    })
+        for file in uploaded_files:
+            filename = file.name
+            anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
+            text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
+            anonymized_text = anonymize_text(text)
+            matched, total = score_skills(anonymized_text, selected_skills)
+
+            if matched >= match_threshold:
+                percent = int((matched / total) * 100) if total > 0 else 0
+                scores.append(matched)
+                names.append(anonymized_name)
+                previews.append(anonymized_text[:1500])
+                insights.append({
+                    "summary": f"{matched} / {total} keywords ({percent}%)",
+                    "text": anonymized_text,
+                    "matches": matched,
+                    "percent": percent
+                })
+                percents.append(percent)
+
+        df = pd.DataFrame({
+            "Anonymized Resume": names,
+            "Original Filename": [f.name for f in uploaded_files],
+            "Skill Matches": scores,
+            "Match Summary": [i["summary"] for i in insights],
+            "⭐ Shortlist": [False] * len(names)
+        })
+
 
 # === EVALUATION STATUS ===
 if uploaded_files and "df" in locals() and not df.empty:
