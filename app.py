@@ -91,14 +91,14 @@ uploaded_files = st.file_uploader(
 
 # === SIDEBAR ===
 with st.sidebar:
-    st.markdown("### 📂 Show/Hide Sections")
+    st.markdown("### Show/Hide Sections")
     show_matrix  = st.toggle("Show Skill Matrix", value=True)
     show_table   = st.toggle("Show Resume Table", value=True)
     show_results = st.toggle("Show Anonymized Results", value=True)
     show_faq     = st.toggle("Show FAQ", value=True)
 
     st.markdown("---")
-    st.markdown("### 🎛️ Filters")
+    st.markdown("### Filters")
     match_threshold = st.slider(
         "Minimum Skill Matches",
         min_value=0,
@@ -218,7 +218,7 @@ if "df" in locals() and not df.empty and show_table:
 
     st.markdown(f"""
     <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>🧾 Resume Evaluation Table</h3>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'> Resume Evaluation Table</h3>
     """, unsafe_allow_html=True)
 
     edited_df = st.data_editor(
@@ -245,7 +245,7 @@ if "df" in locals() and not df.empty and show_table:
 if "df" in locals() and not df.empty and show_results:
     st.markdown(f"""
     <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'> Anonymized Resume Results</h3>
     """, unsafe_allow_html=True)
 
     for i, row in df.iterrows():
@@ -277,7 +277,7 @@ if "df" in locals() and not df.empty and show_results:
 if show_faq:
     st.markdown(f"""
     <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>❓ Frequently Asked Questions (FAQ)</h3>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'> Frequently Asked Questions (FAQ)</h3>
     </div>
     """, unsafe_allow_html=True)
 
