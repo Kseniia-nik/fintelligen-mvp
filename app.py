@@ -233,18 +233,26 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-with st.expander("💼 How are skills evaluated?"):
-    st.markdown("Uploaded resumes are scanned for predefined keywords based on Goldman Sachs analyst role descriptions.")
+with st.expander("🧠 How does the system assess core competencies in a resume?"):
+    st.markdown("The AI scans resumes for keywords and contextual patterns aligned with Goldman Sachs' core skills, using a hybrid of rule-based and language model techniques.")
 
-with st.expander("🔒 Is my data stored or shared?"):
-    st.markdown("No. All processing is done in-session and nothing is stored or transmitted externally.")
+with st.expander("📊 What does the “Skill Match” score represent?"):
+    st.markdown("It shows how many of the predefined core competencies (e.g., leadership, teamwork, problem-solving) are detected in the resume — higher scores indicate stronger alignment.")
 
-with st.expander("📎 What file types are supported?"):
-    st.markdown("PDF and DOCX formats are currently supported.")
+with st.expander("📎 What file types are supported for upload?"):
+    st.markdown("The system currently supports `.pdf` and `.docx` files only.")
 
-with st.expander("📊 How can I interpret the skill match scores?"):
-    st.markdown("The skill match score reflects the number of core skills found in the resume. Higher scores suggest better alignment with the target role.")
+with st.expander("📁 Can I analyze multiple resumes at once?"):
+    st.markdown("Yes — you can upload and evaluate up to 50 resumes simultaneously for comparison.")
 
+with st.expander("🛡️ Is any candidate data stored or shared externally?"):
+    st.markdown("No. All processing happens in memory and nothing is stored, saved, or sent outside your session.")
+
+with st.expander("🔍 Can I filter candidates based on skill match or shortlist status?"):
+    st.markdown("Yes — use the interactive table to filter, sort, and manually shortlist candidates as needed.")
+
+with st.expander("📥 Can I export shortlisted candidates and their evaluation scores?"):
+    st.markdown("Absolutely. Click “Download Shortlist” to get a CSV file of all shortlisted candidates and their matched skill data.")
 
 # === FOOTER ===
 st.markdown("""
