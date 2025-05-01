@@ -318,6 +318,10 @@ if "df" in locals() and not df.empty and show_resumes:
             st.code(insights[i]["text"], language="markdown")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+# === SIDEBAR ===
+with st.sidebar:
+    show_faq = st.toggle("❓ Show FAQ", value=True)
     
 # === FAQ SECTION ===
 if show_faq:
