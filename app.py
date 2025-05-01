@@ -86,7 +86,22 @@ with col1:
         </div>
     """, unsafe_allow_html=True)
 with col2:
-    st.image("goldman.jpeg", width=100)
+    st.markdown(f"""
+        <div style='
+            width: 100px;
+            height: 100px;
+            background-color: #f0f2f5;
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        '>
+            <img src='https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/goldman.jpeg' style='width: 100%; height: auto; border-radius: 8px;' />
+        </div>
+    """, unsafe_allow_html=True)
+
 
 
 # === INSTRUCTIONS ===
