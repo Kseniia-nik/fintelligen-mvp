@@ -49,7 +49,7 @@ st.markdown(f"""
       margin-top: 0.3rem !important;
       margin-bottom: 0.3rem !important;
   }}
-</style>
+
 """, unsafe_allow_html=True)
 
 # === PAGE CONFIG ===
