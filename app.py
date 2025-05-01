@@ -236,26 +236,25 @@ if not df.empty and show_summary:
     st.markdown("</div>", unsafe_allow_html=True)
 
 
-# === FAQ BLOCK ===
-if show_faq:
-    st.markdown("<div class='block'><h3>❓ FAQ</h3>", unsafe_allow_html=True)
+# === FAQ SECTION ===
+st.markdown(f"""
+<div class='block'>
+    <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>❓ Frequently Asked Questions (FAQ)</h3>
+</div>
+""", unsafe_allow_html=True)
 
-    with st.expander("What skills are evaluated?"):
-        st.write("Goldman Sachs core skills for analysts, including financial, analytical, and technical competencies.")
+with st.expander("💼 How are skills evaluated?"):
+    st.markdown("Uploaded resumes are scanned for predefined keywords based on Goldman Sachs analyst role descriptions.")
 
-    with st.expander("Is my data stored anywhere?"):
-        st.write("No. All processing happens in-memory. Resumes are not saved, logged, or transmitted.")
+with st.expander("🔒 Is my data stored or shared?"):
+    st.markdown("No. All processing is done in-session and nothing is stored or transmitted externally.")
 
-    with st.expander("Can I upload multiple resumes?"):
-        st.write("Yes. You can upload up to 50 resumes at once, in PDF or DOCX format.")
+with st.expander("📎 What file types are supported?"):
+    st.markdown("PDF and DOCX formats are currently supported.")
 
-    with st.expander("Can I download the results?"):
-        st.write("Yes. Use the 'Download Shortlisted' button after selecting candidates.")
+with st.expander("📊 How can I interpret the skill match scores?"):
+    st.markdown("The skill match score reflects the number of core skills found in the resume. Higher scores suggest better alignment with the target role.")
 
-    with st.expander("How does this reduce bias?"):
-        st.write("Personal identifiers are anonymized before evaluation, promoting fair skill-based review.")
-
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # === FOOTER ===
 st.markdown("""
