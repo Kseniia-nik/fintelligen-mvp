@@ -12,23 +12,14 @@ bg_color        = "#f8f9fa"  # Light background
 text_color      = "#212529"  # Almost black
 card_color      = "#ffffff"  # Card background
 
-import streamlit as st
-
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === THEME COLORS ===
-accent_color = "#003087"
-bg_color = "#f8f9fa"
-text_color = "#212529"
-card_color = "#ffffff"
-
-# === LOAD FONT LINK ===
+# === GLOBAL STYLES ===
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 """, unsafe_allow_html=True)
 
-# === GLOBAL STYLE ===
 st.markdown(f"""
 <style>
 html, body, [class*="css"] {{
@@ -36,7 +27,6 @@ html, body, [class*="css"] {{
     background-color: {bg_color} !important;
     color: {text_color} !important;
 }}
-
 h1 {{
     font-size: 42px !important;
     font-weight: 700 !important;
@@ -44,18 +34,12 @@ h1 {{
     margin-top: 0 !important;
     margin-bottom: 0.2rem !important;
 }}
-
 h3 {{
     font-weight: 600 !important;
     color: {accent_color} !important;
     margin-top: 0 !important;
     margin-bottom: 0.5rem !important;
 }}
-
-h1 a, h2 a, h3 a {{
-    display: none !important;
-}}
-
 .block {{
     background-color: {card_color} !important;
     border-radius: 15px;
@@ -66,10 +50,8 @@ h1 a, h2 a, h3 a {{
 </style>
 """, unsafe_allow_html=True)
 
-
 # === HEADER: TITLE + LOGO ===
 col1, col2 = st.columns([0.85, 0.15])
-
 with col1:
     st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
     st.markdown("<h3>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
@@ -91,7 +73,6 @@ with st.expander("📋 Instructions for HR", expanded=True):
     _Resume data is not stored or shared. Max: **50 resumes**._
     """)
 
-
 # === SKILLS ===
 goldman_skills = [
     "financial analysis", "investment banking", "capital markets", "excel", "valuation",
@@ -111,7 +92,7 @@ uploaded_files = st.file_uploader(
     accept_multiple_files=True
 )
 
-# === MATCH THRESHOLD SLIDER (must be before resume processing!) ===
+# === SIDEBAR ===
 with st.sidebar:
     st.markdown("#### 🎛️ Filters")
     match_threshold = st.slider(
@@ -121,14 +102,13 @@ with st.sidebar:
         value=0,
         help="Only resumes with this many or more matched skills will be considered."
     )
+    show_faq = st.toggle("❓ Show FAQ", value=True)
 
 # === STATUS AFTER UPLOAD ===
-
 if uploaded_files:
     st.success(f"✅ {len(uploaded_files)} resume(s) uploaded successfully.")
 else:
     st.info("ℹ️ Please upload at least one resume to begin analysis.")
-
 # === FUNCTIONS ===
 def extract_text_from_pdf(file):
     return "".join(page.extract_text() or "" for page in PdfReader(file).pages)
@@ -147,12 +127,10 @@ def score_skills(text, keywords):
     total = len(keywords)
     return matched, total
 
-
-# === SKILL MATRIX ===
-# === ANALYZE RESUMES ===
+# === PROCESSING ===
 scores, names, previews, insights, percents = [], [], [], [], []
 
-if uploaded_files:  # ✅ Без этой строки — ошибка!
+if uploaded_files:
     with st.spinner("🔍 Analyzing resumes..."):
         for file in uploaded_files:
             filename = file.name
@@ -174,25 +152,24 @@ if uploaded_files:  # ✅ Без этой строки — ошибка!
                 })
                 percents.append(percent)
 
-    if names and len(names) == len(scores) == len(insights):
-        df = pd.DataFrame({
-            "Anonymized Resume": names,
-            "Original Filename": [f.name for f in uploaded_files][:len(names)],
-            "Skill Matches": scores,
-            "Match Summary": [i["summary"] for i in insights],
-            "⭐ Shortlist": [False] * len(names)
-        })
+# === CREATE TABLE ===
+if names and len(names) == len(scores) == len(insights):
+    df = pd.DataFrame({
+        "Anonymized Resume": names,
+        "Original Filename": [f.name for f in uploaded_files][:len(names)],
+        "Skill Matches": scores,
+        "Match Summary": [i["summary"] for i in insights],
+        "⭐ Shortlist": [False] * len(names)
+    })
 
-    if not df.empty:
-        
-        # Заголовок внутри блока, с отступом
-        st.markdown(f"""
-        <div class='block'>
+# === SKILL MATRIX CHART ===
+if "df" in locals() and not df.empty:
+    st.markdown(f"""
+    <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📊 Skill Matrix — Resume vs. Core Skills</h3>
-        """, unsafe_allow_html=True)
-            
-        # Построение графика
-        fig = px.bar(
+    """, unsafe_allow_html=True)
+
+    fig = px.bar(
         df.sort_values("Skill Matches", ascending=True),
         x="Skill Matches",
         y="Anonymized Resume",
@@ -200,19 +177,17 @@ if uploaded_files:  # ✅ Без этой строки — ошибка!
         color="Skill Matches",
         color_continuous_scale=["#dee2e6", accent_color],
         height=400
-            )
-        fig.update_layout(
+    )
+    fig.update_layout(
         xaxis_title="Matched Skills",
         yaxis_title=None,
         plot_bgcolor=bg_color,
         paper_bgcolor=bg_color,
         font=dict(family="Inter", color=text_color),
         margin=dict(l=20, r=20, t=40, b=20)
-            )
-
-        st.plotly_chart(fig, use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
-
+    )
+    st.plotly_chart(fig, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # === RESUME EVALUATION TABLE ===
 if "df" in locals() and not df.empty:
@@ -234,7 +209,6 @@ if "df" in locals() and not df.empty:
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
 
-    # ⬇️ Кнопки перемещены после таблицы
     col1, col2 = st.columns([1, 1])
     with col1:
         if st.button("🗑 Clear Shortlist"):
@@ -244,16 +218,6 @@ if "df" in locals() and not df.empty:
         st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
-
-  # === SIDEBAR ===
-
-    st.markdown("---")
-
-    # === FILTERS ===
- 
-   
-    st.markdown("---")
-
     # === DASHBOARD ===
     if "edited_df" in locals() and not edited_df.empty:
         total_resumes = len(edited_df)
@@ -265,20 +229,18 @@ if "df" in locals() and not df.empty:
         top_match_name = top_match_row["Anonymized Resume"]
         top_match_score = top_match_row["Match Summary"]
 
-        st.markdown("#### 📊 Summary Dashboard")
+        st.markdown(f"""
+        <div class='block'>
+        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>🎯 Summary Dashboard</h3>
+        """, unsafe_allow_html=True)
         st.success(f"**Resumes Uploaded:** `{total_resumes}`")
         st.info(f"**⭐ Shortlisted:** `{shortlisted}`")
         st.warning(f"**📈 Average Match:** `{avg_percent}%`")
         st.markdown(f"**🏅 Top Match:** `{top_match_name}`")
         st.caption(f"→ {top_match_score}")
-
-        
-    st.markdown("</div>", unsafe_allow_html=True)
-
+        st.markdown("</div>", unsafe_allow_html=True)
 
 # === ANONYMIZED RESUME RESULTS ===
-if "df" in locals() and not df.empty and show_resumes:
-
     st.markdown(f"""
     <div class='block'>
         <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>📄 Anonymized Resume Results</h3>
@@ -287,7 +249,6 @@ if "df" in locals() and not df.empty and show_resumes:
     for i, row in edited_df.iterrows():
         percent = insights[i]["percent"]
 
-        # Градиентная плашка
         match_bar = f"""
         <div style='
             background: linear-gradient(to right, {accent_color} {percent}%, #e9ecef {100 - percent}%);
@@ -309,10 +270,6 @@ if "df" in locals() and not df.empty and show_resumes:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# === SIDEBAR ===
-with st.sidebar:
-    show_faq = st.toggle("❓ Show FAQ", value=True)
-    
 # === FAQ SECTION ===
 if show_faq:
     st.markdown(f"""
@@ -344,8 +301,8 @@ if show_faq:
 
 # === FOOTER ===
 st.markdown("""
-    <hr style='margin-top: 3rem; margin-bottom: 1rem;'>
-    <p style='text-align: center; font-size: 14px; color: #6c757d;'>
-        Fintelligen does not store or transmit uploaded data. All resume evaluations are performed securely in memory.
-    </p>
+<hr style='margin-top: 3rem; margin-bottom: 1rem;'>
+<p style='text-align: center; font-size: 14px; color: #6c757d;'>
+    Fintelligen does not store or transmit uploaded data. All resume evaluations are performed securely in memory.
+</p>
 """, unsafe_allow_html=True)
