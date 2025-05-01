@@ -13,7 +13,7 @@ with col1:
     st.markdown("<h3 style='margin-top: 0rem; margin-bottom: 0.5rem; font-weight: 600; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
 
 with col2:
-    st.image("goldman_logo.png", width=80)
+    st.image("goldman.jpeg", width=80)
 
 
 # === THEME COLORS (Goldman Sachs branding) ===
