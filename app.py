@@ -196,33 +196,6 @@ if uploaded_files:
         st.markdown("</div>", unsafe_allow_html=True)
    
 
-# === RESUME EVALUATION TABLE ===
-if not df.empty:
-    st.markdown(f"""
-    <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>🧾 Resume Evaluation Table</h3>
-    """, unsafe_allow_html=True)
-
-    edited_df = st.data_editor(
-        df,
-        use_container_width=True,
-        column_config={
-            "⭐ Shortlist": st.column_config.CheckboxColumn("⭐ Shortlist", default=False)
-        },
-        disabled=["Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
-    )
-    # Добавить нумерацию с 1
-    edited_df.insert(0, "#", range(1, 1 + len(edited_df)))
-
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        if st.button("🗑 Clear Shortlist"):
-            edited_df["⭐ Shortlist"] = False
-    with col2:
-        csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
-        st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
-
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # === RESUME EVALUATION TABLE ===
 if not df.empty:
