@@ -146,9 +146,10 @@ def score_skills(text, keywords):
     return matched, total
 
 # === SKILL MATRIX ===
+# === ANALYZE RESUMES ===
 scores, names, previews, insights, percents = [], [], [], [], []
 
-if uploaded_files:
+if uploaded_files:  # ✅ Без этой строки — ошибка!
     with st.spinner("🔍 Analyzing resumes..."):
         for file in uploaded_files:
             filename = file.name
