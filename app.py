@@ -123,7 +123,12 @@ unsafe_allow_html=True)
 
 
 # === FILE UPLOAD ===
-st.header("Upload Resumes")
+st.markdown("""
+<h2 style='font-size: 24px; font-weight: 600; color: #003087; margin-bottom: 10px;'>
+Upload Resumes
+</h2>
+""", unsafe_allow_html=True)
+
 uploaded_files = st.file_uploader(
     "Upload multiple resumes (.pdf or .docx)",
     type=["pdf", "docx"],
