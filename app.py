@@ -65,7 +65,6 @@ with st.expander("📋 Instructions for HR", expanded=True):
         </h4>
         <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
 
-        st.markdown(f"""
         <p><strong>Steps:</strong></p>
         <ol style='margin-left: 1rem;'>
             <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
@@ -84,10 +83,10 @@ with st.expander("📋 Instructions for HR", expanded=True):
             </span>
             <br><br>
             <small style='color: #6c757d;'>Resume data is not stored or shared.</small>
-    """, unsafe_allow_html=True)
         </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 # === SKILLS ===
 goldman_skills = [
