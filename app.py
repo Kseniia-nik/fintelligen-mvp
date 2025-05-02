@@ -44,11 +44,12 @@ Step-by-Step Guide
 </h4>
 
 <p>This tool helps HR professionals and recruiters quickly assess how well each resume aligns with the key skills required for analyst-level roles at Goldman Sachs.
-<strong> Here’s how it works:</strong>.</p>
 
-<p><strong>Steps:</strong></p>
+<p><strong>Here’s how it works:</strong></p>
 <ol style='margin-left: 1rem;'>
     <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
+    Simply upload one or more resumes in PDF or DOCX format. You can drag and drop files or use the browse button.
+
     <li>The tool will automatically:
         <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
             <li><strong>Anonymize</strong> personal data</li>
