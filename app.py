@@ -47,8 +47,8 @@ Step-by-Step Guide
 
 <p><strong>Here’s how it works:</strong></p>
 <ol style='margin-left: 1rem;'>
-    <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
-    Simply upload one or more resumes in PDF or DOCX format. You can drag and drop files or use the browse button.
+    <li><strong>Upload resumes</strong> (PDF or DOCX files)
+    Simply upload one or more resumes in PDF or DOCX format. You can drag and drop files or use the browse button.</li>
 
     <li>The tool will automatically:
         <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
