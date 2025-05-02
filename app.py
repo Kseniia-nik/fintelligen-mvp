@@ -50,7 +50,8 @@ Step-by-Step Guide
     <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
    Simply upload one or more resumes in PDF or DOCX format. You can drag and drop files or use the browse button.</li>
      <li>Automatic analysis:</li>
-     <li>Review & compare</li> 
+     <li>Review & compare</li>
+     Explore the evaluation table, view anonymized resume content, and download shortlisted results.
 
     <li>The tool will automatically:
         <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
