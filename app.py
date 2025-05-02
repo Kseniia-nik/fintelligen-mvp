@@ -89,11 +89,29 @@ Max Upload: 50 resumes
 
 
 # === SKILLS ===
-goldman_skills = [
-    "financial analysis", "investment banking", "capital markets", "excel", "valuation",
-    "risk management", "mergers and acquisitions", "quantitative analysis", "data analytics",
-    "communication", "problem solving", "teamwork", "python", "sql"
+goldman_hard_skills = [
+    "financial analysis",
+    "valuation",
+    "investment banking",
+    "capital markets",
+    "risk management",
+    "mergers and acquisitions",
+    "accounting",
+    "financial modeling",
+    "excel",
+    "pitch decks",
+    "python",
+    "sql",
+    "r",
+    "vba","macros",
+    "tableau",
+    "power bi",
+    "alteryx",
+    "quantitative analysis",
+    "data analytics",
+    "market research"
 ]
+
 selected_skills = goldman_skills
 
 # === CORE SKILLS DISPLAY (as chips) ===
