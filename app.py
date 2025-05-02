@@ -65,7 +65,8 @@ with st.expander("📋 Instructions for HR", expanded=True):
         </h4>
         <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
 
-        <p><strong>Steps:</strong></p>
+        st.markdown(f"""
+                <p><strong>Steps:</strong></p>
         <ol style='margin-left: 1rem;'>
             <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
             <li>The tool will automatically:
