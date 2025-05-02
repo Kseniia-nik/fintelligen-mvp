@@ -54,9 +54,9 @@ with col1:
     st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
     st.markdown("<h3>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
 with col2:
-    st.image("FINTELLIGEN.svg", width=90)
+    st.image("FINTELLIGEN.svg", width=100)
 with col3:
-    st.image("Goldman Sachs Logo.svg", width=90)
+    st.image("Goldman Sachs Logo.svg", width=100)
 
 
 # === INSTRUCTIONS ===
