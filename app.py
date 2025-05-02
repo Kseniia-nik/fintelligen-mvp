@@ -84,6 +84,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
             </span>
             <br><br>
             <small style='color: #6c757d;'>Resume data is not stored or shared.</small>
+    """, unsafe_allow_html=True)
         </p>
     </div>
     """, unsafe_allow_html=True)
