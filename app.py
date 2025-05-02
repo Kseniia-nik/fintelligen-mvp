@@ -50,11 +50,7 @@ h3 {{
 # === BANNER HEADER ===
 st.image("WEB.svg", use_container_width=True)
 
-
-
-
 # === INSTRUCTIONS ===
-
 with st.expander("Instructions for HR", expanded=True):
     instruction_html = f"""<div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
@@ -114,7 +110,6 @@ goldman_skills = [
 selected_skills = goldman_skills
 
 # === CORE SKILLS DISPLAY (as chips) ===
-
 st.markdown("**Goldman Sachs core skillset is applied automatically:**")
 
 st.markdown("""
