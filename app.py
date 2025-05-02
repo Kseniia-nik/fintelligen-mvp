@@ -51,6 +51,7 @@ h3 {{
 st.image("WEB.svg", use_container_width=True)
 
 # === INSTRUCTIONS ===
+
 with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
     instruction_html = f"""
     <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
