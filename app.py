@@ -63,18 +63,15 @@ with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
 
     <p><strong>Here’s how to use it:</strong></p>
     <ol style='margin-left: 1rem;'>
-        <li><strong>Upload resumes</strong><br>
-            Upload multiple resumes in PDF or DOCX format. You can drag and drop files or use the “Browse” button.</li>
-        <li><strong>Automated screening</strong><br>
-            The tool will automatically:
-            <p>🔒 <strong>Anonymize:</strong> Remove names, emails, and phone numbers</p>
-            <p>🧠 <strong>Evaluate:</strong> Check alignment with core analyst-level competencies</p>
-            <p>📊 <strong>Visualize:</strong> Display match scores and enable filtering & shortlisting</p>
-
-
+        <li><strong>Upload resumes:</strong> Upload multiple resumes in PDF or DOCX format. You can drag and drop files or use the “Browse” button.</li>
+        <li><strong>Automated screening:</strong> The tool will automatically:
+            <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
+                <li>🔒 <strong>Anonymize:</strong> Remove names, emails, and phone numbers</li>
+                <li>🧠 <strong>Evaluate:</strong> Check alignment with core analyst-level competencies</li>
+                <li>📊 <strong>Visualize:</strong> Display match scores and enable filtering & shortlisting</li>
+            </ul>
         </li>
-        <li><strong>Review and shortlist</strong><br>
-            Compare results in an interactive table, preview anonymized resumes, and download the shortlist for further review or outreach.</li>
+        <li><strong>Review and shortlist:</strong> Compare results in an interactive table, preview anonymized resumes, and download the shortlist for further review or outreach.</li>
     </ol>
 
     <p style='margin-top: 1rem;'>
@@ -86,8 +83,6 @@ with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
     </p>
     </div>"""
     st.markdown(instruction_html, unsafe_allow_html=True)
-
-
 
 # === SKILLS ===
 goldman_skills = [
