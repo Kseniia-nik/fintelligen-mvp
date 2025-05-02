@@ -128,7 +128,7 @@ unsafe_allow_html=True)
 
 
 # === FILE UPLOAD ===
-st.markdown("## 📤 Upload Resumes")
+st.header("Upload Resumes")
 uploaded_files = st.file_uploader(
     "Upload multiple resumes (.pdf or .docx)",
     type=["pdf", "docx"],
