@@ -67,11 +67,10 @@ with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
             Upload multiple resumes in PDF or DOCX format. You can drag and drop files or use the “Browse” button.</li>
         <li><strong>Automated screening</strong><br>
             The tool will automatically:
-            <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
-                <li>🔒 <strong>Anonymize</strong><br>Remove names, emails, and phone numbers</li>
-                <li>🧠 <strong>Evaluate</strong><br>Check alignment with core analyst-level competencies</li>
-                <li>📊 <strong>Visualize</strong><br>Display match scores and enable filtering & shortlisting</li>
-            </ul>
+            <p>🔒 <strong>Anonymize:</strong> Remove names, emails, and phone numbers</p>
+            <p>🧠 <strong>Evaluate:</strong> Check alignment with core analyst-level competencies</p>
+            <p>📊 <strong>Visualize:</strong> Display match scores and enable filtering & shortlisting</p>
+
 
         </li>
         <li><strong>Review and shortlist</strong><br>
