@@ -78,8 +78,8 @@ goldman_skills = [
 ]
 selected_skills = goldman_skills
 
-st.markdown(" **Goldman Sachs core skillset is applied automatically:**")
 # === CORE SKILLS DISPLAY (as chips) ===
+
 st.markdown("**Goldman Sachs core skillset is applied automatically:**")
 
 st.markdown("""
