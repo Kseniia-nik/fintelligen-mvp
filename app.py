@@ -78,7 +78,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
         </ol>
 
         <p style='margin-top: 1rem;'>
-            <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500;'>
+            <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
                 Max Upload: 50 resumes
             </span>
             <br><br>
@@ -86,7 +86,6 @@ with st.expander("📋 Instructions for HR", expanded=True):
         </p>
     </div>
     """, unsafe_allow_html=True)
-
 
 # === SKILLS ===
 goldman_skills = [
