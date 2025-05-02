@@ -102,13 +102,13 @@ goldman_skills = [
     "excel",
     "pitch decks",
     "python",
-    "r",
     "vba","macros",
     "tableau",
     "power bi",
     "alteryx",
     "quantitative analysis",
     "data analytics",
+    "r",
     "market research"
 ]
 
