@@ -68,10 +68,11 @@ with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
         <li><strong>Automated screening</strong><br>
             The tool will automatically:
             <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
-                <li>🔒 <strong>Anonymize</strong> each resume by removing names, emails, and phone numbers</li>
-                <li>🧠 <strong>Evaluate</strong> each profile against Goldman Sachs’ analyst-level skillset</li>
-                <li>📊 <strong>Visualize</strong> how closely candidates match, with clear scores and filtering options</li>
+                <li>🔒 <strong>Anonymize</strong><br>Remove names, emails, and phone numbers</li>
+                <li>🧠 <strong>Evaluate</strong><br>Check alignment with core analyst-level competencies</li>
+                <li>📊 <strong>Visualize</strong><br>Display match scores and enable filtering & shortlisting</li>
             </ul>
+
         </li>
         <li><strong>Review and shortlist</strong><br>
             Compare results in an interactive table, preview anonymized resumes, and download the shortlist for further review or outreach.</li>
