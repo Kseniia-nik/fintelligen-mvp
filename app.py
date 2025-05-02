@@ -51,9 +51,8 @@ h3 {{
 st.image("WEB.svg", use_container_width=True)
 
 # === INSTRUCTIONS ===
-
 with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
-    html = f"""
+    st.markdown(f"""
     <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
@@ -75,9 +74,7 @@ with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
 
         <p style='font-size: 13px; color: #6c757d;'>Data is processed securely and never stored.</p>
     </div>
-    """
-    st.markdown(html, unsafe_allow_html=True)
-
+    """, unsafe_allow_html=True)
 
 # === SKILLS ===
 goldman_skills = [
