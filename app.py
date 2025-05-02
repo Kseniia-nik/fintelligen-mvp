@@ -48,24 +48,9 @@ h3 {{
 """, unsafe_allow_html=True)
 
 # === BANNER HEADER ===
-st.markdown("""
-<style>
-.banner-container {
-    padding-top: 10px;
-    padding-bottom: 5px;
-    margin-top: -20px;
-    margin-bottom: 15px;
-}
-.banner-container img {
-    max-height: 110px;
-    width: auto;
-}
-</style>
+# === BANNER HEADER ===
+st.image("FINTELLIGENWEB.svg", width=400)
 
-<div class='banner-container' style='display: flex; justify-content: center; align-items: center;'>
-    <img src='FINTELLIGENWEB.svg' alt='Fintelligen Banner'>
-</div>
-""", unsafe_allow_html=True)
 
 
 # === INSTRUCTIONS ===
