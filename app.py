@@ -167,26 +167,26 @@ def score_skills(text, keywords):
 scores, names, previews, insights, percents = [], [], [], [], []
 
 if uploaded_files:
-    with st.spinner("🔍 Analyzing resumes..."):
-        for file in uploaded_files:
-            filename = file.name
-            anonymized_name = f"Candidate_{abs(hash(filename)) % 100000}.pdf"
-            text = extract_text_from_pdf(file) if filename.endswith(".pdf") else extract_text_from_docx(file)
-            anonymized_text = anonymize_text(text)
-            matched, total = score_skills(anonymized_text, selected_skills)
+    st.success(f"✅ {len(uploaded_files)} resume(s) uploaded successfully.")
 
-            if matched >= match_threshold:
-                percent = int((matched / total) * 100) if total > 0 else 0
-                scores.append(matched)
-                names.append(anonymized_name)
-                previews.append(anonymized_text[:1500])
-                insights.append({
-                    "summary": f"{matched} / {total} keywords ({percent}%)",
-                    "text": anonymized_text,
-                    "matches": matched,
-                    "percent": percent
-                })
-                percents.append(percent)
+    selected_skills = core_skills
+
+    for file in uploaded_files:
+        # 1) Читаем текст
+        if file.name.lower().endswith(".pdf"):
+            raw_text = extract_text_from_pdf(file)
+        else:
+            raw_text = extract_text_from_docx(file)
+
+        # 2) Анонимизируем
+        anonymized_text = anonymize_resume(raw_text)
+
+        # 3) Считаем совпадения навыков
+        matched, total = score_skills(anonymized_text, selected_skills)
+
+        # 4) Выводим результат
+        st.write(f"• Matched **{matched}** out of **{total}** core skills")
+
 
 # === CREATE TABLE ===
 if names and len(names) == len(scores) == len(insights):
