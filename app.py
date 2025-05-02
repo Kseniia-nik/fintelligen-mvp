@@ -57,9 +57,9 @@ with col2:
 
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
-    st.markdown(f"""
+    st.markdown(f""" 
 <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
+             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
     <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
         🧾 How to Use
@@ -88,6 +88,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
     </p>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 # === SKILLS ===
