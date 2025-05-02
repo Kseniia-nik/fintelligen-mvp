@@ -64,23 +64,31 @@ with col2:
 with col3:
     st.image("Goldman Sachs Logo.svg", width=80)
 
-
 # === INSTRUCTIONS ===
-with st.expander("Instructions for HR", expanded=True):
-    st.markdown(
-        """
-        <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 12px;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);'>
-            <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: #003087;'>
-                 How to Use
-            </h4>
-            <p>This tool evaluates uploaded resumes against the core competencies required for 
-               <strong>Goldman Sachs</strong>.</p>
-            <!-- … остальной HTML … -->
+with st.expander("📋 Instructions for HR", expanded=True):
+    st.markdown("""
+        <div style='…'>
+            <h4 style='…'>🧾 How to Use</h4>
+            <p>This tool evaluates uploaded resumes against … <strong>Goldman Sachs</strong>.</p>
+            <p><strong>Steps:</strong></p>
+            <ol style='margin-top: -0.5rem; padding-left: 1.2rem;'>
+                <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
+                <li>The tool will:
+                    <ul style='margin-top: 0.5rem; padding-left: 1.2rem;'>
+                        <li><strong>Anonymize</strong> …</li>
+                        <li><strong>Evaluate</strong> …</li>
+                        <li><strong>Visualize</strong> …</li>
+                    </ul>
+                </li>
+            </ol>
+            <p style='color: #6c757d; font-size: 13px; margin-top: 1.5rem;'>
+                Resume data is not stored or shared. Max: <strong>50 resumes</strong>.
+            </p>
         </div>
         """,
         unsafe_allow_html=True
     )
+
 
 # === SKILLS ===
 st.markdown("""
