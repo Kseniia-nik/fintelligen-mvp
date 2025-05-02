@@ -48,15 +48,21 @@ h3 {{
 """, unsafe_allow_html=True)
 
 # === HEADER: TITLE + LOGO ===
-col1, col2, col3 = st.columns([0.7, 0.15, 0.15])
+col1, col2, col3 = st.columns([0.15, 0.7, 0.15])
 
 with col1:
-    st.markdown("<h1>Fintelligen</h1>", unsafe_allow_html=True)
-    st.markdown("<h3>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+    st.image("FINTELLIGEN.svg", width=80)
+
 with col2:
-    st.image("FINTELLIGEN.svg", width=90)
+    st.markdown("""
+        <div style='text-align: center;'>
+            <h1 style='margin-bottom: 0.2rem; color: #003087;'>Fintelligen</h1>
+            <h3 style='color: #003087; font-weight: 500;'>AI Resume Evaluator for Goldman Sachs</h3>
+        </div>
+    """, unsafe_allow_html=True)
+
 with col3:
-    st.image("Goldman Sachs Logo.svg", width=90)
+    st.image("gGoldman Sachs Logo.svg", width=80)
 
 
 # === INSTRUCTIONS ===
