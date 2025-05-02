@@ -48,11 +48,9 @@ h3 {{
 """, unsafe_allow_html=True)
 
 # === FULL WIDTH BANNER HEADER ===
-st.markdown("""
-<div style='text-align: center; margin-top: -30px; margin-bottom: 30px;'>
-    <img src='FINTELLIGENWEB.svg' width='500' />
-</div>
-""", unsafe_allow_html=True)
+# === SIMPLE IMAGE BANNER ===
+st.image("FINTELLIGEN.svg", use_column_width=True)
+
 
 
 
