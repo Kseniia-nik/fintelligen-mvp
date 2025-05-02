@@ -60,7 +60,7 @@ with st.expander("Instructions for HR", expanded=True):
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
 <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
-🧾 How to Use
+How to Use
 </h4>
 
 <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
