@@ -109,7 +109,7 @@ st.markdown("**Goldman Sachs core skillset is applied automatically:**")
 st.markdown("""
 <div style='display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;'>
 """ + "".join([
-    f"<div style='background-color: #e9ecef; padding: 6px 12px; border-radius: 20px; "
+    f"<div style='background-color: #e9ecef; padding: 6px 12px; border-radius: 10px; "
     f"font-size: 14px; color: #003087; font-weight: 500;'>{skill}</div>"
     for skill in goldman_skills
 ]) + "</div>",
