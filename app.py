@@ -62,17 +62,21 @@ with col3:
 # === INSTRUCTIONS ===
 with st.expander("📋 Instructions for HR", expanded=True):
     st.markdown("""
-    This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at Goldman Sachs.
+    <div style='font-size: 16px; line-height: 1.6;'>
+        This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <b>Goldman Sachs</b>.
 
-    **Steps:**
-    1. **Upload resumes** (PDF/DOCX)
-    2. The tool will:
-        - **Anonymize** personal details
-        - **Evaluate** key skills
-        - **Visualize** match scores and allow shortlisting
+        <br><br>
+        <b>Steps:</b><br>
+        1. <b>Upload resumes</b> (PDF/DOCX)<br>
+        2. The tool will:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• <b>Anonymize</b> personal details<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• <b>Evaluate</b> key skills<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• <b>Visualize</b> match scores and allow shortlisting
 
-    _Resume data is not stored or shared. Max: **50 resumes**._
-    """)
+        <br><br><i style='color: #6c757d;'>Resume data is not stored or shared. Max: <b>50 resumes</b>.</i>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 # === SKILLS ===
 st.markdown("""
