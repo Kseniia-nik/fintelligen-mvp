@@ -51,7 +51,7 @@ h3 {{
 
 st.markdown("""
 <div style='text-align: center; margin-top: -30px; margin-bottom: 30px;'>
-    <img src='https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/assets/FINTELLIGEN%20WEB.png' width='500' style='margin-bottom: -10px;' />
+    <img src='https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/assets/FINTELLIGEN WEB.png' width='500' style='margin-bottom: -10px;' />
 </div>
 """, unsafe_allow_html=True)
 
