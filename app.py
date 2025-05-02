@@ -75,15 +75,15 @@ with st.expander("📋 Instructions for HR", expanded=True):
     """)
 
 # === SKILLS ===
-goldman_skills = [
-    "financial analysis", "investment banking", "capital markets", "excel", "valuation",
-    "risk management", "mergers and acquisitions", "quantitative analysis", "data analytics",
-    "communication", "problem solving", "teamwork", "python", "sql"
-]
-selected_skills = goldman_skills
-
-st.markdown(" **Goldman Sachs core skillset is applied automatically:**")
-st.markdown(", ".join(goldman_skills))
+st.markdown("""
+<div class='block' style='margin-top: 1rem;'>
+    <h4 style='margin-bottom: 0.5rem; color: #003087;'>💼 Goldman Sachs Core Skillset</h4>
+    <p style='font-size: 15px;'>
+        financial analysis, investment banking, capital markets, excel, valuation, risk management, mergers and acquisitions,
+        quantitative analysis, data analytics, communication, problem solving, teamwork, python, sql
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # === FILE UPLOAD ===
 st.markdown("## 📤 Upload Resumes")
