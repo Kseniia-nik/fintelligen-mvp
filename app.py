@@ -62,7 +62,7 @@ with col2:
     """, unsafe_allow_html=True)
 
 with col3:
-    st.image("gGoldman Sachs Logo.svg", width=80)
+    st.image("Goldman Sachs Logo.svg", width=80)
 
 
 # === INSTRUCTIONS ===
