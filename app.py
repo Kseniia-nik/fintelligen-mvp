@@ -63,6 +63,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
         <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
             🧾 How to Use
         </h4>
+
         <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
 
         <p><strong>Steps:</strong></p>
@@ -86,7 +87,6 @@ with st.expander("📋 Instructions for HR", expanded=True):
         </p>
     </div>
     """, unsafe_allow_html=True)
-
 
 # === SKILLS ===
 goldman_skills = [
