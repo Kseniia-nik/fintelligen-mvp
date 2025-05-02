@@ -95,7 +95,7 @@ goldman_skills = [
     "investment banking",
     "capital markets",
     "risk management",
-    "sql",
+    "sql", "r",
     "mergers and acquisitions",
     "accounting",
     "financial modeling",
@@ -108,7 +108,6 @@ goldman_skills = [
     "alteryx",
     "quantitative analysis",
     "data analytics",
-    "r",
     "market research"
 ]
 
