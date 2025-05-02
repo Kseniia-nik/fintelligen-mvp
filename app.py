@@ -89,7 +89,7 @@ Max Upload: 50 resumes
 
 
 # === SKILLS ===
-goldman_hard_skills = [
+goldman_skills = [
     "financial analysis",
     "valuation",
     "investment banking",
