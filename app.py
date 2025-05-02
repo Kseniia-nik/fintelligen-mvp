@@ -70,7 +70,7 @@ st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)  # До
 
 with st.expander("📋 Instructions for HR", expanded=True):
     st.markdown(
-        f"""
+        """
         <div style='background-color: #ffffff; color: #212529; padding: 20px 25px; border-radius: 12px;
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 1rem;'>
             <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>🧾 How to Use</h4>
