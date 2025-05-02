@@ -91,16 +91,17 @@ with st.expander("📋 Instructions for HR", expanded=True):
 
 
 # === SKILLS ===
-st.markdown("""
-<div class='block' style='margin-top: 1rem;'>
-    <h4 style='margin-bottom: 0.5rem; color: #003087;'> Goldman Sachs Core Skillset</h4>
-    <p style='font-size: 15px;'>
-        financial analysis, investment banking, capital markets, excel, valuation, risk management, mergers and acquisitions,
-        quantitative analysis, data analytics, communication, problem solving, teamwork, python, sql
-    </p>
-</div>
-""", unsafe_allow_html=True)
+core_skills = [
+    "financial analysis", "investment banking", "capital markets", "excel",
+    "valuation", "risk management", "mergers and acquisitions",
+    "quantitative analysis", "data analytics", "communication",
+    "problem solving", "teamwork", "python", "sql"
+]
 
+# Просто используем весь список «как есть»
+selected_skills = core_skills
+
+matched, total = score_skills(anonymized_text, selected_skills)
 # === FILE UPLOAD ===
 st.markdown("## 📤 Upload Resumes")
 uploaded_files = st.file_uploader(
