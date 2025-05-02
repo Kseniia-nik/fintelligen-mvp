@@ -48,8 +48,8 @@ h3 {{
 """, unsafe_allow_html=True)
 
 # === BANNER HEADER ===
-# === BANNER HEADER ===
-st.image("FINTELLIGENWEB.svg", width=400)
+st.image("WEB.svg", use_container_width=True)
+
 
 
 
