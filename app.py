@@ -63,33 +63,33 @@ accent_color = "#003087"
 # === INSTRUCTION BLOCK HTML ===
 instruction_html = f"""
 <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
-    <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
-        🧾 How to Use
-    </h4>
+<h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
+🧾 How to Use
+</h4>
 
-    <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
+<p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
 
-    <p><strong>Steps:</strong></p>
-    <ol style='margin-left: 1rem;'>
-        <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
-        <li>The tool will automatically:
-            <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
-                <li><strong>Anonymize</strong> personal data</li>
-                <li><strong>Evaluate</strong> key competencies</li>
-                <li><strong>Visualize</strong> results and allow shortlisting</li>
-            </ul>
-        </li>
-    </ol>
+<p><strong>Steps:</strong></p>
+<ol style='margin-left: 1rem;'>
+    <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
+    <li>The tool will automatically:
+        <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
+            <li><strong>Anonymize</strong> personal data</li>
+            <li><strong>Evaluate</strong> key competencies</li>
+            <li><strong>Visualize</strong> results and allow shortlisting</li>
+        </ul>
+    </li>
+</ol>
 
-    <p style='margin-top: 1rem;'>
-        <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
-            Max Upload: 50 resumes
-        </span>
-        <br><br>
-        <small style='color: #6c757d;'>Resume data is not stored or shared.</small>
-    </p>
+<p style='margin-top: 1rem;'>
+<span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
+Max Upload: 50 resumes
+</span>
+<br><br>
+<small style='color: #6c757d;'>Resume data is not stored or shared.</small>
+</p>
 </div>
 """
 
