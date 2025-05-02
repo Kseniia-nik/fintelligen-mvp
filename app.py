@@ -50,6 +50,10 @@ Step-by-Step Guide
     <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
    Simply upload one or more resumes in PDF or DOCX format. You can drag and drop files or use the browse button.</li>
      <li><strong>Automatic analysis:</strong></li>
+     Once uploaded, the tool will automatically:
+   - Anonymize sensitive personal details like names, emails, and phone numbers  
+   - Evaluate each resume against a pre-defined set of core competencies  
+   - Visualize the skill match scores and provide options for shortlisting
      <li><strong>Review & compare</strong></li>
          Explore the evaluation table, view anonymized resume content, and download shortlisted results.
 
