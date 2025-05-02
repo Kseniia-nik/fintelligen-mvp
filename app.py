@@ -65,7 +65,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
     <div style='font-size: 16px; line-height: 1.6;'>
         This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <b>Goldman Sachs</b>.
 
-        <br><br>
+        <br>
         <b>Steps:</b><br>
         1. <b>Upload resumes</b> (PDF/DOCX)<br>
         2. The tool will:<br>
@@ -76,6 +76,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
         <br><br><i style='color: #6c757d;'>Resume data is not stored or shared. Max: <b>50 resumes</b>.</i>
     </div>
     """, unsafe_allow_html=True)
+
 
 
 # === SKILLS ===
