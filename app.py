@@ -98,17 +98,28 @@ core_skills = [
     "problem solving", "teamwork", "python", "sql"
 ]
 
-# Просто используем весь список «как есть»
-selected_skills = core_skills
 
-matched, total = score_skills(anonymized_text, selected_skills)
 # === FILE UPLOAD ===
-st.markdown("## 📤 Upload Resumes")
 uploaded_files = st.file_uploader(
     "Upload multiple resumes (.pdf or .docx)",
     type=["pdf", "docx"],
     accept_multiple_files=True
 )
+
+if uploaded_files:
+    st.success(f"{len(uploaded_files)} resume(s) uploaded successfully.")
+    # Берём весь набор навыков
+    selected_skills = core_skills
+
+    for file in uploaded_files:
+        # 1) Извлекаем текст
+        raw_text = extract_text(file)        # ваша функция чтения PDF/DOCX
+        # 2) Анонимизируем
+        anonymized_text = anonymize_resume(raw_text)
+        # 3) Считаем совпадения
+        matched, total = score_skills(anonymized_text, selected_skills)
+        # 4) Выводим результат
+        st.write(f"• Matched **{matched}** out of **{total}** core skills")
 
 # === SIDEBAR ===
 with st.sidebar:
