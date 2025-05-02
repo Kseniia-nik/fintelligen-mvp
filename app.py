@@ -71,7 +71,7 @@ with st.expander("📋 Instructions for HR", expanded=True):
     <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);'>
         <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: #003087;'>🧾 How to Use</h4>
         <p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
-        
+
         <p><strong>Steps:</strong></p>
         <ol style='margin-top: -0.5rem;'>
             <li><strong>Upload resumes</strong> (PDF/DOCX)</li>
@@ -83,11 +83,13 @@ with st.expander("📋 Instructions for HR", expanded=True):
                 </ul>
             </li>
         </ol>
+
         <p style='color: #6c757d; font-size: 13px; margin-top: 1.5rem;'>
             Resume data is not stored or shared. Max: <strong>50 resumes</strong>.
         </p>
     </div>
     """, unsafe_allow_html=True)
+
 
 
 # === SKILLS ===
