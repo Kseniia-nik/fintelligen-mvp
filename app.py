@@ -126,7 +126,7 @@ unsafe_allow_html=True)
 st.markdown("""
 <div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h2 style='font-size: 28px; font-weight: 700; color: #003087; margin: 0;'>
+   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
         Upload Resumes
     </h2>
 </div>
