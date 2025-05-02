@@ -2,7 +2,6 @@ import streamlit as st
 from PyPDF2 import PdfReader
 from docx import Document
 import pandas as pd
-import plotly.express as px
 import re
 
 # === THEME COLORS ===
@@ -15,7 +14,7 @@ card_color      = "#ffffff"
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
 
-# === FONT AND GLOBAL STYLE ===
+# === GLOBAL STYLE ===
 st.markdown("<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap' rel='stylesheet'>", unsafe_allow_html=True)
 st.markdown(f"""
 <style>
@@ -28,63 +27,54 @@ h1 {{
     font-size: 42px !important;
     font-weight: 700 !important;
     color: {accent_color} !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.2rem !important;
-}}
-h3 {{
-    font-weight: 600 !important;
-    color: {accent_color} !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.5rem !important;
-}}
-.block {{
-    background-color: {card_color} !important;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
 }}
 </style>
 """, unsafe_allow_html=True)
 
-# === BANNER HEADER ===
+# === HEADER IMAGE ===
 st.image("WEB.svg", use_container_width=True)
 
 # === INSTRUCTIONS ===
 with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
-    instruction_html = f"""<div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
+    instruction_html = f"""
+    <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
-    <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
-    🧾 Step-by-Step Guide for Goldman Sachs Recruiters
-    </h4>
+        <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
+            🧾 Step-by-Step Guide for Goldman Sachs Recruiters
+        </h4>
 
-    <p>This tool is designed to support Goldman Sachs HR and recruiting teams in reviewing resumes efficiently and consistently. It helps identify how well candidates align with the core competencies expected at the analyst level.</p>
+        <p>This tool supports Goldman Sachs HR and recruiting teams in reviewing resumes efficiently and consistently. It helps assess how well candidates align with analyst-level core competencies.</p>
 
-    <p><strong>Here’s how to use it:</strong></p>
-    <ol style='margin-left: 1rem;'>
-        <li><strong>Upload resumes</strong><br>
-            Upload multiple resumes in PDF or DOCX format. You can drag and drop files or use the “Browse” button.</li>
-        <li><strong>Automated screening</strong><br>
-            The tool will automatically:
-            <p>🔒 <strong>Anonymize:</strong> Remove names, emails, and phone numbers</p>
-            <p>🧠 <strong>Evaluate:</strong> Check alignment with core analyst-level competencies</p>
-            <p>📊 <strong>Visualize:</strong> Display match scores and enable filtering & shortlisting</p>
+        <p><strong>Here’s how it works:</strong></p>
 
+        <ol style='margin-left: 1rem; padding-left: 0;'>
+            <li style='margin-bottom: 0.75rem;'>
+                <strong>Upload resumes:</strong> Upload multiple resumes in PDF or DOCX format using drag-and-drop or the Browse button.
+            </li>
+            <li style='margin-bottom: 0.75rem;'>
+                <strong>Automated screening:</strong> The tool will:
+                <ul style='margin-top: 0.5rem;'>
+                    <li>🔒 <strong>Anonymize</strong> resumes (removing names, emails, phone numbers)</li>
+                    <li>🧠 <strong>Evaluate</strong> alignment with core analyst competencies</li>
+                    <li>📊 <strong>Visualize</strong> results with scores and filtering options</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Review and shortlist:</strong> Browse evaluation results, view anonymized resumes, and download shortlisted candidates.
+            </li>
+        </ol>
 
-        </li>
-        <li><strong>Review and shortlist</strong><br>
-            Compare results in an interactive table, preview anonymized resumes, and download the shortlist for further review or outreach.</li>
-    </ol>
-
-    <p style='margin-top: 1rem;'>
-    <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
-    Max Upload: 50 resumes
-    </span>
-    <br><br>
-    <small style='color: #6c757d;'>Uploaded data is processed securely and is not stored or shared.</small>
-    </p>
-    </div>"""
+        <p style='margin-top: 1rem;'>
+            <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
+                Max Upload: 50 resumes
+            </span>
+        </p>
+        <p style='color: #6c757d; font-size: 13px; margin-top: 0.5rem;'>
+            Uploaded data is processed securely and is not stored or shared.
+        </p>
+    </div>
+    """
     st.markdown(instruction_html, unsafe_allow_html=True)
 
 # === SKILLS ===
