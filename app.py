@@ -51,37 +51,42 @@ h3 {{
 st.image("WEB.svg", use_container_width=True)
 
 # === INSTRUCTIONS ===
-with st.expander("Getting Started: How to Use This Tool", expanded=True):
+with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
     instruction_html = f"""<div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
-<h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
-Step-by-Step Guide
-</h4>
+    <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
+    🧾 Step-by-Step Guide for Goldman Sachs Recruiters
+    </h4>
 
-<p>This tool evaluates uploaded resumes against the core competencies required for analyst-level roles at <strong>Goldman Sachs</strong>.</p>
+    <p>This tool is designed to support Goldman Sachs HR and recruiting teams in reviewing resumes efficiently and consistently. It helps identify how well candidates align with the core competencies expected at the analyst level.</p>
 
-<p><strong>Steps:</strong></p>
-<ol style='margin-left: 1rem;'>
-    <li><strong>Upload resumes</strong> (PDF or DOCX files)</li>
-    <li>The tool will automatically:
-        <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
-            <li><strong>Anonymize</strong> personal data</li>
-            <li><strong>Evaluate</strong> key competencies</li>
-            <li><strong>Visualize</strong> results and allow shortlisting</li>
-        </ul>
-    </li>
-</ol>
+    <p><strong>Here’s how to use it:</strong></p>
+    <ol style='margin-left: 1rem;'>
+        <li><strong>Upload resumes</strong><br>
+            Upload multiple resumes in PDF or DOCX format. You can drag and drop files or use the “Browse” button.</li>
+        <li><strong>Automated screening</strong><br>
+            The tool will automatically:
+            <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
+                <li>🔒 <strong>Anonymize</strong> each resume by removing names, emails, and phone numbers</li>
+                <li>🧠 <strong>Evaluate</strong> each profile against Goldman Sachs’ analyst-level skillset</li>
+                <li>📊 <strong>Visualize</strong> how closely candidates match, with clear scores and filtering options</li>
+            </ul>
+        </li>
+        <li><strong>Review and shortlist</strong><br>
+            Compare results in an interactive table, preview anonymized resumes, and download the shortlist for further review or outreach.</li>
+    </ol>
 
-<p style='margin-top: 1rem;'>
-<span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
-Max Upload: 50 resumes
-</span>
-<br><br>
-<small style='color: #6c757d;'>Resume data is not stored or shared.</small>
-</p>
-</div>"""
+    <p style='margin-top: 1rem;'>
+    <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
+    Max Upload: 50 resumes
+    </span>
+    <br><br>
+    <small style='color: #6c757d;'>Uploaded data is processed securely and is not stored or shared.</small>
+    </p>
+    </div>"""
     st.markdown(instruction_html, unsafe_allow_html=True)
+
 
 
 # === SKILLS ===
