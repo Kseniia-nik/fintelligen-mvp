@@ -56,7 +56,7 @@ with col1:
 with col2:
     st.image("FINTELLIGEN.svg", width=90)
 with col3:
-    st.image("Goldman-Sachs-Logo.png", width=90)
+    st.image("Goldman Sachs Logo.svg", width=90)
 
 
 # === INSTRUCTIONS ===
