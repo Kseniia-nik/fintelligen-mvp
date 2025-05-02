@@ -127,10 +127,17 @@ st.markdown("""
 <div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
     <h2 style='font-size: 24px; font-weight: 600; color: #003087; margin: 0;'>
-        📤 Upload Resumes
+        Upload Resumes
     </h2>
 </div>
 """, unsafe_allow_html=True)
+
+uploaded_files = st.file_uploader(
+    "Upload one or more resumes",
+    type=["pdf", "docx"],
+    accept_multiple_files=True
+)
+
 
 # === SIDEBAR ===
 with st.sidebar:
