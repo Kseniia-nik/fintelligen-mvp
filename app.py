@@ -53,27 +53,43 @@ st.image("WEB.svg", use_container_width=True)
 # === INSTRUCTIONS ===
 with st.expander("📘 Getting Started: How to Use This Tool", expanded=True):
     st.markdown(f"""
-    <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
+        <div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
-        <h4 style='font-size: 20px; color: {accent_color}; margin-bottom: 1rem;'>🧾 Step-by-Step Guide</h4>
+            <h4 style='margin-top: 0; margin-bottom: 1rem; font-size: 20px; color: {accent_color};'>
+                🧾 Step-by-Step Guide for Goldman Sachs Recruiters
+            </h4>
 
-        <p>This tool helps Goldman Sachs recruiters quickly assess resume alignment with analyst-level competencies.</p>
+            <p>This tool supports Goldman Sachs HR and recruiting teams in reviewing resumes efficiently and consistently. It helps assess how well candidates align with analyst-level core competencies.</p>
 
-        <ol>
-            <li><strong>Upload resumes:</strong> PDF/DOCX — drag and drop or use Browse.</li>
-            <li><strong>Auto-screening:</strong>
-                <ul>
-                    <li>🔒 Anonymize contact info</li>
-                    <li>🧠 Evaluate skill matches</li>
-                    <li>📊 Visualize match scores</li>
-                </ul>
-            </li>
-            <li><strong>Review and shortlist:</strong> View results, compare, and export top candidates.</li>
-        </ol>
+            <p><strong>Here’s how it works:</strong></p>
 
-        <p style='font-size: 13px; color: #6c757d;'>Data is processed securely and never stored.</p>
-    </div>
+            <ol style='margin-left: 1rem; padding-left: 0;'>
+                <li style='margin-bottom: 0.75rem;'>
+                    <strong>Upload resumes:</strong> Upload multiple resumes in PDF or DOCX format using drag-and-drop or the Browse button.
+                </li>
+                <li style='margin-bottom: 0.75rem;'>
+                    <strong>Automated screening:</strong> The tool will:
+                    <ul style='margin-top: 0.5rem;'>
+                        <li>🔒 <strong>Anonymize</strong> resumes (removing names, emails, phone numbers)</li>
+                        <li>🧠 <strong>Evaluate</strong> alignment with core analyst competencies</li>
+                        <li>📊 <strong>Visualize</strong> results with scores and filtering options</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Review and shortlist:</strong> Browse evaluation results, view anonymized resumes, and download shortlisted candidates.
+                </li>
+            </ol>
+
+            <p style='margin-top: 1rem;'>
+                <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
+                    Max Upload: 50 resumes
+                </span>
+            </p>
+            <p style='color: #6c757d; font-size: 13px; margin-top: 0.5rem;'>
+                Uploaded data is processed securely and is not stored or shared.
+            </p>
+        </div>
     """, unsafe_allow_html=True)
 
 # === SKILLS ===
