@@ -49,11 +49,13 @@ h3 {{
 
 # === BANNER HEADER ===
 
-st.markdown("""
-<div style='text-align: center; margin-top: -30px; margin-bottom: 30px;'>
-    <img src='https://raw.githubusercontent.com/Kseniia-nik/fintelligen-mvp/main/assets/FINTELLIGENWEB.svg' width='500' style='margin-bottom: -10px;' />
-</div>
-""", unsafe_allow_html=True)
+col1, col2 = st.columns([0.8, 0.2])
+with col1:
+    st.markdown("<h1 style='margin-bottom: 0.2rem;'>Fintelligen</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='font-weight:600; color: #003087;'>AI Resume Evaluator for Goldman Sachs</h3>", unsafe_allow_html=True)
+with col2:
+    st.image("FINTELLIGENWEB.svg", width=90)
+
 
 
 # === INSTRUCTIONS ===
