@@ -205,7 +205,7 @@ if names and len(names) == len(scores) == len(insights):
         "Original Filename": [f.name for f in uploaded_files][:len(names)],
         "Skill Matches": scores,
         "Match Summary": [i["summary"] for i in insights],
-        "⭐ Shortlist": [False] * len(names)
+        "Shortlist": [False] * len(names)
     })
 
 # === SUMMARY DASHBOARD IN SIDEBAR ===
