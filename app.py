@@ -268,7 +268,7 @@ if "df" in locals() and not df.empty and show_table:
         use_container_width=True,
         hide_index=True,
         column_config={
-            "⭐ Shortlist": st.column_config.CheckboxColumn("⭐ Shortlist", default=False)
+            "Shortlist": st.column_config.CheckboxColumn("Shortlist", default=False)
         },
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
@@ -276,9 +276,9 @@ if "df" in locals() and not df.empty and show_table:
     col1, col2 = st.columns([1, 1])
     with col1:
         if st.button("🗑 Clear Shortlist"):
-            edited_df["⭐ Shortlist"] = False
+            edited_df["Shortlist"] = False
     with col2:
-        csv = edited_df[edited_df["⭐ Shortlist"]].to_csv(index=False).encode("utf-8")
+        csv = edited_df[edited_df["Shortlist"]].to_csv(index=False).encode("utf-8")
         st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
