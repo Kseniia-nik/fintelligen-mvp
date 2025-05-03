@@ -263,7 +263,7 @@ if "df" in locals() and not df.empty and show_table:
     df_with_index = df.copy()
     df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
 
-   st.markdown(f"""
+    st.markdown(f"""
 <div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
    <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
