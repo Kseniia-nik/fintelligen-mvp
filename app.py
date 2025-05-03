@@ -247,6 +247,7 @@ with st.sidebar:
 
 
 
+
 # === SKILL MATRIX ===
 if "df" in locals() and not df.empty and show_matrix:
     
