@@ -7,10 +7,10 @@ import re
 
 # === THEME COLORS ===
 accent_color    = "#473BD0"
-highlight_color = "#473BD0"
-bg_color        = "#473BD0"
-text_color      = "#473BD0"
-card_color      = "#473BD0"
+highlight_color = "#c59d5f"
+bg_color        = "#f8f9fa"
+text_color      = "#212529"
+card_color      = "#ffffff"
 
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
@@ -115,12 +115,12 @@ unsafe_allow_html=True)
 
 
 # === FILE UPLOAD ===
-st.markdown("""
-<div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
+st.markdown(f"""
+<div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
+   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
         Upload Resumes
-    </h2>
+    </h3>
 </div>
 """, unsafe_allow_html=True)
 
