@@ -258,10 +258,14 @@ if "df" in locals() and not df.empty and show_table:
     df_with_index = df.copy()
     df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
 
-    st.markdown(f"""
-    <div class='block'>
-        <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'> Resume Evaluation Table</h3>
-    """, unsafe_allow_html=True)
+    st.markdown("""
+<div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
+   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
+        Resume Evaluation Table
+    </h2>
+</div>
+""", unsafe_allow_html=True)
 
     edited_df = st.data_editor(
         df_with_index,
