@@ -57,12 +57,12 @@ Step-by-Step Guide
         <li>Visualize the skill match scores and provide options for shortlisting</li>
     </ul>
 </li>
-     <strong>Review & compare</strong><br>
+     <li><strong>Review & compare</strong><br>
 Explore the evaluation table, view anonymized resume content, and download shortlisted results.<br><br>
 To shortlist candidates:
 <ul>
   <li>Scroll through the interactive resume table.</li>
-  <li>Tick the <strong>⭐ Shortlist</strong> checkbox next to candidates you wish to keep.</li>
+  <li>Tick the <strong>Shortlist</strong> checkbox next to candidates you wish to keep.</li>
   <li>Use the <strong>📥 Download Shortlist</strong> button to export selected candidates to a CSV file for further review or sharing.</li>
 </ul>
 
