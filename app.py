@@ -10,7 +10,7 @@ accent_color    = "#473BD0"
 highlight_color = "#473BD0"
 bg_color        = "#473BD0"
 text_color      = "#212529"
-card_color      = "#ffffff"
+card_color      = "#473BD0"
 
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
