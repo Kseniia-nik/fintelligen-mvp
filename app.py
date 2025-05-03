@@ -222,27 +222,28 @@ if "df" in locals() and not df.empty:
     top_match_name = top_match_row["Anonymized Resume"]
     top_match_score = top_match_row["Match Summary"]
     
-    
-    with st.sidebar:
-        st.markdown("###Summary Dashboard")
-        
-        st.markdown(f"""
-        <div style='background-color: #ffffff; padding: 15px 20px; border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 15px;'>
-                <p style='margin: 0; font-weight: 600; color: #473BD0;'>Resumes Uploaded:</p>
-                <p style='margin: 0 0 10px 0; font-size: 18px;'>{total_resumes}</p>
-                
-                <p style='margin: 0; font-weight: 600; color: #473BD0;'>Shortlisted:</p>
-                <p style='margin: 0 0 10px 0; font-size: 18px;'>{shortlisted}</p>
-                
-                <p style='margin: 0; font-weight: 600; color: #473BD0;'>Avg Match:</p>
-                <p style='margin: 0 0 10px 0; font-size: 18px;'>{avg_percent}%</p>
-                
-                <p style='margin: 0; font-weight: 600; color: #473BD0;'>Top Match:</p>
-                <p style='margin: 0 0 5px 0; font-size: 16px;'>{top_match_name}</p>
-                <small style='color: #6c757d;'>{top_match_score}</small>
-        </div>
-        """, unsafe_allow_html=True)
+
+with st.sidebar:
+    st.markdown("### 📊 Summary Dashboard")
+
+    st.markdown(f"""
+<div style='background-color: #ffffff; padding: 15px 20px; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 15px;'>
+    <p style='margin: 0; font-weight: 600; color: #473BD0;'>Resumes Uploaded:</p>
+    <p style='margin: 0 0 10px 0; font-size: 18px;'>{total_resumes}</p>
+
+    <p style='margin: 0; font-weight: 600; color: #473BD0;'>Shortlisted:</p>
+    <p style='margin: 0 0 10px 0; font-size: 18px;'>{shortlisted}</p>
+
+    <p style='margin: 0; font-weight: 600; color: #473BD0;'>Avg Match:</p>
+    <p style='margin: 0 0 10px 0; font-size: 18px;'>{avg_percent}%</p>
+
+    <p style='margin: 0; font-weight: 600; color: #473BD0;'>Top Match:</p>
+    <p style='margin: 0 0 5px 0; font-size: 16px;'>{top_match_name}</p>
+    <small style='color: #6c757d;'>{top_match_score}</small>
+</div>
+""", unsafe_allow_html=True)
+
 
 
 
