@@ -2,6 +2,7 @@ import streamlit as st
 from PyPDF2 import PdfReader
 from docx import Document
 import pandas as pd
+import plotly.express as px 
 import re
 
 # === THEME COLORS ===
