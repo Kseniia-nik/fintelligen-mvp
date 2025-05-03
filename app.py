@@ -6,11 +6,12 @@ import plotly.express as px
 import re
 
 # === THEME COLORS ===
-accent_color    = "#473BD0"
-highlight_color = "#5375D9"
-bg_color        = "#f8f9fa"
-text_color      = "#212529"
-card_color      = "#ffffff"
+accent_color    = "#473BD0"   # Основной фирменный цвет
+highlight_color = "#60B6E2"   # Вторичный голубой для выделения
+bg_color        = "#f8f9fa"   # Светлый фон
+text_color      = "#212529"   # Цвет текста
+card_color      = "#ffffff"   # Цвет карточек/блоков
+
 
 # === PAGE CONFIG ===
 st.set_page_config(page_title="Fintelligen", layout="centered")
