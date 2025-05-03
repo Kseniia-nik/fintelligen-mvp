@@ -72,8 +72,14 @@ To shortlist candidates:
 Max Upload: 50 resumes
 </span>
 <br><br>
-<small style='color: #6c757d;'>Resume data is not stored or shared.</small>
+<small style='color: #495057;'>Resume data is not stored or shared.</small>
+
+<p style='margin-top: 1rem;'>
+<span style='background-color: #e9eef5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
+Max Upload: 50 resumes
+</span>
 </p>
+
 </div>"""
     st.markdown(instruction_html, unsafe_allow_html=True)
 
