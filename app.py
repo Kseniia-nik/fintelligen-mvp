@@ -66,15 +66,6 @@ To shortlist candidates:
   <li>Use the <strong>📥 Download Shortlist</strong> button to export selected candidates to a CSV file for further review or sharing.</li>
 </ul>
 
-    <li>The tool will automatically:
-        <ul style='margin-top: 0.5rem; margin-bottom: 0.5rem;'>
-            <li><strong>Anonymize</strong> personal data</li>
-            <li><strong>Evaluate</strong> key competencies</li>
-            <li><strong>Visualize</strong> results and allow shortlisting</li>
-        </ul>
-    </li>
-</ol>
-
 <p style='margin-top: 1rem;'>
 <span style='background-color: #f1f3f5; padding: 6px 12px; border-radius: 10px; font-weight: 500; display: inline-block;'>
 Max Upload: 50 resumes
