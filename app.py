@@ -229,14 +229,14 @@ if "df" in locals() and not df.empty:
 # === SKILL MATRIX ===
 if "df" in locals() and not df.empty and show_matrix:
     
-    st.markdown("""
-<div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
-        Skill Matrix — Resume vs. Core Skills
-    </h2>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown(f"""
+    <div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
+       <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
+            Skill Matrix — Resume vs. Core Skills
+        </h3>
+    </div>
+    """, unsafe_allow_html=True)
 
     fig = px.bar(
         df.sort_values("Skill Matches", ascending=True),
@@ -263,12 +263,12 @@ if "df" in locals() and not df.empty and show_table:
     df_with_index = df.copy()
     df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
 
-    st.markdown("""
-<div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
+   st.markdown(f"""
+<div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
+   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
         Resume Evaluation Table
-    </h2>
+    </h3>
 </div>
 """, unsafe_allow_html=True)
 
@@ -295,14 +295,15 @@ if "df" in locals() and not df.empty and show_table:
 # === ANONYMIZED RESUMES ===
 if "df" in locals() and not df.empty and show_results:
     
-    st.markdown("""
-<div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
+    st.markdown(f"""
+<div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
+   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
         Anonymized Resume Results
-    </h2>
+    </h3>
 </div>
 """, unsafe_allow_html=True)
+
 
     for i, row in df.iterrows():
         percent = insights[i]["percent"]
@@ -332,14 +333,15 @@ if "df" in locals() and not df.empty and show_results:
 # === FAQ SECTION ===
 if show_faq:
 
-    st.markdown("""
-<div style='background-color: #ffffff; padding: 18px 25px; border-radius: 12px;
+    st.markdown(f"""
+<div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem;'>
-        Frequently Asked Question
-    </h2>
+   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
+        Frequently Asked Questions (FAQ)
+    </h3>
 </div>
 """, unsafe_allow_html=True)
+
 
     with st.expander("🧠 How does the system assess core competencies in a resume?"):
         st.markdown("The AI scans resumes for keywords and contextual patterns aligned with Goldman Sachs' core skills, using a hybrid of rule-based and language model techniques.")
