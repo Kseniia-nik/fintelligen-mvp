@@ -212,7 +212,7 @@ if names and len(names) == len(scores) == len(insights):
 if "df" in locals() and not df.empty:
     total_resumes = len(df)
     total_skills = len(selected_skills)
-    shortlisted = df["⭐ Shortlist"].sum()
+    shortlisted = df["Shortlist"].sum()
     avg_percent = round(df["Skill Matches"].sum() / (total_resumes * total_skills) * 100)
     top_match_row = df.loc[df["Skill Matches"].idxmax()]
     top_match_name = top_match_row["Anonymized Resume"]
