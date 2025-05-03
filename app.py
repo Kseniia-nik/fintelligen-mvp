@@ -245,6 +245,7 @@ if "df" in locals() and not df.empty:
     """, unsafe_allow_html=True)
 
 
+
 # === SKILL MATRIX ===
 if "df" in locals() and not df.empty and show_matrix:
     
