@@ -9,7 +9,7 @@ import re
 accent_color    = "#473BD0"
 highlight_color = "#473BD0"
 bg_color        = "#473BD0"
-text_color      = "#212529"
+text_color      = "#473BD0"
 card_color      = "#473BD0"
 
 # === PAGE CONFIG ===
