@@ -110,11 +110,12 @@ st.markdown("**Goldman Sachs core skillset is applied automatically:**")
 st.markdown("""
 <div style='display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;'>
 """ + "".join([
-    f"<div style='background-color: #e9ecef; padding: 6px 12px; border-radius: 8px; "
-    f"font-size: 14px; color: #003087; font-weight: 500;'>{skill}</div>"
+    f"<div style='background-color: #e2e6f1; padding: 6px 12px; border-radius: 8px; "
+    f"font-size: 14px; color: #473BD0; font-weight: 500;'>{skill}</div>"
     for skill in goldman_skills
 ]) + "</div>",
 unsafe_allow_html=True)
+
 
 
 # === FILE UPLOAD ===
