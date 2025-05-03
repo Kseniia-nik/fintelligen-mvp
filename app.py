@@ -6,7 +6,7 @@ import plotly.express as px
 import re
 
 # === THEME COLORS ===
-accent_color    = "#003087"
+accent_color    = "#473BD0"
 highlight_color = "#c59d5f"
 bg_color        = "#f8f9fa"
 text_color      = "#212529"
