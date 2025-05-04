@@ -267,8 +267,8 @@ if "df" in locals() and not df.empty and show_table:
 
     # Добавим звездочку к лучшему совпадению
     max_match = df_sorted["Skill Matches"].max()
-    df_sorted["Top Match ⭐"] = df_sorted["Skill Matches"] == max_match
-    df_sorted["Top Match ⭐"] = df_sorted["Top Match ⭐"].apply(lambda x: "🌟" if x else "")
+    df_sorted["Top Match"] = df_sorted["Skill Matches"] == max_match
+    df_sorted["Top Match"] = df_sorted["Top Match"].apply(lambda x: "🌟" if x else "")
 
     st.markdown(f"""
     <div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
