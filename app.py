@@ -263,22 +263,23 @@ if "df" in locals() and not df.empty and show_matrix:
     st.plotly_chart(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# === RESUME TABLE ===
+# === RESUME TABLE (Improved with Highlighting & Sorting) ===
 if "df" in locals() and not df.empty and show_table:
-    df_with_index = df.copy()
-    df_with_index.insert(0, "#", range(1, 1 + len(df_with_index)))
+    df_sorted = df.copy().sort_values(by="Skill Matches", ascending=False).reset_index(drop=True)
+    df_sorted.insert(0, "#", range(1, 1 + len(df_sorted)))
 
     st.markdown(f"""
-<div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
-   <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
-        Resume Evaluation Table
-    </h3>
-</div>
-""", unsafe_allow_html=True)
+    <div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03); margin-bottom: 25px;'>
+       <h3 style='margin-top: 0.5rem; margin-bottom: 1rem; color: {accent_color};'>
+            Resume Evaluation Table
+        </h3>
+    </div>
+    """, unsafe_allow_html=True)
 
+    # 👉 Make editable version for interaction (shortlisting)
     edited_df = st.data_editor(
-        df_with_index,
+        df_sorted,
         use_container_width=True,
         hide_index=True,
         column_config={
@@ -287,6 +288,18 @@ if "df" in locals() and not df.empty and show_table:
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
 
+    # 👉 Highlight best match (optional static view for clarity)
+    st.markdown("##### 📊 Highlighted View of Top Matches (Read-only)")
+    def highlight_top_row(s):
+        is_max = s["Skill Matches"] == s["Skill Matches"].max()
+        return ['background-color: #fdf3d0' if v else '' for v in is_max]
+
+    st.dataframe(
+        df_sorted.style.apply(highlight_top_row, axis=1),
+        use_container_width=True
+    )
+
+    # 👉 Buttons
     col1, col2 = st.columns([1, 1])
     with col1:
         if st.button("🗑 Clear Shortlist"):
@@ -296,6 +309,7 @@ if "df" in locals() and not df.empty and show_table:
         st.download_button("📥 Download Shortlist", csv, "shortlisted_resumes.csv", "text/csv")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
 
 # === ANONYMIZED RESUMES ===
 if "df" in locals() and not df.empty and show_results:
