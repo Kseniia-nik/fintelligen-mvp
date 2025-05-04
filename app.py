@@ -225,14 +225,10 @@ if "df" in locals() and not df.empty:
     with st.sidebar:
         st.markdown("### Summary Dashboard")
         st.markdown("**Resumes Uploaded:**  \n5", unsafe_allow_html=True)
-        st.success(f"**Resumes Uploaded:** `{total_resumes}`")
         st.info(f"**Shortlisted:** `{shortlisted}`")
         st.warning(f"**Avg Match:** `{avg_percent}%`")
         st.markdown(f"**Top Match:** `{top_match_name}`")
         st.caption(f"→ {top_match_score}")
-
-
-
 
 
 # === SKILL MATRIX ===
