@@ -116,8 +116,6 @@ st.markdown("""
 ]) + "</div>",
 unsafe_allow_html=True)
 
-
-
 # === FILE UPLOAD ===
 st.markdown(f"""
 <div style='background-color: {card_color}; padding: 18px 25px; border-radius: 12px;
@@ -133,7 +131,6 @@ uploaded_files = st.file_uploader(
     type=["pdf", "docx"],
     accept_multiple_files=True
 )
-
 
 # === SIDEBAR ===
 with st.sidebar:
@@ -288,15 +285,17 @@ if "df" in locals() and not df.empty and show_table:
         disabled=["#", "Anonymized Resume", "Original Filename", "Skill Matches", "Match Summary"]
     )
 
-    # 👉 Highlight best match (optional static view for clarity)
+
+    # 🔍 Highlight best match — только для отображения
     st.markdown("##### 📊 Highlighted View of Top Matches (Read-only)")
+
     def highlight_top_row(s):
         is_max = s["Skill Matches"] == s["Skill Matches"].max()
         return ['background-color: #fdf3d0' if v else '' for v in is_max]
 
-    st.dataframe(
-        df_sorted.style.apply(highlight_top_row, axis=1),
-        use_container_width=True
+    # ❗ st.write вместо st.dataframe
+    st.write(
+        df_sorted.style.apply(highlight_top_row, axis=1)
     )
 
     # 👉 Buttons
