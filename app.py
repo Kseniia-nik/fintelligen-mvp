@@ -37,7 +37,7 @@ h1 {{
 st.image("WEB.svg", use_container_width=True)
 
 # === INSTRUCTIONS ===
-with st.expander("Getting Started: How to Use This Tool", expanded=True):
+with st.expander("Getting Started: How to Use This Tool", expanded=False):
     instruction_html = f"""<div style='background-color: #ffffff; padding: 20px 25px; border-radius: 15px;
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-top: 10px;'>
 
